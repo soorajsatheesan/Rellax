@@ -1,9 +1,13 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 import {
+  bulkCreateEmployeesAction,
   createEmployeeAction,
+  deleteEmployeeAction,
+  type BulkUploadResult,
   type EmployeeActionState,
 } from "@/components/dashboard/employee-actions";
 
@@ -16,6 +20,7 @@ type EmployeeRecord = {
   fullName: string;
   roleTitle: string;
   status: "active";
+  progressPercentage: number;
 };
 
 function CopyButton({ value, label }: { value: string; label: string }) {
@@ -42,7 +47,39 @@ export function EmployeeManagement({
 }: {
   employees: EmployeeRecord[];
 }) {
-  const [state, formAction] = useActionState(createEmployeeAction, initialState);
+  const [state, formAction, createPending] = useActionState(createEmployeeAction, initialState);
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  function handleDelete(id: string) {
+    if (!confirm("Remove this employee's access? This cannot be undone.")) return;
+    setDeletingId(id);
+    startTransition(async () => {
+      await deleteEmployeeAction(id);
+      setDeletingId(null);
+      router.refresh();
+    });
+  }
+  const [activeTab, setActiveTab] = useState<"single" | "bulk">("single");
+  const [bulkResult, setBulkResult] = useState<BulkUploadResult | null>(null);
+  const [isBulkPending, startBulkTransition] = useTransition();
+
+  function handleBulkUpload(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setBulkResult(null);
+    startBulkTransition(async () => {
+      const result = await bulkCreateEmployeesAction(data);
+      setBulkResult(result);
+      if (result.successCount > 0) {
+        form.reset();
+        router.refresh();
+      }
+    });
+  }
+
   const [clientError, setClientError] = useState<string | null>(null);
   const [formValues, setFormValues] = useState({
     employeeId: "",
@@ -126,7 +163,7 @@ export function EmployeeManagement({
           <table className="w-full min-w-[520px]">
             <thead>
               <tr style={{ background: "var(--db-surface)" }}>
-                {["Employee ID", "Name", "Role", "Status"].map((col) => (
+                {["Employee ID", "Name", "Role", "Progress", "Status", ""].map((col) => (
                   <th
                     key={col}
                     className="px-6 py-3 text-left font-mono text-[0.58rem] uppercase tracking-[0.18em] font-semibold"
@@ -142,7 +179,7 @@ export function EmployeeManagement({
                 employees.map((employee, i) => (
                   <tr
                     key={employee._id}
-                    className="transition"
+                    className="transition-colors hover:bg-[var(--db-surface)]"
                     style={{
                       borderTop: i === 0 ? "none" : "1px solid var(--db-border)",
                     }}
@@ -178,27 +215,60 @@ export function EmployeeManagement({
                       </span>
                     </td>
                     <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="h-1.5 w-20 rounded-full overflow-hidden"
+                          style={{ background: "var(--db-border)" }}
+                        >
+                          <div
+                            className="h-full rounded-full"
+                            style={{
+                              width: `${employee.progressPercentage}%`,
+                              background: "var(--rellax-sage)",
+                            }}
+                          />
+                        </div>
+                        <span
+                          className="font-mono text-xs tabular-nums"
+                          style={{ color: "var(--db-text-muted)" }}
+                        >
+                          {employee.progressPercentage}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[0.62rem] font-semibold text-emerald-600">
                         <span className="size-1.5 rounded-full bg-emerald-500" />
                         {employee.status}
                       </span>
                     </td>
+                    <td className="px-6 py-4">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(employee._id)}
+                        disabled={deletingId === employee._id || isPending}
+                        className="rounded-full px-3 py-1 text-xs font-medium text-red-500 transition hover:bg-red-500/10 disabled:opacity-40"
+                        style={{ border: "1px solid rgba(220,38,38,0.25)" }}
+                      >
+                        {deletingId === employee._id ? "Removing…" : "Delete"}
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={4} className="px-6 py-14 text-center">
+                  <td colSpan={6} className="px-6 py-14 text-center">
                     <p
                       className="text-sm font-medium"
                       style={{ color: "var(--db-text-soft)" }}
                     >
-                      No employees added yet.
+                      No employees yet.
                     </p>
                     <p
                       className="mt-1 text-xs"
                       style={{ color: "var(--db-text-muted)" }}
                     >
-                      Use the form to create the first employee credential.
+                      Create your first employee credential using the form.
                     </p>
                   </td>
                 </tr>
@@ -217,6 +287,7 @@ export function EmployeeManagement({
           boxShadow: "var(--db-shadow-sm)",
         }}
       >
+        {/* Card header */}
         <div
           className="px-6 py-5"
           style={{ borderBottom: "1px solid var(--db-border)" }}
@@ -235,7 +306,26 @@ export function EmployeeManagement({
           </h2>
         </div>
 
-        <form
+        {/* Tab switcher */}
+        <div className="flex gap-1 px-6 pt-4">
+          {(["single", "bulk"] as const).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => setActiveTab(tab)}
+              className="rounded-full px-4 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.16em] font-semibold transition"
+              style={{
+                background: activeTab === tab ? "var(--rellax-sage)" : "var(--db-surface)",
+                color: activeTab === tab ? "#fff" : "var(--db-text-muted)",
+                border: activeTab === tab ? "1px solid transparent" : "1px solid var(--db-border)",
+              }}
+            >
+              {tab === "single" ? "Single" : "Bulk CSV"}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === "single" && <form
           action={formAction}
           className="space-y-3 p-6"
           onSubmit={(event) => {
@@ -368,12 +458,94 @@ export function EmployeeManagement({
 
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold text-white transition hover:opacity-85"
+            disabled={createPending}
+            className="inline-flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold text-white transition hover:opacity-85 disabled:opacity-60"
             style={{ background: "var(--rellax-sage)" }}
           >
-            Create employee access
+            {createPending ? "Creating…" : "Create employee access"}
           </button>
-        </form>
+        </form>}
+
+        {activeTab === "bulk" && (
+          <form onSubmit={handleBulkUpload} className="space-y-4 p-6">
+            {/* Format hint */}
+            <div
+              className="rounded-[0.75rem] px-4 py-3 text-xs leading-6 space-y-1"
+              style={{
+                background: "var(--db-surface)",
+                border: "1px solid var(--db-border)",
+                color: "var(--db-text-soft)",
+              }}
+            >
+              <p className="font-semibold" style={{ color: "var(--db-text)" }}>
+                Expected columns (no header required):
+              </p>
+              <p className="font-mono" style={{ color: "var(--db-text-muted)" }}>
+                employeeId, fullName, roleTitle, email
+              </p>
+            </div>
+
+            {/* File input */}
+            <div>
+              <label
+                className="block text-xs mb-1.5 font-medium"
+                style={{ color: "var(--db-text-muted)" }}
+              >
+                Upload file{" "}
+                <span style={{ color: "var(--db-text-soft)" }}>(.csv or .xlsx)</span>
+              </label>
+              <input
+                type="file"
+                name="file"
+                accept=".csv,.xlsx"
+                required
+                className="block w-full text-xs cursor-pointer"
+                style={{ color: "var(--db-text-soft)" }}
+              />
+            </div>
+
+            {/* Result feedback */}
+            {bulkResult && (
+              <div className="space-y-2">
+                {bulkResult.successCount > 0 && (
+                  <p className="rounded-[0.75rem] border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-xs text-emerald-600">
+                    {bulkResult.successCount} employee{bulkResult.successCount !== 1 ? "s" : ""} created
+                    {bulkResult.failedCount > 0 ? `, ${bulkResult.failedCount} failed` : " successfully"}.
+                  </p>
+                )}
+                {bulkResult.successCount === 0 && bulkResult.failedCount > 0 && (
+                  <p className="rounded-[0.75rem] border border-red-400/30 bg-red-500/10 px-4 py-3 text-xs text-red-500">
+                    All {bulkResult.failedCount} row{bulkResult.failedCount !== 1 ? "s" : ""} failed.
+                  </p>
+                )}
+                {bulkResult.errors.length > 0 && (
+                  <div
+                    className="rounded-[0.75rem] px-4 py-3 space-y-1"
+                    style={{
+                      background: "var(--db-surface)",
+                      border: "1px solid var(--db-border)",
+                    }}
+                  >
+                    {bulkResult.errors.map((e, i) => (
+                      <p key={i} className="font-mono text-[0.68rem]" style={{ color: "var(--db-text-muted)" }}>
+                        Row {e.row}{e.employeeId ? ` (${e.employeeId})` : ""}: {e.error}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isBulkPending}
+              className="inline-flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold text-white transition hover:opacity-85 disabled:opacity-60"
+              style={{ background: "var(--rellax-sage)" }}
+            >
+              {isBulkPending ? "Uploading…" : "Upload employees"}
+            </button>
+          </form>
+        )}
       </div>
     </section>
   );

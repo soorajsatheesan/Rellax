@@ -3,8 +3,10 @@
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { WorkOS } from "@workos-inc/node";
 import { revalidatePath } from "next/cache";
+import * as XLSX from "xlsx";
 
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 import { createAuthenticatedConvexClient } from "@/lib/convex-server";
 
 export type EmployeeActionState = {
@@ -83,6 +85,13 @@ export async function createEmployeeAction(
     return { error: "Complete company setup before creating employee accounts." };
   }
 
+  const duplicate = workspace.employees.some(
+    (e) => e.email.toLowerCase() === email,
+  );
+  if (duplicate) {
+    return { error: "An employee with that email already exists." };
+  }
+
   let createdUserId: string | null = null;
 
   try {
@@ -116,22 +125,19 @@ export async function createEmployeeAction(
 
     const message = error instanceof Error ? error.message.toLowerCase() : "";
 
-    if (message.includes("external") || message.includes("employee id")) {
+    if (message.includes("already") || message.includes("exists")) {
+      return { error: "An employee with that email or ID already exists." };
+    }
+
+    if (message.includes("external") || message.includes("externalid")) {
       return { error: "That employee ID is already in use." };
     }
 
-    if (message.includes("already") || message.includes("exists")) {
-      return { error: "That employee email is already in use." };
-    }
-
     if (message.includes("password")) {
-      return { error: "Unable to generate a password that satisfies the current policy." };
+      return { error: "Failed to generate a valid password. Please try again." };
     }
 
-    return {
-      error:
-        error instanceof Error ? error.message : "Unable to create the employee account right now.",
-    };
+    return { error: "Failed to create employee. Please try again." };
   }
 
   revalidatePath("/dashboard");
@@ -143,4 +149,155 @@ export async function createEmployeeAction(
       password,
     },
   };
+}
+
+export type BulkUploadResult = {
+  successCount: number;
+  failedCount: number;
+  errors: { row: number; employeeId?: string; error: string }[];
+};
+
+export async function bulkCreateEmployeesAction(
+  formData: FormData,
+): Promise<BulkUploadResult> {
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) {
+    return { successCount: 0, failedCount: 0, errors: [{ row: 0, error: "No file provided." }] };
+  }
+
+  // Parse the file into rows using SheetJS (handles both CSV and xlsx)
+  const buffer = await file.arrayBuffer();
+  const workbook = XLSX.read(buffer, { type: "array" });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rawRows: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "" });
+
+  // Drop header row if first cell looks like a column name
+  const firstCell = String(rawRows[0]?.[0] ?? "").toLowerCase();
+  const dataRows = firstCell === "employeeid" || firstCell === "employee id" || firstCell === "employee_id"
+    ? rawRows.slice(1)
+    : rawRows;
+
+  const nonEmptyRows = dataRows.filter((row) => row.some((cell) => String(cell).trim() !== ""));
+
+  if (nonEmptyRows.length === 0) {
+    return { successCount: 0, failedCount: 0, errors: [{ row: 0, error: "File contains no data rows." }] };
+  }
+
+  // Auth + workspace fetched once for the whole batch
+  const auth = await withAuth({ ensureSignedIn: true });
+  const convex = createAuthenticatedConvexClient(auth.accessToken);
+  const workspace = await convex.query(api.employers.getCurrentEmployerWorkspace, {});
+
+  if (!workspace?.employer) {
+    return {
+      successCount: 0,
+      failedCount: nonEmptyRows.length,
+      errors: [{ row: 0, error: "Complete company setup before creating employee accounts." }],
+    };
+  }
+
+  const existingEmails = new Set(workspace.employees.map((e) => e.email.toLowerCase()));
+
+  const results: BulkUploadResult = { successCount: 0, failedCount: 0, errors: [] };
+
+  for (let i = 0; i < nonEmptyRows.length; i++) {
+    const rowNum = i + 1;
+    const [col0, col1, col2, col3] = nonEmptyRows[i];
+    const employeeId = String(col0 ?? "").trim();
+    const fullName   = String(col1 ?? "").trim();
+    const roleTitle  = String(col2 ?? "").trim();
+    const email      = String(col3 ?? "").trim().toLowerCase();
+
+    if (!employeeId || !fullName || !roleTitle || !email) {
+      results.failedCount++;
+      results.errors.push({ row: rowNum, employeeId, error: "Missing required field(s)." });
+      continue;
+    }
+
+    if (!isValidEmployeeId(employeeId)) {
+      results.failedCount++;
+      results.errors.push({ row: rowNum, employeeId, error: "Invalid employee ID format." });
+      continue;
+    }
+
+    if (!isValidEmail(email)) {
+      results.failedCount++;
+      results.errors.push({ row: rowNum, employeeId, error: "Invalid email address." });
+      continue;
+    }
+
+    if (existingEmails.has(email)) {
+      results.failedCount++;
+      results.errors.push({ row: rowNum, employeeId, error: "Email already exists." });
+      continue;
+    }
+
+    const password = generateStrongPassword();
+    let createdUserId: string | null = null;
+
+    try {
+      const user = await workos.userManagement.createUser({
+        email,
+        password,
+        emailVerified: true,
+        externalId: employeeId,
+        metadata: {
+          accountType: "employee",
+          employeeId,
+          employerCompanyName: workspace.employer.companyName,
+          employerOwnerWorkOSUserId: auth.user.id,
+          fullName,
+          roleTitle,
+        },
+      });
+      createdUserId = user.id;
+
+      await convex.mutation(api.employees.createEmployeeForCurrentEmployer, {
+        employeeId,
+        workOSUserId: user.id,
+        email,
+        fullName,
+        roleTitle,
+      });
+
+      existingEmails.add(email); // prevent duplicates within the same batch
+      results.successCount++;
+    } catch (error) {
+      if (createdUserId) {
+        await workos.userManagement.deleteUser(createdUserId).catch(() => null);
+      }
+
+      const message = error instanceof Error ? error.message.toLowerCase() : "";
+      let reason = "Failed to create employee.";
+      if (message.includes("already") || message.includes("exists")) reason = "Email or ID already in use.";
+      else if (message.includes("external") || message.includes("externalid")) reason = "Employee ID already in use.";
+
+      results.failedCount++;
+      results.errors.push({ row: rowNum, employeeId, error: reason });
+    }
+  }
+
+  if (results.successCount > 0) {
+    revalidatePath("/dashboard");
+  }
+
+  return results;
+}
+
+export async function deleteEmployeeAction(
+  convexEmployeeId: string,
+): Promise<{ success?: boolean; error?: string }> {
+  const auth = await withAuth({ ensureSignedIn: true });
+  const convex = createAuthenticatedConvexClient(auth.accessToken);
+
+  try {
+    await convex.mutation(api.employees.deleteEmployee, {
+      employeeId: convexEmployeeId as Id<"employees">,
+    });
+
+    revalidatePath("/dashboard");
+    return { success: true };
+  } catch {
+    return { error: "Unable to delete employee." };
+  }
 }

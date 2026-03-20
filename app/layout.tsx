@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 
 import { SplashProvider } from "@/components/splash";
 
@@ -14,14 +15,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full" data-scroll-behavior="smooth">
+    <html lang="en" className="h-full" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        {/* Restore saved theme before first paint — prevents flash */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('rellax-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
-          }}
-        />
+        <Script id="theme-init" strategy="beforeInteractive">{`(function(){try{var t=localStorage.getItem('rellax-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`}</Script>
       </head>
       <body className="min-h-full flex flex-col">
         <SplashProvider>{children}</SplashProvider>

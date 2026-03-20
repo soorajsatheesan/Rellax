@@ -5,6 +5,11 @@ import { api } from "@/convex/_generated/api";
 import { deleteAccountAction } from "@/components/dashboard/account-actions";
 import { EmployeeManagement } from "@/components/dashboard/employee-management";
 import { EmployerSidebar } from "@/components/dashboard/employer-sidebar";
+import {
+  deleteRoleRequirementAction,
+  upsertRoleRequirementAction,
+} from "@/components/dashboard/role-requirement-actions";
+import { RoleRequirements } from "@/components/dashboard/role-requirements";
 import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 import { createAuthenticatedConvexClient } from "@/lib/convex-server";
 
@@ -29,6 +34,20 @@ export default async function DashboardPage() {
   }
 
   const { employer, employees } = workspace;
+
+  const roleRequirements = await convex.query(
+    api.roleRequirements.getRoleRequirementsForEmployer,
+    {},
+  );
+
+  const progressRecords = await convex.query(
+    api.employeeProgress.getEmployeeProgressByEmployer,
+    {},
+  );
+
+  const progressMap = new Map(
+    progressRecords.map((p) => [p.employeeId, p.progressPercentage]),
+  );
 
   const activeCount = employees.filter((e) => e.status === "active").length;
   const uniqueRoles = new Set(employees.map((e) => e.roleTitle).filter(Boolean)).size;
@@ -143,8 +162,18 @@ export default async function DashboardPage() {
               fullName: employee.fullName,
               roleTitle: employee.roleTitle,
               status: employee.status,
+              progressPercentage: progressMap.get(employee._id) ?? 0,
             }))}
           />
+
+          {/* Role requirements */}
+          <div className="mb-8">
+            <RoleRequirements
+              requirements={roleRequirements}
+              upsertAction={upsertRoleRequirementAction}
+              deleteAction={deleteRoleRequirementAction}
+            />
+          </div>
 
           {/* Danger zone */}
           <div

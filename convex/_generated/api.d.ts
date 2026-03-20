@@ -8,8 +8,10 @@
  * @module
  */
 
+import type * as employeeProgress from "../employeeProgress.js";
 import type * as employees from "../employees.js";
 import type * as employers from "../employers.js";
+import type * as roleRequirements from "../roleRequirements.js";
 
 import type {
   ApiFromModules,
@@ -18,8 +20,10 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  employeeProgress: typeof employeeProgress;
   employees: typeof employees;
   employers: typeof employers;
+  roleRequirements: typeof roleRequirements;
 }>;
 
 /**

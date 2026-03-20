@@ -197,35 +197,37 @@ export async function signInEmployeeAction(
   _prevState: AuthActionState,
   formData: FormData,
 ): Promise<AuthActionState> {
-  const employeeId = readString(formData, "employeeId");
+  const email = readString(formData, "email").toLowerCase();
   const password = readString(formData, "password");
 
-  if (!employeeId || !password) {
-    return { error: "Enter your employee ID and password." };
+  if (!email || !password) {
+    return { error: "Enter your work email and password." };
+  }
+
+  if (!isValidEmail(email)) {
+    return { error: "Enter a valid email address." };
   }
 
   try {
-    const employeeUser = await workos.userManagement.getUserByExternalId(employeeId);
-
     const authResponse = await workos.userManagement.authenticateWithPassword({
       clientId: process.env.WORKOS_CLIENT_ID!,
-      email: employeeUser.email,
+      email,
       password,
     });
+
+    console.log("LOGIN user.id:", authResponse.user.id);
 
     const convex = createAuthenticatedConvexClient(authResponse.accessToken);
     const employeeProfile = await convex.query(api.employees.getCurrentEmployeeProfile, {});
 
+    console.log("EMPLOYEE PROFILE:", JSON.stringify(employeeProfile, null, 2));
+
     if (!employeeProfile?.employee) {
-      return { error: "This employee account has not been assigned by an employer yet." };
+      return { error: "No employee account found for this email. Contact your employer." };
     }
 
     await saveSession(authResponse, getAppUrl());
   } catch (error) {
-    if (error instanceof Error && error.message.toLowerCase().includes("not found")) {
-      return { error: "Invalid employee ID or password." };
-    }
-
     return { error: getWorkOSErrorMessage(error, "sign-in") };
   }
 
