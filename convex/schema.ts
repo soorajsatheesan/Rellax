@@ -38,4 +38,11 @@ export default defineSchema({
     .index("by_employee_id", ["employeeId"])
     .index("by_workos_user_id", ["workOSUserId"])
     .index("by_employer_owner_id", ["employerWorkOSUserId"]),
+  role_requirements: defineTable({
+    employerId: v.id("employers"),
+    roleTitle: v.string(),
+    requiredSkills: v.array(v.string()),
+    jdText: v.optional(v.string()),
+    updatedAt: v.number(),
+  }).index("by_employer_role_title", ["employerId", "roleTitle"]),
 });

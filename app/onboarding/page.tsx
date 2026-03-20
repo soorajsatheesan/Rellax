@@ -13,6 +13,7 @@ export default async function OnboardingPage() {
   }
 
   const convex = createAuthenticatedConvexClient(auth.accessToken);
+
   const employer = await convex.query(api.employers.getCurrentEmployer, {});
   const employeeProfile = await convex.query(api.employees.getCurrentEmployeeProfile, {});
 

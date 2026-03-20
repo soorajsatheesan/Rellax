@@ -222,7 +222,23 @@ export async function signInEmployeeAction(
 
     await saveSession(authResponse, getAppUrl());
   } catch (error) {
-    if (error instanceof Error && error.message.toLowerCase().includes("not found")) {
+    const message = error instanceof Error ? error.message.toLowerCase() : "";
+
+    // WorkOS password auth errors for employees are expected to map to
+    // a safe "invalid credentials" UX (not internal provider details).
+    if (
+      message.includes("not found") ||
+      message.includes("externalid") ||
+      message.includes("employee id") ||
+      message.includes("invalid_grant") ||
+      message.includes("invalid email or password") ||
+      message.includes("invalid password") ||
+      message.includes("wrong password") ||
+      message.includes("incorrect password") ||
+      message.includes("password") ||
+      message.includes("credential") ||
+      message.includes("authentication")
+    ) {
       return { error: "Invalid employee ID or password." };
     }
 

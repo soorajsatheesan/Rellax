@@ -17,6 +17,7 @@ export default authkitMiddleware({
       "/login",
       "/signup",
       "/employee/dashboard",
+      "/employee/change-password",
       "/verify-email",
       "/sign-in",
       "/sign-up",

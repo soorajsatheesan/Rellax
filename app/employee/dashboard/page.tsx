@@ -1,4 +1,5 @@
 import { withAuth } from "@workos-inc/authkit-nextjs";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { api } from "@/convex/_generated/api";
@@ -114,6 +115,18 @@ export default async function EmployeeDashboardPage() {
               {initials}
             </div>
             <ThemeToggle />
+            <Link
+              href="/employee/change-password"
+              className="rounded-full px-4 py-1.5 text-xs font-medium transition"
+              style={{
+                border: "1px solid var(--db-border)",
+                color: "var(--db-text-soft)",
+                background: "transparent",
+                textDecoration: "none",
+              }}
+            >
+              Change password
+            </Link>
             <form action={signOutEmployeeAction}>
               <button
                 type="submit"
