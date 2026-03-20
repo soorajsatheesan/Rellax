@@ -1,0 +1,95 @@
+.heroSection {
+  position: relative;
+  overflow: hidden;
+  background: #080809;
+}
+
+.heroBackground {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1800&auto=format&fit=crop&q=80");
+  background-position: center;
+  background-size: cover;
+}
+
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(110deg, rgba(8, 8, 9, 0.76) 0%, rgba(8, 8, 9, 0.52) 46%, rgba(8, 8, 9, 0.18) 100%),
+    linear-gradient(180deg, rgba(8, 8, 9, 0.1) 55%, rgba(255, 255, 255, 0.2) 100%);
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(220px, 340px));
+  gap: 2px;
+  background: var(--rellax-surface-3);
+}
+
+.photoCell {
+  position: relative;
+  overflow: hidden;
+  background: var(--rellax-surface-2);
+  animation: cellReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.photoCell:nth-child(1) { animation-delay: 0.05s; }
+.photoCell:nth-child(2) { animation-delay: 0.15s; }
+.photoCell:nth-child(3) { animation-delay: 0.22s; }
+.photoCell:nth-child(4) { animation-delay: 0.30s; }
+.photoCell:nth-child(5) { animation-delay: 0.38s; }
+
+@keyframes cellReveal {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.photoLarge {
+  grid-row: span 2;
+}
+
+.photoImage {
+  object-fit: cover;
+  transition: transform 6s ease, filter 0.3s ease;
+  filter: saturate(0.8);
+}
+
+.photoCell:hover .photoImage {
+  transform: scale(1.04);
+  filter: saturate(1);
+}
+
+.photoOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.25rem;
+  background: linear-gradient(180deg, transparent 40%, rgba(8, 8, 9, 0.55) 100%);
+}
+
+.photoLabel {
+  font-size: 0.82rem;
+  color: white;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 900px) {
+  .photoGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 240px);
+  }
+
+  .photoLarge {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .photoGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 240px);
+  }
+}

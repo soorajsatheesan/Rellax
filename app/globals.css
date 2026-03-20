@@ -1,6 +1,20 @@
 @import "tailwindcss";
 
 :root {
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", "Cascadia Mono", "Fira Code", Consolas, monospace;
+  --rellax-ink: #080809;
+  --rellax-ink-2: #16161a;
+  --rellax-ink-soft: #5c5c6b;
+  --rellax-ink-muted: #9898a8;
+  --rellax-surface: #f7f6f3;
+  --rellax-surface-2: #f0ede6;
+  --rellax-surface-3: #e5e1d8;
+  --rellax-sage: #3d6b4f;
+  --rellax-gold: #9c7a3c;
+  --rellax-gold-muted: #faf3e4;
+  --rellax-slate: #2d4f72;
+  --rellax-line: rgba(8, 8, 9, 0.08);
   --bg:      #FFFFFF;
   --surface: #F7F7F5;
   --black:   #0F0F0F;
@@ -16,9 +30,19 @@
   --color-foreground: var(--black);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html  { scroll-behavior: smooth; }
-body  { background: var(--bg); color: var(--black); overflow-x: hidden; }
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html  { scroll-behavior: smooth; }
+  body  { background: var(--bg); color: var(--black); overflow-x: hidden; }
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
 
 /* ── buttons ──────────────────────────────────────────────── */
 .btn {
@@ -104,3 +128,90 @@ body  { background: var(--bg); color: var(--black); overflow-x: hidden; }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--black); }
+
+/* ── dashboard semantic tokens (light) ────────────────────── */
+:root {
+  --db-bg:            #f0efe9;
+  --db-card:          #ffffff;
+  --db-sidebar:       #ffffff;
+  --db-header:        #ffffff;
+  --db-surface:       #eeecea;
+  --db-border:        rgba(8, 8, 9, 0.10);
+  --db-text:          #080809;
+  --db-text-soft:     #4a4a58;
+  --db-text-muted:    #6e6e82;
+  --db-input:         #f4f3f0;
+  --db-input-border:  rgba(8, 8, 9, 0.14);
+  --db-nav-hover:     #f0efe9;
+  --db-nav-active-bg: #080809;
+  --db-nav-active-tx: #ffffff;
+  --db-shadow-sm:     0 2px 8px rgba(8,8,9,0.06);
+  --db-shadow-md:     0 8px 32px rgba(8,8,9,0.08);
+  --db-shadow-lg:     0 16px 52px rgba(8,8,9,0.10);
+}
+
+/* ── dashboard dark token values ───────────────────────────── */
+/* Applied when: system preference is dark (and not overridden to light) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --db-bg:            #0c0c10;
+    --db-card:          #15151b;
+    --db-sidebar:       #101016;
+    --db-header:        #101016;
+    --db-surface:       #1c1c24;
+    --db-border:        rgba(255, 255, 255, 0.08);
+    --db-text:          #ecebf0;
+    --db-text-soft:     #8888a8;
+    --db-text-muted:    #54546a;
+    --db-input:         #1c1c24;
+    --db-input-border:  rgba(255, 255, 255, 0.10);
+    --db-nav-hover:     #1c1c24;
+    --db-nav-active-bg: var(--rellax-sage);
+    --db-nav-active-tx: #ffffff;
+    --db-shadow-sm:     0 2px 8px rgba(0,0,0,0.30);
+    --db-shadow-md:     0 8px 32px rgba(0,0,0,0.40);
+    --db-shadow-lg:     0 16px 52px rgba(0,0,0,0.50);
+  }
+}
+
+/* Applied when: user manually chose dark (even if system is light) */
+:root[data-theme="dark"] {
+  --db-bg:            #0c0c10;
+  --db-card:          #15151b;
+  --db-sidebar:       #101016;
+  --db-header:        #101016;
+  --db-surface:       #1c1c24;
+  --db-border:        rgba(255, 255, 255, 0.08);
+  --db-text:          #ecebf0;
+  --db-text-soft:     #8888a8;
+  --db-text-muted:    #54546a;
+  --db-input:         #1c1c24;
+  --db-input-border:  rgba(255, 255, 255, 0.10);
+  --db-nav-hover:     #1c1c24;
+  --db-nav-active-bg: var(--rellax-sage);
+  --db-nav-active-tx: #ffffff;
+  --db-shadow-sm:     0 2px 8px rgba(0,0,0,0.30);
+  --db-shadow-md:     0 8px 32px rgba(0,0,0,0.40);
+  --db-shadow-lg:     0 16px 52px rgba(0,0,0,0.50);
+}
+
+/* Applied when: user manually chose light (even if system is dark) */
+:root[data-theme="light"] {
+  --db-bg:            #f0efe9;
+  --db-card:          #ffffff;
+  --db-sidebar:       #ffffff;
+  --db-header:        #ffffff;
+  --db-surface:       #eeecea;
+  --db-border:        rgba(8, 8, 9, 0.10);
+  --db-text:          #080809;
+  --db-text-soft:     #4a4a58;
+  --db-text-muted:    #6e6e82;
+  --db-input:         #f4f3f0;
+  --db-input-border:  rgba(8, 8, 9, 0.14);
+  --db-nav-hover:     #f0efe9;
+  --db-nav-active-bg: #080809;
+  --db-nav-active-tx: #ffffff;
+  --db-shadow-sm:     0 2px 8px rgba(8,8,9,0.06);
+  --db-shadow-md:     0 8px 32px rgba(8,8,9,0.08);
+  --db-shadow-lg:     0 16px 52px rgba(8,8,9,0.10);
+}
