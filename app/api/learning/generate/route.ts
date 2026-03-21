@@ -1,4 +1,4 @@
-import { withAuth } from "@workos-inc/authkit-nextjs";
+import { refreshSession } from "@workos-inc/authkit-nextjs";
 
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
@@ -20,9 +20,22 @@ function toMessage(error: unknown, fallback: string) {
   return error instanceof Error ? error.message : fallback;
 }
 
-export async function POST(request: Request) {
-  const auth = await withAuth();
+async function getFreshConvexClient() {
+  const auth = await refreshSession();
+
   if (!auth.user || !auth.accessToken) {
+    throw new Error("Unauthorized");
+  }
+
+  return createAuthenticatedConvexClient(auth.accessToken);
+}
+
+export async function POST(request: Request) {
+  let convex;
+
+  try {
+    convex = await getFreshConvexClient();
+  } catch {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -31,7 +44,6 @@ export async function POST(request: Request) {
     return Response.json({ error: "Missing pathId" }, { status: 400 });
   }
 
-  const convex = createAuthenticatedConvexClient(auth.accessToken);
   const context = await convex.query(api.employeeLearning.getGenerationContext, { pathId });
 
   if (!context?.resume) {
@@ -85,6 +97,7 @@ export async function POST(request: Request) {
       personalizationNote = notes.personalizationNote;
       videoStyle = notes.videoStyle;
 
+      convex = await getFreshConvexClient();
       await convex.mutation(api.employeeLearning.saveModuleNotes, {
         moduleId: claimedModuleId,
         notesContent,
@@ -126,6 +139,7 @@ export async function POST(request: Request) {
       transcriptUrl = builtModule.assets.transcriptUrl;
       artifactManifestUrl = builtModule.assets.artifactManifestUrl;
 
+      convex = await getFreshConvexClient();
       await convex.mutation(api.employeeLearning.saveModuleVideo, {
         moduleId: claimedModuleId,
         slides,
@@ -139,6 +153,7 @@ export async function POST(request: Request) {
 
     if (moduleRecord.qaStatus !== "ready") {
       const qaPairs = await generateModuleQAPairs(generationInput, roadmapModule, notesContent);
+      convex = await getFreshConvexClient();
       await convex.mutation(api.employeeLearning.saveModuleQa, {
         moduleId: claimedModuleId,
         qaPairs,
@@ -164,12 +179,18 @@ export async function POST(request: Request) {
         ? "video"
         : "qa";
 
-    await convex.mutation(api.employeeLearning.failModuleGeneration, {
-      pathId,
-      moduleId: claimedModuleId,
-      stage,
-      error: message,
-    });
+    try {
+      convex = await getFreshConvexClient();
+      await convex.mutation(api.employeeLearning.failModuleGeneration, {
+        pathId,
+        moduleId: claimedModuleId,
+        stage,
+        error: message,
+      });
+    } catch {
+      // Keep returning the original generation error even if the session can no longer
+      // be refreshed to persist failure state.
+    }
 
     return Response.json({ error: message }, { status: 500 });
   }
