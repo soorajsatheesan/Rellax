@@ -77,6 +77,7 @@ export const createEmployeeForCurrentEmployer = mutation({
     workOSUserId: v.string(),
     email: v.string(),
     fullName: v.string(),
+    roleId: v.optional(v.string()),
     roleTitle: v.string(),
   },
   handler: async (ctx, args) => {
@@ -101,6 +102,7 @@ export const createEmployeeForCurrentEmployer = mutation({
     const now = Date.now();
     const email = args.email.trim().toLowerCase();
     const fullName = args.fullName.trim();
+    const roleId = args.roleId?.trim();
     const roleTitle = args.roleTitle.trim();
 
     if (!employeeId || !email || !fullName || !roleTitle) {
@@ -113,6 +115,7 @@ export const createEmployeeForCurrentEmployer = mutation({
         workOSUserId: args.workOSUserId,
         email,
         fullName,
+        roleId,
         roleTitle,
         updatedAt: now,
       });
@@ -127,6 +130,7 @@ export const createEmployeeForCurrentEmployer = mutation({
       workOSUserId: args.workOSUserId,
       email,
       fullName,
+      roleId,
       roleTitle,
       createdAt: now,
       updatedAt: now,

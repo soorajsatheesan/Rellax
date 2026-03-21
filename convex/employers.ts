@@ -75,6 +75,12 @@ export const getCurrentEmployerWorkspace = query({
 export const upsertCurrentEmployer = mutation({
   args: {
     companyName: v.string(),
+    companyLogoUrl: v.optional(v.string()),
+    companyWebsite: v.optional(v.string()),
+    industry: v.optional(v.string()),
+    companySize: v.optional(v.string()),
+    headquarters: v.optional(v.string()),
+    aboutCompany: v.optional(v.string()),
     ownerEmail: v.optional(v.string()),
     ownerName: v.optional(v.string()),
     ownerRole: v.optional(v.string()),
@@ -101,6 +107,12 @@ export const upsertCurrentEmployer = mutation({
       (typeof identity.email === "string" ? identity.email.toLowerCase() : "");
     const ownerName = args.ownerName?.trim();
     const ownerRole = args.ownerRole?.trim();
+    const companyLogoUrl = args.companyLogoUrl?.trim();
+    const companyWebsite = args.companyWebsite?.trim();
+    const industry = args.industry?.trim();
+    const companySize = args.companySize?.trim();
+    const headquarters = args.headquarters?.trim();
+    const aboutCompany = args.aboutCompany?.trim();
 
     const existingEmployer = await ctx.db
       .query("employers")
@@ -112,6 +124,12 @@ export const upsertCurrentEmployer = mutation({
     if (existingEmployer) {
       await ctx.db.patch(existingEmployer._id, {
         companyName,
+        companyLogoUrl: companyLogoUrl || existingEmployer.companyLogoUrl,
+        companyWebsite: companyWebsite || existingEmployer.companyWebsite,
+        industry: industry || existingEmployer.industry,
+        companySize: companySize || existingEmployer.companySize,
+        headquarters: headquarters || existingEmployer.headquarters,
+        aboutCompany: aboutCompany || existingEmployer.aboutCompany,
         ownerEmail,
         ownerName: ownerName || existingEmployer.ownerName,
         ownerRole: ownerRole || existingEmployer.ownerRole,
@@ -125,6 +143,12 @@ export const upsertCurrentEmployer = mutation({
 
     return await ctx.db.insert("employers", {
       companyName,
+      companyLogoUrl,
+      companyWebsite,
+      industry,
+      companySize,
+      headquarters,
+      aboutCompany,
       ownerEmail,
       ownerName,
       ownerRole,

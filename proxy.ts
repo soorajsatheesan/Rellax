@@ -34,7 +34,12 @@ export default authkitMiddleware({
   },
 });
 
-// Apply middleware to ALL routes
 export const config = {
-  matcher: ["/:path*"],
+  matcher: [
+    /*
+     * Skip Next.js internals and common static asset files so CSS/JS requests
+     * are never intercepted by auth middleware.
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map)$).*)",
+  ],
 };
