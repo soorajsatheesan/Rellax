@@ -2,7 +2,7 @@ import Link from "next/link";
 
 type BrandLogoProps = {
   href?: string;
-  tone?: "dark" | "light";
+  tone?: "dark" | "light" | "auto";
   className?: string;
 };
 
@@ -12,7 +12,13 @@ export function BrandLogo({
   className,
 }: BrandLogoProps) {
   const textColor =
-    tone === "light" ? "text-white" : "text-[var(--rellax-ink)]";
+    tone === "light"
+      ? "text-white"
+      : tone === "auto"
+      ? ""
+      : "text-[var(--rellax-ink)]";
+
+  const style = tone === "auto" ? { color: "var(--db-text)" } : undefined;
 
   return (
     <Link
@@ -24,7 +30,10 @@ export function BrandLogo({
         className={[
           "font-display text-[1.8rem] font-semibold leading-none tracking-[-0.06em]",
           textColor,
-        ].join(" ")}
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        style={style}
       >
         Rellax
       </span>

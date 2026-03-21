@@ -12,6 +12,13 @@ export type RoleRequirementRecord = {
   roleTitle: string;
   roleId?: string;
   requiredSkills: string[];
+  preferredSkills?: string[];
+  responsibilities?: string[];
+  qualifications?: string[];
+  toolsAndTechnologies?: string[];
+  roleSummary?: string;
+  seniority?: string;
+  sourceJdText?: string;
   jdText?: string;
   jdFileUrl?: string;
   updatedAt: number;
@@ -32,6 +39,15 @@ type Props = {
 };
 
 const initialState: ActionState = {};
+
+function createRoleId(roleTitle: string) {
+  return roleTitle
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 64);
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -54,7 +70,6 @@ export function RoleRequirements({
   const [roleId, setRoleId] = useState("");
   const [skillsInput, setSkillsInput] = useState("");
   const [jdText, setJdText] = useState("");
-  const [jdFileName, setJdFileName] = useState("");
 
   useEffect(() => {
     if (upsertState.success || deleteState.success) {
@@ -67,8 +82,7 @@ export function RoleRequirements({
     setRoleTitle(req.roleTitle);
     setRoleId(req.roleId ?? "");
     setSkillsInput(req.requiredSkills.join(", "));
-    setJdText(req.jdText ?? "");
-    setJdFileName("");
+    setJdText(req.sourceJdText ?? req.jdText ?? "");
   }
 
   function resetForm() {
@@ -77,7 +91,6 @@ export function RoleRequirements({
     setRoleId("");
     setSkillsInput("");
     setJdText("");
-    setJdFileName("");
   }
 
   const inputStyle = {
@@ -97,7 +110,7 @@ export function RoleRequirements({
       style={{
         background: "var(--db-card)",
         border: "1px solid var(--db-border)",
-        boxShadow: "var(--db-shadow-sm)",
+        boxShadow: "var(--db-shadow-md)",
       }}
     >
       {/* Header */}
@@ -107,13 +120,13 @@ export function RoleRequirements({
       >
         <div>
           <p
-            className="font-mono text-[0.62rem] uppercase tracking-[0.2em] font-semibold"
+            className="font-mono text-[0.6rem] uppercase tracking-[0.22em] font-semibold"
             style={{ color: "var(--db-text-muted)" }}
           >
             Role requirements
           </p>
           <h2
-            className="mt-0.5 text-base font-semibold"
+            className="mt-1 text-base font-semibold"
             style={{ color: "var(--db-text)" }}
           >
             Required skills by role
@@ -137,7 +150,7 @@ export function RoleRequirements({
           {requirements.map((req, i) => (
             <li
               key={req._id}
-              className="flex items-start justify-between gap-4 px-6 py-4"
+              className="flex items-start justify-between gap-4 px-6 py-4 transition-colors hover:bg-[var(--db-surface)]"
               style={{
                 borderTop: i === 0 ? "none" : "1px solid var(--db-border)",
               }}
@@ -167,7 +180,24 @@ export function RoleRequirements({
                       JD attached
                     </span>
                   )}
+                  {req.seniority ? (
+                    <span
+                      className="font-mono text-[0.58rem] uppercase tracking-[0.14em] px-2 py-0.5 rounded-full"
+                      style={{
+                        background: "var(--db-surface)",
+                        border: "1px solid var(--db-border)",
+                        color: "var(--db-text-muted)",
+                      }}
+                    >
+                      {req.seniority}
+                    </span>
+                  ) : null}
                 </div>
+                {req.roleSummary ? (
+                  <p className="mt-2 text-xs leading-6" style={{ color: "var(--db-text-soft)" }}>
+                    {req.roleSummary}
+                  </p>
+                ) : null}
                 <div className="mt-1.5 flex flex-wrap gap-1.5">
                   {req.requiredSkills.map((skill) => (
                     <span
@@ -188,11 +218,11 @@ export function RoleRequirements({
                 <button
                   type="button"
                   onClick={() => startEdit(req)}
-                  className="rounded-full px-3 py-1 text-xs font-medium transition"
+                  className="db-nav-btn rounded-full px-3 py-1 text-xs font-medium"
                   style={{
                     border: "1px solid var(--db-border)",
                     color: "var(--db-text-soft)",
-                    background: "var(--db-card)",
+                    background: "var(--db-surface)",
                   }}
                 >
                   Edit
@@ -201,7 +231,7 @@ export function RoleRequirements({
                   <input type="hidden" name="id" value={req._id} />
                   <button
                     type="submit"
-                    className="rounded-full px-3 py-1 text-xs font-medium text-red-500 transition hover:bg-red-500/10"
+                    className="rounded-full px-3 py-1 text-xs font-medium text-red-500 transition hover:bg-red-500/10 active:opacity-75"
                     style={{ border: "1px solid rgba(220,38,38,0.25)" }}
                   >
                     Delete
@@ -235,17 +265,20 @@ export function RoleRequirements({
           name="roleTitle"
           type="text"
           required
-          placeholder="Role title  (e.g. frontend engineer)"
+          placeholder="Role title  (kept exactly as entered by the employer)"
           value={roleTitle}
-          onChange={(e) => setRoleTitle(e.target.value)}
+          onChange={(e) => {
+            const nextTitle = e.target.value;
+            setRoleTitle(nextTitle);
+            setRoleId(createRoleId(nextTitle));
+          }}
           style={inputStyle}
         />
 
         <input
           name="requiredSkills"
           type="text"
-          required
-          placeholder="Required skills  (comma-separated: React, TypeScript, …)"
+          placeholder="Required skills  (manual fallback if no JD is provided)"
           value={skillsInput}
           onChange={(e) => setSkillsInput(e.target.value)}
           style={inputStyle}
@@ -254,10 +287,10 @@ export function RoleRequirements({
         <input
           name="roleId"
           type="text"
-          placeholder="Role ID  (optional, e.g. ENG-001)"
+          placeholder="Role ID"
           value={roleId}
-          onChange={(e) => setRoleId(e.target.value)}
-          style={inputStyle}
+          readOnly
+          style={{ ...inputStyle, color: "var(--db-text-soft)" }}
         />
 
         <textarea
@@ -274,21 +307,25 @@ export function RoleRequirements({
             className="block text-xs mb-1.5"
             style={{ color: "var(--db-text-muted)" }}
           >
-            JD file  <span style={{ color: "var(--db-text-soft)" }}>(optional · .pdf, .doc, .docx)</span>
+            JD file  <span style={{ color: "var(--db-text-soft)" }}>(optional · .pdf, .txt, .md)</span>
           </label>
           <input
             type="file"
-            accept=".pdf,.doc,.docx"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) setJdFileName(file.name);
-            }}
+            name="jdFile"
+            accept=".pdf,.txt,.md"
             className="block w-full text-xs"
             style={{ color: "var(--db-text-soft)" }}
           />
-          {/* Store filename as jdFileUrl placeholder until full storage is wired */}
-          <input type="hidden" name="jdFileUrl" value={jdFileName} />
         </div>
+
+        <p className="rounded-[0.75rem] border px-4 py-3 text-xs leading-6" style={{
+          borderColor: "var(--db-border)",
+          background: "var(--db-surface)",
+          color: "var(--db-text-soft)",
+        }}>
+          When you paste a JD or upload a JD file, Rellax sends it for AI analysis and stores the
+          generated description, responsibilities, qualifications, and skills with the role.
+        </p>
 
         {upsertState.error && (
           <p className="rounded-[0.75rem] border border-red-400/30 bg-red-500/10 px-4 py-3 text-xs text-red-500">

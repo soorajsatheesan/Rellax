@@ -34,17 +34,108 @@ function isValidEmployeeId(employeeId: string) {
   return /^[a-zA-Z0-9_-]{4,32}$/.test(employeeId);
 }
 
+function getEmployeeMetadata(input: {
+  employeeId: string;
+  companyName: string;
+  employerOwnerWorkOSUserId: string;
+  fullName: string;
+  roleTitle: string;
+}) {
+  return {
+    accountType: "employee",
+    employeeId: input.employeeId,
+    employerCompanyName: input.companyName,
+    employerOwnerWorkOSUserId: input.employerOwnerWorkOSUserId,
+    fullName: input.fullName,
+    roleTitle: input.roleTitle,
+  };
+}
+
+function extractErrorText(error: unknown): string {
+  if (error instanceof Error && error.message.trim()) {
+    return error.message.trim();
+  }
+
+  if (error && typeof error === "object") {
+    const candidate = error as {
+      message?: unknown;
+      code?: unknown;
+      errors?: unknown;
+      rawData?: unknown;
+      cause?: unknown;
+    };
+
+    if (typeof candidate.message === "string" && candidate.message.trim()) {
+      return candidate.message.trim();
+    }
+
+    if (Array.isArray(candidate.errors) && candidate.errors.length > 0) {
+      const nested = candidate.errors
+        .map((entry) => extractErrorText(entry))
+        .find(Boolean);
+
+      if (nested) {
+        return nested;
+      }
+    }
+
+    if (candidate.rawData) {
+      const nested = extractErrorText(candidate.rawData);
+      if (nested) {
+        return nested;
+      }
+    }
+
+    if (candidate.cause) {
+      const nested = extractErrorText(candidate.cause);
+      if (nested) {
+        return nested;
+      }
+    }
+
+    if (typeof candidate.code === "string" && candidate.code.trim()) {
+      return candidate.code.trim();
+    }
+  }
+
+  return "";
+}
+
+async function findExistingWorkOSUser(email: string, employeeId: string) {
+  const [userByExternalId, usersByEmail] = await Promise.all([
+    workos.userManagement
+      .getUserByExternalId(employeeId)
+      .catch(() => null),
+    workos.userManagement.listUsers({ email }).catch(() => null),
+  ]);
+
+  const userByEmail = usersByEmail
+    ? (await usersByEmail.data)[0] ?? null
+    : null;
+
+  if (
+    userByExternalId &&
+    userByEmail &&
+    userByExternalId.id !== userByEmail.id
+  ) {
+    throw new Error("Employee email and ID belong to different existing users.");
+  }
+
+  return userByExternalId ?? userByEmail;
+}
+
 export async function createEmployeeAction(
   _prevState: EmployeeActionState,
   formData: FormData,
 ): Promise<EmployeeActionState> {
   const employeeId = readString(formData, "employeeId");
   const fullName = readString(formData, "fullName");
-  const roleTitle = readString(formData, "roleTitle");
+  const submittedRoleTitle = readString(formData, "roleTitle");
+  const submittedRoleId = readString(formData, "roleId");
   const email = readString(formData, "email").toLowerCase();
   const password = generateStrongPassword();
 
-  if (!employeeId || !fullName || !roleTitle || !email) {
+  if (!employeeId || !fullName || !submittedRoleTitle || !email) {
     return { error: "Fill in the employee ID, name, role, and email." };
   }
 
@@ -62,10 +153,25 @@ export async function createEmployeeAction(
   const auth = await withAuth({ ensureSignedIn: true });
   const convex = createAuthenticatedConvexClient(auth.accessToken);
   const workspace = await convex.query(api.employers.getCurrentEmployerWorkspace, {});
+  const availableRoles = await convex.query(
+    api.roleRequirements.getRoleRequirementsForEmployer,
+    {},
+  );
 
   if (!workspace?.employer) {
     return { error: "Complete company setup before creating employee accounts." };
   }
+
+  const selectedRole = availableRoles.find(
+    (role) =>
+      role.roleId === submittedRoleId &&
+      role.roleTitle === submittedRoleTitle,
+  );
+  if (!selectedRole) {
+    return { error: "Select a valid role from role management before creating an employee." };
+  }
+  const roleTitle = selectedRole.roleTitle;
+  const roleId = selectedRole.roleId;
 
   const duplicate = workspace.employees.some(
     (e) => e.email.toLowerCase() === email,
@@ -74,23 +180,40 @@ export async function createEmployeeAction(
     return { error: "An employee with that email already exists." };
   }
 
+  const duplicateEmployeeId = workspace.employees.some(
+    (e) => e.employeeId.toLowerCase() === employeeId.toLowerCase(),
+  );
+  if (duplicateEmployeeId) {
+    return { error: "An employee with that ID already exists." };
+  }
+
   let createdUserId: string | null = null;
 
   try {
-    const user = await workos.userManagement.createUser({
-      email,
-      password,
-      emailVerified: true,
-      externalId: employeeId,
-      metadata: {
-        accountType: "employee",
-        employeeId,
-        employerCompanyName: workspace.employer.companyName,
-        employerOwnerWorkOSUserId: auth.user.id,
-        fullName,
-        roleTitle,
-      },
+    const metadata = getEmployeeMetadata({
+      employeeId,
+      companyName: workspace.employer.companyName,
+      employerOwnerWorkOSUserId: workspace.employer.ownerWorkOSUserId,
+      fullName,
+      roleTitle,
     });
+    const existingUser = await findExistingWorkOSUser(email, employeeId);
+    const user = existingUser
+      ? await workos.userManagement.updateUser({
+          userId: existingUser.id,
+          email,
+          password,
+          emailVerified: true,
+          externalId: employeeId,
+          metadata,
+        })
+      : await workos.userManagement.createUser({
+          email,
+          password,
+          emailVerified: true,
+          externalId: employeeId,
+          metadata,
+        });
     createdUserId = user.id;
 
     await convex.mutation(api.employees.createEmployeeForCurrentEmployer, {
@@ -98,14 +221,23 @@ export async function createEmployeeAction(
       workOSUserId: user.id,
       email,
       fullName,
+      roleId,
       roleTitle,
     });
   } catch (error) {
     if (createdUserId) {
-      await workos.userManagement.deleteUser(createdUserId);
+      await workos.userManagement.deleteUser(createdUserId).catch(() => null);
     }
 
-    const message = error instanceof Error ? error.message.toLowerCase() : "";
+    const rawMessage = extractErrorText(error);
+    const message = rawMessage.toLowerCase();
+
+    console.error("createEmployeeAction failed", {
+      employeeId,
+      email,
+      error,
+      rawMessage,
+    });
 
     if (message.includes("already") || message.includes("exists")) {
       return { error: "An employee with that email or ID already exists." };
@@ -117,6 +249,10 @@ export async function createEmployeeAction(
 
     if (message.includes("password")) {
       return { error: "Failed to generate a valid password. Please try again." };
+    }
+
+    if (rawMessage) {
+      return { error: rawMessage };
     }
 
     return { error: "Failed to create employee. Please try again." };
@@ -178,7 +314,12 @@ export async function bulkCreateEmployeesAction(
     };
   }
 
-  const existingEmails = new Set(workspace.employees.map((e) => e.email.toLowerCase()));
+  const existingEmails = new Set(
+    workspace.employees.map((e) => e.email.toLowerCase()),
+  );
+  const existingEmployeeIds = new Set(
+    workspace.employees.map((e) => e.employeeId.toLowerCase()),
+  );
 
   const results: BulkUploadResult = { successCount: 0, failedCount: 0, errors: [] };
 
@@ -214,24 +355,40 @@ export async function bulkCreateEmployeesAction(
       continue;
     }
 
+    if (existingEmployeeIds.has(employeeId.toLowerCase())) {
+      results.failedCount++;
+      results.errors.push({ row: rowNum, employeeId, error: "Employee ID already exists." });
+      continue;
+    }
+
     const password = generateStrongPassword();
     let createdUserId: string | null = null;
 
     try {
-      const user = await workos.userManagement.createUser({
-        email,
-        password,
-        emailVerified: true,
-        externalId: employeeId,
-        metadata: {
-          accountType: "employee",
-          employeeId,
-          employerCompanyName: workspace.employer.companyName,
-          employerOwnerWorkOSUserId: auth.user.id,
-          fullName,
-          roleTitle,
-        },
+      const metadata = getEmployeeMetadata({
+        employeeId,
+        companyName: workspace.employer.companyName,
+        employerOwnerWorkOSUserId: workspace.employer.ownerWorkOSUserId,
+        fullName,
+        roleTitle,
       });
+      const existingUser = await findExistingWorkOSUser(email, employeeId);
+      const user = existingUser
+        ? await workos.userManagement.updateUser({
+            userId: existingUser.id,
+            email,
+            password,
+            emailVerified: true,
+            externalId: employeeId,
+            metadata,
+          })
+        : await workos.userManagement.createUser({
+            email,
+            password,
+            emailVerified: true,
+            externalId: employeeId,
+            metadata,
+          });
       createdUserId = user.id;
 
       await convex.mutation(api.employees.createEmployeeForCurrentEmployer, {
@@ -242,17 +399,20 @@ export async function bulkCreateEmployeesAction(
         roleTitle,
       });
 
-      existingEmails.add(email); // prevent duplicates within the same batch
+      existingEmails.add(email);
+      existingEmployeeIds.add(employeeId.toLowerCase());
       results.successCount++;
     } catch (error) {
       if (createdUserId) {
         await workos.userManagement.deleteUser(createdUserId).catch(() => null);
       }
 
-      const message = error instanceof Error ? error.message.toLowerCase() : "";
+      const rawMessage = extractErrorText(error);
+      const message = rawMessage.toLowerCase();
       let reason = "Failed to create employee.";
       if (message.includes("already") || message.includes("exists")) reason = "Email or ID already in use.";
       else if (message.includes("external") || message.includes("externalid")) reason = "Employee ID already in use.";
+      else if (rawMessage) reason = rawMessage;
 
       results.failedCount++;
       results.errors.push({ row: rowNum, employeeId, error: reason });
@@ -273,6 +433,18 @@ export async function deleteEmployeeAction(
   const convex = createAuthenticatedConvexClient(auth.accessToken);
 
   try {
+    const workspace = await convex.query(
+      api.employers.getCurrentEmployerWorkspace,
+      {},
+    );
+    const employee = workspace?.employees.find((entry) => entry._id === convexEmployeeId);
+
+    if (!employee) {
+      return { error: "Employee not found." };
+    }
+
+    await workos.userManagement.deleteUser(employee.workOSUserId).catch(() => null);
+
     await convex.mutation(api.employees.deleteEmployee, {
       employeeId: convexEmployeeId as Id<"employees">,
     });

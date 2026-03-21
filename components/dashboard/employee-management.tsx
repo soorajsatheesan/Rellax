@@ -23,29 +23,51 @@ type EmployeeRecord = {
   progressPercentage: number;
 };
 
+type RoleOption = {
+  roleTitle: string;
+  roleId?: string;
+};
+
+function formatRoleLabel(roleTitle: string) {
+  return roleTitle
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0]?.toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function CopyButton({ value, label }: { value: string; label: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  }
+
   return (
     <button
       type="button"
-      onClick={async () => {
-        await navigator.clipboard.writeText(value);
-      }}
-      className="rounded-full px-3 py-1 text-xs font-medium transition"
+      onClick={handleCopy}
+      className="db-nav-btn rounded-full px-3 py-1 text-xs font-medium"
       style={{
-        border: "1px solid var(--db-border)",
-        color: "var(--db-text-soft)",
-        background: "var(--db-card)",
+        border: `1px solid ${copied ? "rgba(34,197,94,0.35)" : "var(--db-border)"}`,
+        color: copied ? "#16a34a" : "var(--db-text-soft)",
+        background: copied ? "rgba(34,197,94,0.08)" : "var(--db-card)",
+        transition: "color 0.2s, background 0.2s, border-color 0.2s",
       }}
     >
-      Copy {label}
+      {copied ? "Copied!" : `Copy ${label}`}
     </button>
   );
 }
 
 export function EmployeeManagement({
   employees,
+  availableRoles,
 }: {
   employees: EmployeeRecord[];
+  availableRoles: RoleOption[];
 }) {
   const [state, formAction, createPending] = useActionState(createEmployeeAction, initialState);
   const router = useRouter();
@@ -84,6 +106,7 @@ export function EmployeeManagement({
   const [formValues, setFormValues] = useState({
     employeeId: "",
     fullName: "",
+    roleId: "",
     roleTitle: "",
     email: "",
   });
@@ -95,8 +118,17 @@ export function EmployeeManagement({
     if (!formValues.fullName.trim()) {
       return "Enter the employee name.";
     }
-    if (!formValues.roleTitle.trim()) {
-      return "Enter the employee role.";
+    if (!formValues.roleTitle.trim() || !formValues.roleId.trim()) {
+      return "Select the employee role.";
+    }
+    if (
+      !availableRoles.some(
+        (role) =>
+          role.roleTitle === formValues.roleTitle.trim() &&
+          (role.roleId ?? "") === formValues.roleId.trim(),
+      )
+    ) {
+      return "Choose one of the roles defined in role management.";
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email.trim())) {
       return "Enter a valid employee email address.";
@@ -124,7 +156,7 @@ export function EmployeeManagement({
         style={{
           background: "var(--db-card)",
           border: "1px solid var(--db-border)",
-          boxShadow: "var(--db-shadow-sm)",
+          boxShadow: "var(--db-shadow-md)",
         }}
       >
         {/* Header */}
@@ -134,13 +166,13 @@ export function EmployeeManagement({
         >
           <div>
             <p
-              className="font-mono text-[0.62rem] uppercase tracking-[0.2em] font-semibold"
+              className="font-mono text-[0.6rem] uppercase tracking-[0.22em] font-semibold"
               style={{ color: "var(--db-text-muted)" }}
             >
               Team credentials
             </p>
             <h2
-              className="mt-0.5 text-base font-semibold"
+              className="mt-1 text-base font-semibold"
               style={{ color: "var(--db-text)" }}
             >
               Employee access
@@ -217,20 +249,21 @@ export function EmployeeManagement({
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <div
-                          className="h-1.5 w-20 rounded-full overflow-hidden"
-                          style={{ background: "var(--db-border)" }}
+                          className="h-2 w-20 rounded-full overflow-hidden"
+                          style={{ background: "var(--db-surface)" }}
                         >
                           <div
                             className="h-full rounded-full"
                             style={{
                               width: `${employee.progressPercentage}%`,
                               background: "var(--rellax-sage)",
+                              transition: "width 0.4s ease",
                             }}
                           />
                         </div>
                         <span
-                          className="font-mono text-xs tabular-nums"
-                          style={{ color: "var(--db-text-muted)" }}
+                          className="font-mono text-xs tabular-nums font-medium"
+                          style={{ color: "var(--db-text-soft)" }}
                         >
                           {employee.progressPercentage}%
                         </span>
@@ -284,7 +317,7 @@ export function EmployeeManagement({
         style={{
           background: "var(--db-card)",
           border: "1px solid var(--db-border)",
-          boxShadow: "var(--db-shadow-sm)",
+          boxShadow: "var(--db-shadow-md)",
         }}
       >
         {/* Card header */}
@@ -293,13 +326,13 @@ export function EmployeeManagement({
           style={{ borderBottom: "1px solid var(--db-border)" }}
         >
           <p
-            className="font-mono text-[0.62rem] uppercase tracking-[0.2em] font-semibold"
+            className="font-mono text-[0.6rem] uppercase tracking-[0.22em] font-semibold"
             style={{ color: "var(--db-text-muted)" }}
           >
             Add employee
           </p>
           <h2
-            className="mt-0.5 text-base font-semibold"
+            className="mt-1 text-base font-semibold"
             style={{ color: "var(--db-text)" }}
           >
             Create credentials
@@ -358,16 +391,34 @@ export function EmployeeManagement({
             onBlur={() => clientError && setClientError(validateForm())}
             style={inputStyle}
           />
-          <input
+          <input type="hidden" name="roleId" value={formValues.roleId} />
+          <select
             name="roleTitle"
-            type="text"
             required
-            placeholder="Role in company"
             value={formValues.roleTitle}
-            onChange={(e) => setFormValues((s) => ({ ...s, roleTitle: e.target.value }))}
+            onChange={(e) => {
+              const nextRole = availableRoles.find(
+                (role) => role.roleTitle === e.target.value,
+              );
+              setFormValues((s) => ({
+                ...s,
+                roleTitle: e.target.value,
+                roleId: nextRole?.roleId ?? "",
+              }));
+            }}
             onBlur={() => clientError && setClientError(validateForm())}
             style={inputStyle}
-          />
+            disabled={availableRoles.length === 0}
+          >
+            <option value="">
+              {availableRoles.length === 0 ? "Add roles first in role management" : "Select employee role"}
+            </option>
+            {availableRoles.map((role) => (
+              <option key={role.roleId ?? role.roleTitle} value={role.roleTitle}>
+                {formatRoleLabel(role.roleTitle)}
+              </option>
+            ))}
+          </select>
           <input
             name="email"
             type="email"
@@ -388,7 +439,9 @@ export function EmployeeManagement({
               color: "var(--db-text-soft)",
             }}
           >
-            Rellax auto-generates a strong temporary password when the credential is created.
+            {availableRoles.length === 0
+              ? "Add at least one role in role management before creating employee credentials."
+              : "Rellax auto-generates a strong temporary password when the credential is created."}
           </div>
 
           {/* Errors */}
@@ -458,7 +511,7 @@ export function EmployeeManagement({
 
           <button
             type="submit"
-            disabled={createPending}
+            disabled={createPending || availableRoles.length === 0}
             className="inline-flex w-full items-center justify-center rounded-full py-3 text-sm font-semibold text-white transition hover:opacity-85 disabled:opacity-60"
             style={{ background: "var(--rellax-sage)" }}
           >

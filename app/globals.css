@@ -129,89 +129,117 @@
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--black); }
 
+/* ── dashboard scrollbar (inside themed areas) ────────────── */
+.db-scroll::-webkit-scrollbar { width: 5px; }
+.db-scroll::-webkit-scrollbar-track { background: var(--db-surface); }
+.db-scroll::-webkit-scrollbar-thumb { background: var(--db-border); border-radius: 99px; }
+
+/* ── dashboard inputs focus ring ──────────────────────────── */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--rellax-sage) 45%, transparent);
+  border-color: color-mix(in srgb, var(--rellax-sage) 60%, transparent) !important;
+}
+
+/* ── dashboard nav buttons ────────────────────────────────── */
+.db-nav-btn {
+  transition: background 0.13s ease, color 0.13s ease, opacity 0.13s ease;
+  cursor: pointer;
+}
+.db-nav-btn:hover:not(.db-nav-active) {
+  background: var(--db-nav-hover);
+  color: var(--db-text);
+}
+.db-nav-btn:hover:not(.db-nav-active) span {
+  color: var(--db-text-soft) !important;
+}
+.db-nav-btn:active { opacity: 0.75; }
+
 /* ── dashboard semantic tokens (light) ────────────────────── */
 :root {
   --db-bg:            #f0efe9;
   --db-card:          #ffffff;
-  --db-sidebar:       #ffffff;
+  --db-sidebar:       #faf9f7;
   --db-header:        #ffffff;
   --db-surface:       #eeecea;
   --db-border:        rgba(8, 8, 9, 0.10);
-  --db-text:          #080809;
-  --db-text-soft:     #4a4a58;
-  --db-text-muted:    #6e6e82;
+  --db-text:          #0a0a0c;
+  --db-text-soft:     #3e3e50;
+  --db-text-muted:    #6a6a7e;
   --db-input:         #f4f3f0;
   --db-input-border:  rgba(8, 8, 9, 0.14);
-  --db-nav-hover:     #f0efe9;
-  --db-nav-active-bg: #080809;
+  --db-nav-hover:     #eeede8;
+  --db-nav-active-bg: #0a0a0c;
   --db-nav-active-tx: #ffffff;
-  --db-shadow-sm:     0 2px 8px rgba(8,8,9,0.06);
-  --db-shadow-md:     0 8px 32px rgba(8,8,9,0.08);
-  --db-shadow-lg:     0 16px 52px rgba(8,8,9,0.10);
+  --db-shadow-sm:     0 2px 8px rgba(8,8,9,0.07);
+  --db-shadow-md:     0 8px 32px rgba(8,8,9,0.10);
+  --db-shadow-lg:     0 16px 52px rgba(8,8,9,0.13);
 }
 
 /* ── dashboard dark token values ───────────────────────────── */
 /* Applied when: system preference is dark (and not overridden to light) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --db-bg:            #0c0c10;
-    --db-card:          #15151b;
-    --db-sidebar:       #101016;
-    --db-header:        #101016;
-    --db-surface:       #1c1c24;
-    --db-border:        rgba(255, 255, 255, 0.08);
-    --db-text:          #ecebf0;
-    --db-text-soft:     #8888a8;
-    --db-text-muted:    #54546a;
-    --db-input:         #1c1c24;
-    --db-input-border:  rgba(255, 255, 255, 0.10);
-    --db-nav-hover:     #1c1c24;
+    --db-bg:            #0b0b0f;
+    --db-card:          #141419;
+    --db-sidebar:       #0f0f14;
+    --db-header:        #0f0f14;
+    --db-surface:       #1a1a22;
+    --db-border:        rgba(255, 255, 255, 0.11);
+    --db-text:          #f0eff6;
+    --db-text-soft:     #9898b8;
+    --db-text-muted:    #686885;
+    --db-input:         #1a1a22;
+    --db-input-border:  rgba(255, 255, 255, 0.14);
+    --db-nav-hover:     #1a1a22;
     --db-nav-active-bg: var(--rellax-sage);
     --db-nav-active-tx: #ffffff;
-    --db-shadow-sm:     0 2px 8px rgba(0,0,0,0.30);
-    --db-shadow-md:     0 8px 32px rgba(0,0,0,0.40);
-    --db-shadow-lg:     0 16px 52px rgba(0,0,0,0.50);
+    --db-shadow-sm:     0 2px 8px rgba(0,0,0,0.45);
+    --db-shadow-md:     0 8px 32px rgba(0,0,0,0.55);
+    --db-shadow-lg:     0 16px 52px rgba(0,0,0,0.65);
   }
 }
 
 /* Applied when: user manually chose dark (even if system is light) */
 :root[data-theme="dark"] {
-  --db-bg:            #0c0c10;
-  --db-card:          #15151b;
-  --db-sidebar:       #101016;
-  --db-header:        #101016;
-  --db-surface:       #1c1c24;
-  --db-border:        rgba(255, 255, 255, 0.08);
-  --db-text:          #ecebf0;
-  --db-text-soft:     #8888a8;
-  --db-text-muted:    #54546a;
-  --db-input:         #1c1c24;
-  --db-input-border:  rgba(255, 255, 255, 0.10);
-  --db-nav-hover:     #1c1c24;
+  --db-bg:            #0b0b0f;
+  --db-card:          #141419;
+  --db-sidebar:       #0f0f14;
+  --db-header:        #0f0f14;
+  --db-surface:       #1a1a22;
+  --db-border:        rgba(255, 255, 255, 0.11);
+  --db-text:          #f0eff6;
+  --db-text-soft:     #9898b8;
+  --db-text-muted:    #686885;
+  --db-input:         #1a1a22;
+  --db-input-border:  rgba(255, 255, 255, 0.14);
+  --db-nav-hover:     #1a1a22;
   --db-nav-active-bg: var(--rellax-sage);
   --db-nav-active-tx: #ffffff;
-  --db-shadow-sm:     0 2px 8px rgba(0,0,0,0.30);
-  --db-shadow-md:     0 8px 32px rgba(0,0,0,0.40);
-  --db-shadow-lg:     0 16px 52px rgba(0,0,0,0.50);
+  --db-shadow-sm:     0 2px 8px rgba(0,0,0,0.45);
+  --db-shadow-md:     0 8px 32px rgba(0,0,0,0.55);
+  --db-shadow-lg:     0 16px 52px rgba(0,0,0,0.65);
 }
 
 /* Applied when: user manually chose light (even if system is dark) */
 :root[data-theme="light"] {
   --db-bg:            #f0efe9;
   --db-card:          #ffffff;
-  --db-sidebar:       #ffffff;
+  --db-sidebar:       #faf9f7;
   --db-header:        #ffffff;
   --db-surface:       #eeecea;
   --db-border:        rgba(8, 8, 9, 0.10);
-  --db-text:          #080809;
-  --db-text-soft:     #4a4a58;
-  --db-text-muted:    #6e6e82;
+  --db-text:          #0a0a0c;
+  --db-text-soft:     #3e3e50;
+  --db-text-muted:    #6a6a7e;
   --db-input:         #f4f3f0;
   --db-input-border:  rgba(8, 8, 9, 0.14);
-  --db-nav-hover:     #f0efe9;
-  --db-nav-active-bg: #080809;
+  --db-nav-hover:     #eeede8;
+  --db-nav-active-bg: #0a0a0c;
   --db-nav-active-tx: #ffffff;
-  --db-shadow-sm:     0 2px 8px rgba(8,8,9,0.06);
-  --db-shadow-md:     0 8px 32px rgba(8,8,9,0.08);
-  --db-shadow-lg:     0 16px 52px rgba(8,8,9,0.10);
+  --db-shadow-sm:     0 2px 8px rgba(8,8,9,0.07);
+  --db-shadow-md:     0 8px 32px rgba(8,8,9,0.10);
+  --db-shadow-lg:     0 16px 52px rgba(8,8,9,0.13);
 }
