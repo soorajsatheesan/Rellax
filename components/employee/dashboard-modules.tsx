@@ -1,16 +1,37 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import type { Doc } from "@/convex/_generated/dataModel";
 import { ModuleCard } from "./module-card";
+
+type LearningPathData = {
+  path: Doc<"learning_paths">;
+  modules: Doc<"learning_path_modules">[];
+} | null;
 
 type Props = {
   companyName: string;
+  serverLearningPath?: LearningPathData | null;
 };
 
-export function DashboardModules({ companyName }: Props) {
-  const data = useQuery(api.employeeLearning.getLearningPathForEmployee, {});
+export function DashboardModules({ companyName, serverLearningPath }: Props) {
+  const clientData = useQuery(api.employeeLearning.getLearningPathForEmployee, {});
+  const lastGoodData = useRef<LearningPathData | undefined>(
+    serverLearningPath ?? undefined,
+  );
+
+  useEffect(() => {
+    if (clientData?.modules?.length) lastGoodData.current = clientData;
+    else if (serverLearningPath?.modules?.length) lastGoodData.current = serverLearningPath;
+  }, [clientData, serverLearningPath]);
+
+  const data =
+    clientData === undefined
+      ? lastGoodData.current ?? serverLearningPath ?? undefined
+      : clientData ?? lastGoodData.current ?? (serverLearningPath ?? null);
 
   if (data === undefined) {
     return (

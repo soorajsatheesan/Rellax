@@ -1,8 +1,9 @@
 /**
  * Extract plain text from resume files: .docx (Word) and .pdf.
+ * Uses unpdf (serverless-friendly) instead of pdf-parse to avoid worker bundling issues.
  */
 import mammoth from "mammoth";
-import { PDFParse } from "pdf-parse";
+import { extractText, getDocumentProxy } from "unpdf";
 
 const MIN_TEXT_LENGTH = 50;
 
@@ -17,14 +18,9 @@ async function extractFromPdf(file: File): Promise<string> {
   const arrayBuffer = await file.arrayBuffer();
   const data = new Uint8Array(arrayBuffer);
 
-  const parser = new PDFParse({ data });
-  try {
-    const textResult = await parser.getText();
-    const text = textResult?.text?.trim() ?? "";
-    return text;
-  } finally {
-    await parser.destroy();
-  }
+  const pdf = await getDocumentProxy(data);
+  const { text } = await extractText(pdf, { mergePages: true });
+  return text?.trim() ?? "";
 }
 
 export async function extractTextFromResumeFile(file: File): Promise<string> {

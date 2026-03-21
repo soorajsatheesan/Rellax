@@ -32,6 +32,11 @@ export default async function EmployeeDashboardPage() {
 
   const { employee, employer: company } = employeeProfile;
 
+  const serverLearningPath = await convex.query(
+    api.employeeLearning.getLearningPathForEmployee,
+    {},
+  );
+
   const initials = employee.fullName
     .split(" ")
     .map((w: string) => w[0])
@@ -113,7 +118,7 @@ export default async function EmployeeDashboardPage() {
                 {employee.roleTitle} · {company.companyName}
               </p>
             </div>
-            <DashboardHeroStats />
+            <DashboardHeroStats serverLearningPath={serverLearningPath} />
           </div>
         </div>
       </div>
@@ -147,7 +152,10 @@ export default async function EmployeeDashboardPage() {
             </div>
           </div>
 
-          <DashboardModules companyName={company.companyName} />
+          <DashboardModules
+            companyName={company.companyName}
+            serverLearningPath={serverLearningPath}
+          />
         </section>
 
         {/* Announcement */}
