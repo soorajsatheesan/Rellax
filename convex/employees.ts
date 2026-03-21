@@ -46,6 +46,31 @@ export const getCurrentEmployeeProfile = query({
   },
 });
 
+export const deleteEmployee = mutation({
+  args: { employeeId: v.id("employees") },
+  handler: async (ctx, args) => {
+    const identity = await requireIdentity(ctx);
+
+    const employer = await ctx.db
+      .query("employers")
+      .withIndex("by_owner_workos_user_id", (q) =>
+        q.eq("ownerWorkOSUserId", identity.subject),
+      )
+      .unique();
+
+    if (!employer) throw new Error("Unauthorized");
+
+    const employee = await ctx.db.get(args.employeeId);
+
+    if (!employee || employee.employerId !== employer._id) {
+      throw new Error("Unauthorized");
+    }
+
+    await ctx.db.delete(args.employeeId);
+    return { success: true };
+  },
+});
+
 export const createEmployeeForCurrentEmployer = mutation({
   args: {
     employeeId: v.string(),

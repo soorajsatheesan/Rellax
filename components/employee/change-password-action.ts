@@ -3,6 +3,8 @@
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { WorkOS } from "@workos-inc/node";
 
+import { generateStrongPassword } from "@/lib/workos-strong-password";
+
 const workos = new WorkOS(process.env.WORKOS_API_KEY!);
 
 export type ChangePasswordState = {
@@ -130,7 +132,7 @@ function getPasswordRequirementChecks(
 
   return {
     summary:
-      "WorkOS rejected your new password. Update it to satisfy the requirements below.",
+      "WorkOS uses strict strength rules (not everything is listed here). Try “Generate strong password” for the same style as employer-created accounts, or adjust using the hints below.",
     checks,
   };
 }
@@ -239,3 +241,13 @@ export async function changePasswordAction(
   };
 }
 
+export type SuggestPasswordResult = { password?: string; error?: string };
+
+/** Same generator as employer dashboard — aligns with WorkOS acceptance in practice. */
+export async function suggestStrongPasswordAction(): Promise<SuggestPasswordResult> {
+  try {
+    return { password: generateStrongPassword() };
+  } catch {
+    return { error: "Could not generate a password. Try again." };
+  }
+}

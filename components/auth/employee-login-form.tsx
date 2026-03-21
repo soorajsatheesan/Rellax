@@ -26,10 +26,11 @@ export function EmployeeLoginForm() {
       </div>
 
       <input
-        name="employeeId"
-        type="text"
+        name="email"
+        type="email"
         required
-        placeholder="Employee ID"
+        placeholder="Work email"
+        autoComplete="email"
         className="w-full rounded-2xl border border-black/8 bg-[var(--rellax-surface)] px-4 py-3 text-sm outline-none transition focus:border-[var(--rellax-sage)]"
       />
       <div className="relative">

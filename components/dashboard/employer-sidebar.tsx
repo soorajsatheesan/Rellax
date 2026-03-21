@@ -3,17 +3,6 @@ import Link from "next/link";
 import { signOutEmployerAction } from "@/components/dashboard/account-actions";
 import { BrandLogo } from "@/components/global/brand-logo";
 
-function IconGrid() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-      <rect x="0.5" y="0.5" width="5.5" height="5.5" rx="1.25" fill="currentColor" />
-      <rect x="9" y="0.5" width="5.5" height="5.5" rx="1.25" fill="currentColor" />
-      <rect x="0.5" y="9" width="5.5" height="5.5" rx="1.25" fill="currentColor" />
-      <rect x="9" y="9" width="5.5" height="5.5" rx="1.25" fill="currentColor" />
-    </svg>
-  );
-}
-
 function IconUsers() {
   return (
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
@@ -38,24 +27,9 @@ function IconUsers() {
   );
 }
 
-function IconSettings() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-      <circle cx="7.5" cy="7.5" r="2" fill="currentColor" />
-      <path
-        d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M2.93 2.93l1.06 1.06M11.01 11.01l1.06 1.06M2.93 12.07l1.06-1.06M11.01 3.99l1.06-1.06"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 const NAV_ITEMS = [
-  { label: "Overview", href: "/dashboard", Icon: IconGrid },
   { label: "Team", href: "/dashboard", Icon: IconUsers },
-  { label: "Settings", href: "/dashboard", Icon: IconSettings },
 ];
 
 type Props = {
@@ -70,7 +44,7 @@ export function EmployerSidebar({
   companyName,
   ownerName,
   ownerRole,
-  activeItem = "Overview",
+  activeItem = "Team",
 }: Props) {
   const initials = (ownerName ?? "A")
     .split(" ")

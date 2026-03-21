@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { SubmitButton } from "@/components/auth/submit-button";
 
 import {
   changePasswordAction,
+  suggestStrongPasswordAction,
   type ChangePasswordState,
 } from "@/components/employee/change-password-action";
 
@@ -15,6 +16,10 @@ export function ChangePasswordForm() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [generateError, setGenerateError] = useState<string | null>(null);
+  const [generatePending, startGenerate] = useTransition();
 
   return (
     <form action={formAction} className="space-y-4">
@@ -47,15 +52,47 @@ export function ChangePasswordForm() {
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium" style={{ color: "var(--db-text)" }}>
-          New password
-        </label>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <label className="block text-sm font-medium" style={{ color: "var(--db-text)" }}>
+            New password
+          </label>
+          <button
+            type="button"
+            disabled={generatePending}
+            onClick={() => {
+              setGenerateError(null);
+              startGenerate(async () => {
+                const result = await suggestStrongPasswordAction();
+                if (result.error) {
+                  setGenerateError(result.error);
+                  return;
+                }
+                if (result.password) {
+                  setNewPassword(result.password);
+                  setConfirmPassword(result.password);
+                }
+              });
+            }}
+            className="rounded-full border px-3 py-1 text-xs font-medium transition disabled:opacity-50"
+            style={{
+              borderColor: "var(--db-border)",
+              color: "var(--db-text-soft)",
+            }}
+          >
+            {generatePending ? "Generating…" : "Generate strong password"}
+          </button>
+        </div>
+        {generateError ? (
+          <p className="text-xs text-red-600">{generateError}</p>
+        ) : null}
         <div className="relative">
           <input
             name="newPassword"
             type={showNewPassword ? "text" : "password"}
             required
             autoComplete="new-password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
             className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
             placeholder="Enter new password"
           />
@@ -84,6 +121,8 @@ export function ChangePasswordForm() {
             type={showConfirmPassword ? "text" : "password"}
             required
             autoComplete="new-password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
             placeholder="Re-enter new password"
           />

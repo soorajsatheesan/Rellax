@@ -22,6 +22,23 @@ export default defineSchema({
   })
     .index("by_owner_workos_user_id", ["ownerWorkOSUserId"])
     .index("by_owner_email", ["ownerEmail"]),
+  role_requirements: defineTable({
+    employerId: v.id("employers"),
+    roleTitle: v.string(),
+    roleId: v.optional(v.string()),
+    requiredSkills: v.array(v.string()),
+    jdText: v.optional(v.string()),
+    jdFileUrl: v.optional(v.string()),
+    updatedAt: v.number(),
+  }).index("by_employer_role_title", ["employerId", "roleTitle"]),
+  employee_progress: defineTable({
+    employeeId: v.id("employees"),
+    employerId: v.id("employers"),
+    progressPercentage: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_employer_id", ["employerId"])
+    .index("by_employee_id", ["employeeId"]),
   employees: defineTable({
     employerId: v.id("employers"),
     employerWorkOSUserId: v.string(),
@@ -38,11 +55,4 @@ export default defineSchema({
     .index("by_employee_id", ["employeeId"])
     .index("by_workos_user_id", ["workOSUserId"])
     .index("by_employer_owner_id", ["employerWorkOSUserId"]),
-  role_requirements: defineTable({
-    employerId: v.id("employers"),
-    roleTitle: v.string(),
-    requiredSkills: v.array(v.string()),
-    jdText: v.optional(v.string()),
-    updatedAt: v.number(),
-  }).index("by_employer_role_title", ["employerId", "roleTitle"]),
 });
