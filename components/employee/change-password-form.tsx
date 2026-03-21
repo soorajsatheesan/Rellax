@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useTransition } from "react";
+import { useActionState, useRef, useState, useTransition } from "react";
 import { SubmitButton } from "@/components/auth/submit-button";
 
 import {
@@ -16,8 +16,8 @@ export function ChangePasswordForm() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const newPasswordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const [generateError, setGenerateError] = useState<string | null>(null);
   const [generatePending, startGenerate] = useTransition();
 
@@ -68,8 +68,8 @@ export function ChangePasswordForm() {
                   return;
                 }
                 if (result.password) {
-                  setNewPassword(result.password);
-                  setConfirmPassword(result.password);
+                  if (newPasswordRef.current) newPasswordRef.current.value = result.password;
+                  if (confirmPasswordRef.current) confirmPasswordRef.current.value = result.password;
                 }
               });
             }}
@@ -87,14 +87,14 @@ export function ChangePasswordForm() {
         ) : null}
         <div className="relative">
           <input
+            ref={newPasswordRef}
             name="newPassword"
             type={showNewPassword ? "text" : "password"}
             required
             autoComplete="new-password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            minLength={14}
             className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
-            placeholder="Enter new password"
+            placeholder="Enter new password (min 14 chars, mixed case, numbers, symbols)"
           />
           <button
             type="button"
@@ -117,12 +117,12 @@ export function ChangePasswordForm() {
         </label>
         <div className="relative">
           <input
+            ref={confirmPasswordRef}
             name="confirmPassword"
             type={showConfirmPassword ? "text" : "password"}
             required
             autoComplete="new-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            minLength={14}
             className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
             placeholder="Re-enter new password"
           />

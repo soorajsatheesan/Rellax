@@ -72,4 +72,40 @@ export default defineSchema({
     .index("by_employee_id", ["employeeId"])
     .index("by_workos_user_id", ["workOSUserId"])
     .index("by_employer_owner_id", ["employerWorkOSUserId"]),
+
+  // Employee learning (employee-owned; employer does not write)
+  employee_resumes: defineTable({
+    employeeId: v.id("employees"),
+    employerId: v.id("employers"),
+    resumeText: v.string(),
+    extractedSkills: v.array(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_employee_id", ["employeeId"])
+    .index("by_employer_id", ["employerId"]),
+
+  learning_paths: defineTable({
+    employeeId: v.id("employees"),
+    employerId: v.id("employers"),
+    sourceResumeId: v.optional(v.id("employee_resumes")),
+    createdAt: v.number(),
+  })
+    .index("by_employee_id", ["employeeId"])
+    .index("by_employer_id", ["employerId"]),
+
+  learning_path_modules: defineTable({
+    learningPathId: v.id("learning_paths"),
+    title: v.string(),
+    category: v.string(),
+    duration: v.string(),
+    lessons: v.number(),
+    orderIndex: v.number(),
+    status: v.union(
+      v.literal("not_started"),
+      v.literal("in_progress"),
+      v.literal("completed"),
+    ),
+    completedAt: v.optional(v.number()),
+  })
+    .index("by_learning_path_id", ["learningPathId"]),
 });

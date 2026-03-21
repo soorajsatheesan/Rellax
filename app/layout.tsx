@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { SplashProvider } from "@/components/splash";
 
 import "./globals.css";
@@ -20,7 +21,9 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">{`(function(){try{var t=localStorage.getItem('rellax-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`}</Script>
       </head>
       <body className="min-h-full flex flex-col">
-        <SplashProvider>{children}</SplashProvider>
+        <SplashProvider>
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </SplashProvider>
       </body>
     </html>
   );

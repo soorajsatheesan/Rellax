@@ -7,58 +7,8 @@ import { signOutEmployeeAction } from "@/components/dashboard/account-actions";
 import { BrandLogo } from "@/components/global/brand-logo";
 import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 import { createAuthenticatedConvexClient } from "@/lib/convex-server";
-
-type CourseColor = "sage" | "slate" | "gold" | "ink";
-type CourseStatus = "not_started" | "in_progress" | "completed";
-
-type Course = {
-  id: string;
-  title: string;
-  category: string;
-  duration: string;
-  lessons: number;
-  status: CourseStatus;
-  color: CourseColor;
-};
-
-const PLACEHOLDER_COURSES: Course[] = [
-  {
-    id: "c1",
-    title: "Workplace Safety & Compliance",
-    category: "Compliance",
-    duration: "45 min",
-    lessons: 6,
-    status: "not_started",
-    color: "sage",
-  },
-  {
-    id: "c2",
-    title: "Code of Conduct & Ethics",
-    category: "Onboarding",
-    duration: "30 min",
-    lessons: 4,
-    status: "not_started",
-    color: "slate",
-  },
-  {
-    id: "c3",
-    title: "Data Privacy & Security",
-    category: "Compliance",
-    duration: "60 min",
-    lessons: 8,
-    status: "not_started",
-    color: "gold",
-  },
-  {
-    id: "c4",
-    title: "Company Culture & Values",
-    category: "Onboarding",
-    duration: "20 min",
-    lessons: 3,
-    status: "not_started",
-    color: "ink",
-  },
-];
+import { DashboardHeroStats } from "@/components/employee/dashboard-hero-stats";
+import { DashboardModules } from "@/components/employee/dashboard-modules";
 
 export default async function EmployeeDashboardPage() {
   const auth = await withAuth();
@@ -163,11 +113,7 @@ export default async function EmployeeDashboardPage() {
                 {employee.roleTitle} · {company.companyName}
               </p>
             </div>
-            <div className="flex shrink-0 gap-6">
-              <HeroStat label="Modules" value={String(PLACEHOLDER_COURSES.length)} />
-              <HeroStat label="Completed" value="0" />
-              <HeroStat label="In progress" value="0" />
-            </div>
+            <DashboardHeroStats />
           </div>
         </div>
       </div>
@@ -199,23 +145,9 @@ export default async function EmployeeDashboardPage() {
                 Assigned modules
               </h2>
             </div>
-            <span
-              className="inline-flex rounded-full px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em]"
-              style={{
-                background: "var(--db-surface)",
-                border: "1px solid var(--db-border)",
-                color: "var(--db-text-muted)",
-              }}
-            >
-              {PLACEHOLDER_COURSES.length} modules
-            </span>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {PLACEHOLDER_COURSES.map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))}
-          </div>
+          <DashboardModules companyName={company.companyName} />
         </section>
 
         {/* Announcement */}
@@ -271,17 +203,6 @@ export default async function EmployeeDashboardPage() {
   );
 }
 
-function HeroStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="text-center">
-      <p className="font-display text-3xl text-white">{value}</p>
-      <p className="mt-1 font-mono text-[0.58rem] uppercase tracking-[0.18em] text-white/40">
-        {label}
-      </p>
-    </div>
-  );
-}
-
 function InfoCard({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
   return (
     <div
@@ -311,150 +232,3 @@ function InfoCard({ label, value, mono }: { label: string; value: string; mono?:
   );
 }
 
-const COURSE_COLOR_MAP: Record<
-  CourseColor,
-  { headerBg: string; pillBorder: string; pillBg: string; pillText: string; dot: string }
-> = {
-  sage: {
-    headerBg: "var(--rellax-sage)",
-    pillBorder: "rgba(255,255,255,0.22)",
-    pillBg: "rgba(255,255,255,0.14)",
-    pillText: "#fff",
-    dot: "rgba(255,255,255,0.7)",
-  },
-  slate: {
-    headerBg: "var(--rellax-slate)",
-    pillBorder: "rgba(255,255,255,0.22)",
-    pillBg: "rgba(255,255,255,0.14)",
-    pillText: "#fff",
-    dot: "rgba(255,255,255,0.7)",
-  },
-  gold: {
-    headerBg: "#7a5c28",
-    pillBorder: "rgba(255,255,255,0.22)",
-    pillBg: "rgba(255,255,255,0.14)",
-    pillText: "#fff",
-    dot: "rgba(255,255,255,0.7)",
-  },
-  ink: {
-    headerBg: "#1e1e28",
-    pillBorder: "rgba(255,255,255,0.18)",
-    pillBg: "rgba(255,255,255,0.10)",
-    pillText: "rgba(255,255,255,0.80)",
-    dot: "rgba(255,255,255,0.5)",
-  },
-};
-
-const STATUS_LABEL: Record<CourseStatus, string> = {
-  not_started: "Not started",
-  in_progress: "In progress",
-  completed: "Completed",
-};
-
-function CourseCard({ course }: { course: Course }) {
-  const c = COURSE_COLOR_MAP[course.color];
-
-  return (
-    <div
-      className="group flex cursor-pointer flex-col overflow-hidden rounded-[1.5rem] transition"
-      style={{
-        background: "var(--db-card)",
-        border: "1px solid var(--db-border)",
-        boxShadow: "var(--db-shadow-sm)",
-      }}
-    >
-      {/* Colored header band */}
-      <div
-        className="h-20 px-5 pt-4"
-        style={{ background: c.headerBg }}
-      >
-        <div className="flex items-start justify-between gap-2">
-          <span
-            className="inline-flex rounded-full px-2.5 py-1 font-mono text-[0.58rem] uppercase tracking-[0.14em]"
-            style={{
-              border: `1px solid ${c.pillBorder}`,
-              background: c.pillBg,
-              color: c.pillText,
-            }}
-          >
-            {course.category}
-          </span>
-          <span
-            className="mt-1 size-2 shrink-0 rounded-full"
-            style={{ background: c.dot }}
-          />
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col p-5 pt-4">
-        <h3
-          className="text-sm font-semibold leading-6"
-          style={{ color: "var(--db-text)" }}
-        >
-          {course.title}
-        </h3>
-
-        <div className="mt-3 flex items-center gap-2.5">
-          <span
-            className="font-mono text-[0.58rem] uppercase tracking-[0.12em]"
-            style={{ color: "var(--db-text-muted)" }}
-          >
-            {course.duration}
-          </span>
-          <span
-            className="size-1 rounded-full"
-            style={{ background: "var(--db-border)" }}
-          />
-          <span
-            className="font-mono text-[0.58rem] uppercase tracking-[0.12em]"
-            style={{ color: "var(--db-text-muted)" }}
-          >
-            {course.lessons} lessons
-          </span>
-        </div>
-
-        {/* Progress bar */}
-        <div className="mt-4">
-          <div
-            className="h-1 overflow-hidden rounded-full"
-            style={{ background: "var(--db-surface)" }}
-          >
-            <div
-              className="h-full rounded-full transition-all"
-              style={{
-                width: course.status === "completed" ? "100%" : "0%",
-                background: "var(--rellax-sage)",
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="mt-3 flex items-center justify-between gap-2">
-          <span
-            className="font-mono text-[0.58rem] uppercase tracking-[0.12em]"
-            style={{ color: "var(--db-text-muted)" }}
-          >
-            {STATUS_LABEL[course.status]}
-          </span>
-          <button
-            type="button"
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.62rem] font-semibold text-white transition hover:opacity-80"
-            style={{ background: "var(--rellax-sage)" }}
-          >
-            Start
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-              <path
-                d="M2 5h6M5.5 2.5 8 5l-2.5 2.5"
-                stroke="currentColor"
-                strokeWidth="1.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}

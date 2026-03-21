@@ -1,3 +1,7 @@
+/**
+ * xAI (Grok) job-description parsing for employer role requirements.
+ * Env: XAI_API_KEY, XAI_JD_ANALYSIS_MODEL. OPENAI_* is not used here.
+ */
 const XAI_API_BASE = "https://api.x.ai/v1";
 const XAI_MODEL =
   process.env.XAI_JD_ANALYSIS_MODEL || "grok-4.20-0309-reasoning";

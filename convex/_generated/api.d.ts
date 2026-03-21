@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as employeeLearning from "../employeeLearning.js";
 import type * as employeeProgress from "../employeeProgress.js";
 import type * as employees from "../employees.js";
 import type * as employers from "../employers.js";
@@ -20,6 +21,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  employeeLearning: typeof employeeLearning;
   employeeProgress: typeof employeeProgress;
   employees: typeof employees;
   employers: typeof employers;

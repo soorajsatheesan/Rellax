@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment
+
+Copy `.env.example` to `.env.local` and set WorkOS + Convex values. JD skill extraction uses **xAI** (`XAI_API_KEY`); see `lib/openai.ts`.
+
 ## Getting Started
 
 First, run the development server:

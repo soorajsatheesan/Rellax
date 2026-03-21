@@ -31,6 +31,8 @@ export default authkitMiddleware({
       "/onboarding",
       "/employee/dashboard",
       "/employee/change-password",
+      "/employee/upload-resume",
+      "/employee/roadmap",
     ],
   },
 });

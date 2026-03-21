@@ -2,6 +2,7 @@
 
 import { withAuth } from "@workos-inc/authkit-nextjs";
 import { WorkOS } from "@workos-inc/node";
+import { redirect } from "next/navigation";
 
 import { generateStrongPassword } from "@/lib/workos-strong-password";
 
@@ -195,14 +196,16 @@ export async function changePasswordAction(
     const lower = message.toLowerCase();
     console.error("[rellax][change-password] password update failed:", message);
 
-    // Common WorkOS failures: password policy / strength requirements.
+    // WorkOS failures: policy, strength, weak, requirements, etc.
     const looksLikePasswordPolicyIssue =
       lower.includes("password") &&
       (lower.includes("policy") ||
         lower.includes("require") ||
         lower.includes("strength") ||
         lower.includes("complex") ||
-        lower.includes("length"));
+        lower.includes("length") ||
+        lower.includes("weak") ||
+        lower.includes("meet"));
 
     if (looksLikePasswordPolicyIssue) {
       const passwordRequirements = getPasswordRequirementChecks(
@@ -220,25 +223,7 @@ export async function changePasswordAction(
     return { error: "Unable to update password right now. Please try again." };
   }
 
-  // Best-effort: verification can fail immediately after update due to propagation.
-  // Do not block success on this extra check.
-  let verified = false;
-  try {
-    await workos.userManagement.authenticateWithPassword({
-      clientId: process.env.WORKOS_CLIENT_ID!,
-      email: auth.user.email,
-      password: newPassword,
-    });
-    verified = true;
-  } catch {
-    // Intentionally ignore; user can verify by signing out/in.
-  }
-
-  return {
-    success: verified
-      ? "Password updated successfully."
-      : "Password updated. Please sign out and sign in again to confirm.",
-  };
+  redirect("/employee/dashboard");
 }
 
 export type SuggestPasswordResult = { password?: string; error?: string };
