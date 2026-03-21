@@ -1,0 +1,8 @@
+Balancing Flutter and React UI Approaches
+Flutter’s widgets build your apps like LEGO, while React’s virtual DOM efficiently paints web UIs. Knowing their differences lets you tailor apps that feel native, yet share a seamless design language from Figma mockups you craft.
+
+Optimizing State and Rendering for Speed
+UI speed is vital. In React, smart hooks prevent unwanted re-rendering, while Flutter’s providers let you control when widgets rebuild. Together, these tactics keep your apps feeling lightning-fast.
+
+Designing Unified UX Across Platforms
+Consistent UX builds trust and brand identity. Prototyping with Figma lets you iterate quickly, then apply those designs faithfully in Flutter and React, delivering seamless cross-platform journeys.

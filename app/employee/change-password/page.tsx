@@ -31,15 +31,16 @@ export default async function ChangePasswordPage() {
       <header
         className="sticky top-0 z-20"
         style={{
-          background: "var(--db-header)",
+          background: "color-mix(in srgb, var(--db-header) 92%, transparent)",
           borderBottom: "1px solid var(--db-border)",
+          backdropFilter: "blur(16px)",
         }}
       >
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 sm:px-8">
-          <BrandLogo />
-          <div className="flex items-center gap-4">
+          <BrandLogo tone="auto" />
+          <div className="flex items-center gap-3">
             <span
-              className="hidden font-mono text-[0.62rem] uppercase tracking-[0.18em] sm:block"
+              className="hidden font-mono text-[0.6rem] uppercase tracking-[0.2em] sm:block"
               style={{ color: "var(--db-text-muted)" }}
             >
               {company.companyName}
@@ -47,20 +48,20 @@ export default async function ChangePasswordPage() {
             <ThemeToggle />
             <Link
               href="/employee/dashboard"
-              className="rounded-full px-4 py-1.5 text-xs font-medium transition"
+              className="db-nav-btn rounded-full px-4 py-1.5 text-xs font-medium"
               style={{
                 border: "1px solid var(--db-border)",
                 color: "var(--db-text-soft)",
-                background: "transparent",
+                background: "var(--db-surface)",
                 textDecoration: "none",
               }}
             >
-              Back
+              ← Dashboard
             </Link>
             <form action={signOutEmployeeAction}>
               <button
                 type="submit"
-                className="rounded-full px-4 py-1.5 text-xs font-medium transition"
+                className="db-nav-btn rounded-full px-4 py-1.5 text-xs font-medium"
                 style={{
                   border: "1px solid var(--db-border)",
                   color: "var(--db-text-soft)",
@@ -75,11 +76,14 @@ export default async function ChangePasswordPage() {
       </header>
 
       <main className="mx-auto max-w-2xl px-6 py-10 sm:px-8">
-        <h1 className="font-display text-3xl" style={{ color: "var(--db-text)" }}>
+        <h1
+          className="font-display text-3xl"
+          style={{ color: "var(--db-text)", letterSpacing: "-0.02em" }}
+        >
           Change password
         </h1>
-        <p className="mt-2 text-sm leading-7" style={{ color: "var(--db-text-soft)" }}>
-          Update your password securely.
+        <p className="mt-2 text-sm leading-[1.75]" style={{ color: "var(--db-text-soft)" }}>
+          Keep your account secure with a strong, unique password.
         </p>
 
         <div
@@ -87,7 +91,7 @@ export default async function ChangePasswordPage() {
           style={{
             background: "var(--db-card)",
             border: "1px solid var(--db-border)",
-            boxShadow: "var(--db-shadow-sm)",
+            boxShadow: "var(--db-shadow-md)",
           }}
         >
           <ChangePasswordForm />

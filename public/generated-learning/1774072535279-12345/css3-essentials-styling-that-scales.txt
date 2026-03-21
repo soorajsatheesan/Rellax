@@ -1,0 +1,8 @@
+Scene 1: Modern Layout Techniques
+Flexbox allows aligning items horizontally or vertically, great for components like navbars. Grid controls rows and columns, perfect for entire page layouts.
+
+Scene 2: CSS Variables and Theming
+Variables are reusable values like colors or spacing. Define them at the root for site-wide use, or inside components for scoped custom themes.
+
+Scene 3: Transitions and Animation Principles
+Transitions animate property changes like color or size. Keyframes define more complex sequences. Always test on devices to keep interactions smooth.

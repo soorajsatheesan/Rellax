@@ -88,6 +88,22 @@ export default defineSchema({
     employeeId: v.id("employees"),
     employerId: v.id("employers"),
     sourceResumeId: v.optional(v.id("employee_resumes")),
+    sourceRoleTitle: v.optional(v.string()),
+    learnerPersonaSummary: v.optional(v.string()),
+    requiredSkills: v.optional(v.array(v.string())),
+    gapSkills: v.optional(v.array(v.string())),
+    generationVersion: v.optional(v.string()),
+    generationStatus: v.optional(
+      v.union(
+        v.literal("pending"),
+        v.literal("roadmap_ready"),
+        v.literal("generating"),
+        v.literal("ready"),
+        v.literal("failed"),
+      ),
+    ),
+    generationError: v.optional(v.string()),
+    currentGeneratingModuleId: v.optional(v.id("learning_path_modules")),
     createdAt: v.number(),
   })
     .index("by_employee_id", ["employeeId"])
@@ -97,8 +113,80 @@ export default defineSchema({
     learningPathId: v.id("learning_paths"),
     title: v.string(),
     category: v.string(),
+    summary: v.optional(v.string()),
+    targetSkill: v.optional(v.string()),
+    personalizationNote: v.optional(v.string()),
+    notesContent: v.optional(v.string()),
+    videoStyle: v.optional(v.string()),
+    learningObjectives: v.optional(v.array(v.string())),
     duration: v.string(),
     lessons: v.number(),
+    sceneCount: v.optional(v.number()),
+    difficulty: v.optional(
+      v.union(
+        v.literal("foundation"),
+        v.literal("intermediate"),
+        v.literal("advanced"),
+      ),
+    ),
+    estimatedMinutes: v.optional(v.number()),
+    slides: v.optional(
+      v.array(
+        v.object({
+          title: v.string(),
+          focus: v.optional(v.string()),
+          bullets: v.array(v.string()),
+          speakerNotes: v.string(),
+          narration: v.string(),
+          takeaway: v.optional(v.string()),
+          visualCue: v.optional(v.string()),
+          imageUrl: v.optional(v.string()),
+          imageSourceUrl: v.optional(v.string()),
+          imageCaption: v.optional(v.string()),
+          layoutVariant: v.optional(v.string()),
+          approxDurationSec: v.number(),
+          audioUrl: v.optional(v.string()),
+          audioChunks: v.optional(v.array(v.string())),
+        }),
+      ),
+    ),
+    narrationScript: v.optional(v.string()),
+    knowledgeChecks: v.optional(v.array(v.string())),
+    qaPairs: v.optional(
+      v.array(
+        v.object({
+          question: v.string(),
+          answer: v.optional(v.string()),
+          options: v.optional(v.array(v.string())),
+          correctAnswer: v.optional(v.string()),
+          explanation: v.optional(v.string()),
+        }),
+      ),
+    ),
+    voiceoverAudioUrl: v.optional(v.string()),
+    slideDeckUrl: v.optional(v.string()),
+    transcriptUrl: v.optional(v.string()),
+    artifactManifestUrl: v.optional(v.string()),
+    generationProvider: v.optional(v.string()),
+    generationStatus: v.optional(
+      v.union(
+        v.literal("pending"),
+        v.literal("processing"),
+        v.literal("partial"),
+        v.literal("ready"),
+        v.literal("failed"),
+      ),
+    ),
+    notesStatus: v.optional(
+      v.union(v.literal("pending"), v.literal("processing"), v.literal("ready"), v.literal("failed")),
+    ),
+    videoStatus: v.optional(
+      v.union(v.literal("pending"), v.literal("processing"), v.literal("ready"), v.literal("failed")),
+    ),
+    qaStatus: v.optional(
+      v.union(v.literal("pending"), v.literal("processing"), v.literal("ready"), v.literal("failed")),
+    ),
+    generationError: v.optional(v.string()),
     orderIndex: v.number(),
     status: v.union(
       v.literal("not_started"),

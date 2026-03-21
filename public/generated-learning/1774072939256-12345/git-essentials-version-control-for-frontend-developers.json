@@ -1,0 +1,81 @@
+{
+  "title": "Git Essentials: Version Control for Frontend Developers",
+  "category": "Version Control",
+  "summary": "Enable confident source code management with Git, focusing on workflows and collaboration needs of frontend engineers.",
+  "targetSkill": "Git proficiency and collaboration",
+  "personalizationNote": "You have Git basics; we’ll build on them to cover branching, rebasing, conflict resolution, and team collaboration practices.",
+  "videoStyle": "Step-by-step terminal demonstrations",
+  "duration": "3 min",
+  "learningObjectives": [
+    "Understand branching and merging",
+    "Handle merge conflicts with confidence",
+    "Use rebasing to maintain clean history",
+    "Collaborate using pull requests and code reviews"
+  ],
+  "knowledgeChecks": [
+    "What is one benefit of branching in Git?",
+    "Name a step in manually resolving merge conflicts.",
+    "Why use git rebase instead of merge?"
+  ],
+  "narrationScript": "Scene 1: Branching and Merging Fundamentals\nCreate branches for features, switch context easily, and merge back once tested to maintain a stable main branch.\n\nScene 2: Resolving Merge Conflicts Gracefully\nWhen Git flags conflicts, open affected files, analyze differences, and carefully merge code to unify changes without overwriting work.\n\nScene 3: Using Git Rebase for a Cleaner History\nUse git rebase to integrate changes cleanly. Interactive rebasing lets you edit, squash, or reorder commits before sharing code.\n\nScene 4: Collaborating with Pull Requests and Code Reviews\nWrite clear PR descriptions, address reviewer comments constructively, and use reviews to learn and keep code solid.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Branching and Merging Fundamentals",
+      "bullets": [
+        "Creating and switching branches",
+        "Merging strategies",
+        "Keeping main branch stable"
+      ],
+      "speakerNotes": "Branches let you develop features safely without disrupting main code. Clean merges keep history understandable and bugs minimal.",
+      "narration": "Create branches for features, switch context easily, and merge back once tested to maintain a stable main branch.",
+      "visualCue": "Terminal commands creating and merging branches",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 2,
+      "title": "Resolving Merge Conflicts Gracefully",
+      "bullets": [
+        "Detecting conflicts",
+        "Manual conflict resolution",
+        "Best practices for prevention"
+      ],
+      "speakerNotes": "Conflicts happen when multiple changes collide. Learning how to resolve them calmly avoids team delays and lost work.",
+      "narration": "When Git flags conflicts, open affected files, analyze differences, and carefully merge code to unify changes without overwriting work.",
+      "visualCue": "Sample conflicted file and resolution steps",
+      "approxDurationSec": 55
+    },
+    {
+      "index": 3,
+      "title": "Using Git Rebase for a Cleaner History",
+      "bullets": [
+        "Rebasing vs merging",
+        "Interactive rebase",
+        "When and why to rebase"
+      ],
+      "speakerNotes": "Rebasing reorganizes commits to create a linear, easier to follow history — valuable for peer reviews and debugging.",
+      "narration": "Use git rebase to integrate changes cleanly. Interactive rebasing lets you edit, squash, or reorder commits before sharing code.",
+      "visualCue": "Visualized commit graph before and after rebasing",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 4,
+      "title": "Collaborating with Pull Requests and Code Reviews",
+      "bullets": [
+        "Creating meaningful PRs",
+        "Responding to feedback",
+        "Maintaining code quality"
+      ],
+      "speakerNotes": "Pull requests and code reviews enforce quality and knowledge sharing across frontend teams, vital for your role at Veyon.",
+      "narration": "Write clear PR descriptions, address reviewer comments constructively, and use reviews to learn and keep code solid.",
+      "visualCue": "Screenshot of GitHub PR with comments",
+      "approxDurationSec": 45
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072939256-12345/git-essentials-version-control-for-frontend-developers.pptx",
+    "transcriptUrl": "/generated-learning/1774072939256-12345/git-essentials-version-control-for-frontend-developers.txt",
+    "artifactManifestUrl": "/generated-learning/1774072939256-12345/git-essentials-version-control-for-frontend-developers.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072939256-12345/git-essentials-version-control-for-frontend-developers.mp3"
+  }
+}

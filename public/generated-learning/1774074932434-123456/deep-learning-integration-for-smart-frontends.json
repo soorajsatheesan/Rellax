@@ -1,0 +1,66 @@
+{
+  "title": "Deep Learning Integration for Smart Frontends",
+  "category": "Machine Learning & Frontend Fusion",
+  "summary": "Extend your deep learning expertise by embedding AI-powered features directly into frontend applications for smarter user experiences at Truffaire.",
+  "targetSkill": "Frontend AI Integration",
+  "personalizationNote": "Building on your TensorFlow and AI-powered smart mirror projects to deliver interactive, real-time AI-driven frontend components.",
+  "videoStyle": "Technical demo with interactive UI mockups",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Embed TensorFlow models within React components.",
+    "Deploy real-time inference pipelines in frontend apps.",
+    "Visualize AI outputs seamlessly for end users."
+  ],
+  "knowledgeChecks": [
+    "Describe advantages of running TensorFlow models client-side vs server-side.",
+    "Outline methods to visualize AI model outputs effectively in a React UI.",
+    "Explain how data caching can optimize live frontend data pipelines."
+  ],
+  "narrationScript": "Running TensorFlow Models in the Browser\nRunning AI right in the browser cuts latency and empowers users with instant feedback. TensorFlow.js lets you reuse your Python TensorFlow models in React, bringing machine learning magic to your frontend interfaces.\n\nReal-Time AI Visualization and User Interaction\nAn AI feature isn’t useful if users don’t get it. By weaving clear visual cues and interactive input, you turn complex models into intuitive tools that keep users engaged and informed.\n\nData Pipelines from Backend to Frontend\nFrom complex model outputs to clean frontends, managing data pipelines ensures users see the right insights at the right time. Streaming data live and caching cleverly keeps your interfaces quick and reliable.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Running TensorFlow Models in the Browser",
+      "bullets": [
+        "Use TensorFlow.js to load models in React apps.",
+        "Optimize models for browser performance.",
+        "Balance between client and server inference for best results."
+      ],
+      "speakerNotes": "You’ve crafted powerful AI backend models, Sudarshan. Imagine running parts of this intelligence directly in your frontend, speeding up responses and enhancing privacy in your Truffaire apps.",
+      "narration": "Running AI right in the browser cuts latency and empowers users with instant feedback. TensorFlow.js lets you reuse your Python TensorFlow models in React, bringing machine learning magic to your frontend interfaces.",
+      "visualCue": "Screenshot of React app UI with embedded TensorFlow.js inference visualizing real-time predictions.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Real-Time AI Visualization and User Interaction",
+      "bullets": [
+        "Design dynamic visualizations of AI predictions.",
+        "Integrate user input to refine model outputs live.",
+        "Ensure smooth UI updates with React state and hooks."
+      ],
+      "speakerNotes": "Your audio deepfake detection UI was impressive. Now, let’s refine how AI results communicate with users, keeping interfaces intuitive for Truffaire’s clientele.",
+      "narration": "An AI feature isn’t useful if users don’t get it. By weaving clear visual cues and interactive input, you turn complex models into intuitive tools that keep users engaged and informed.",
+      "visualCue": "Animated chart showing live updating AI confidence scores alongside user input controls in a React app.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Data Pipelines from Backend to Frontend",
+      "bullets": [
+        "Transform raw model outputs into UI-friendly formats.",
+        "Use WebSocket streams for live data feeds.",
+        "Implement caching strategies with Redis and React state."
+      ],
+      "speakerNotes": "Your full-stack expertise means you can craft seamless pipelines from backend AI to frontend dashboards, critical for delivering data-rich features in Truffaire’s smart applications.",
+      "narration": "From complex model outputs to clean frontends, managing data pipelines ensures users see the right insights at the right time. Streaming data live and caching cleverly keeps your interfaces quick and reliable.",
+      "visualCue": "Diagram showing data flow from TensorFlow backend through Redis cache into React frontend visualization components.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074932434-123456/deep-learning-integration-for-smart-frontends.pptx",
+    "transcriptUrl": "/generated-learning/1774074932434-123456/deep-learning-integration-for-smart-frontends.txt",
+    "artifactManifestUrl": "/generated-learning/1774074932434-123456/deep-learning-integration-for-smart-frontends.json"
+  }
+}

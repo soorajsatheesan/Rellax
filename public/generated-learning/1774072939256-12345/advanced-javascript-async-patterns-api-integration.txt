@@ -1,0 +1,11 @@
+Scene 1: Demystifying the JavaScript Event Loop
+JavaScript runs tasks on a single thread using the event loop, scheduling callbacks and promises to avoid blocking your app.
+
+Scene 2: Using Promises and Async/Await
+Promises represent future results; async/await lets you write asynchronous code like synchronous, improving clarity and maintainability.
+
+Scene 3: REST API Integration: Best Practices
+The Fetch API allows you to call REST endpoints straightforwardly; always check responses and handle errors to avoid user breaks.
+
+Scene 4: Optimizing API Calls: Caching & Debouncing
+Cache responses locally and debounce input events so your app only queries APIs when necessary, improving speed and reducing load.

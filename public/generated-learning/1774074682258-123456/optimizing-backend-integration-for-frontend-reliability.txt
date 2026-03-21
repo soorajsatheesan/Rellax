@@ -1,0 +1,8 @@
+API Design for Frontend Performance
+FastAPI is your backend powerhouse. Shaping APIs so your React frontend requests only needed data cuts wait times. Pagination and filtering avoid overwhelming frontend. API versioning lets Truffaire evolve features without breaking user experience.
+
+Caching for Instant UI Updates
+Caching with Redis slashes response times for user profile or clothing recommendations. Pair with smart invalidation rules to keep data accurate. Redis Pub/Sub lets you push live updates, making Truffaire’s frontend feel truly instantaneous and responsive.
+
+Async Task Queues Enhance Frontend UX
+Heavy tasks like AI inference take time. Offloading them with Celery workers keeps APIs responsive. Notify your React frontend when tasks finish so users see updates live. Proper retries and error handling keep the system stable—essential for Truffaire’s professional apps.

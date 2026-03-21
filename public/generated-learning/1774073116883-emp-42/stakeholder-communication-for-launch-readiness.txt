@@ -1,0 +1,5 @@
+Why launch updates fail
+Launch updates usually fail when the audience cannot tell what changed, what is blocked, and who owns the next move.
+
+A simple communication frame
+A strong update starts with the expected outcome, then names the main risk, and closes with a concrete owner and next action.

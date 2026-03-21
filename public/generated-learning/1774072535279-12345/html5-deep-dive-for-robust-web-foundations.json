@@ -1,0 +1,68 @@
+{
+  "title": "HTML5 Deep Dive for Robust Web Foundations",
+  "category": "Core Frontend Skills",
+  "summary": "Master semantic HTML5 to build accessible, maintainable frontends meeting modern web standards.",
+  "targetSkill": "Strong proficiency in HTML",
+  "personalizationNote": "Focus on practical HTML semantics and accessibility techniques to complement existing JavaScript and React skills.",
+  "videoStyle": "Clean slides with code snippets and live browser renderings",
+  "duration": "3 min",
+  "learningObjectives": [
+    "Use semantic HTML5 tags correctly",
+    "Implement accessible HTML structures",
+    "Structure complex web pages for maintainability",
+    "Integrate multimedia and forms effectively"
+  ],
+  "knowledgeChecks": [
+    "Which semantic tag is appropriate for primary site navigation?",
+    "What ARIA role helps identify main content?",
+    "How do labels improve form accessibility?"
+  ],
+  "narrationScript": "Scene 1: Semantic HTML Overview\nSemantic HTML uses tags that describe content meaningfully. For example, 'header' marks the top section, 'nav' contains navigation links—helping browsers and assistive tech understand page structure.\n\nScene 2: Structuring Content for Accessibility\nLandmarks like 'main' and 'aside' define sections for assistive tech. ARIA attributes add extra info to elements when HTML alone isn’t enough. This makes your HTML usable by everyone.\n\nScene 3: Forms and Multimedia Elements\nLabel every form input clearly, provide helpful hints, and make error messages accessible. For media, use fallback captions and controls so everyone benefits.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Semantic HTML Overview",
+      "bullets": [
+        "Purpose of semantic tags",
+        "Improving accessibility & SEO",
+        "Common semantic elements (header, nav, main)"
+      ],
+      "speakerNotes": "Understanding semantic HTML anchors your pages with meaning for users and tools alike, improving accessibility and SEO. We'll cover key elements you should use daily.",
+      "narration": "Semantic HTML uses tags that describe content meaningfully. For example, 'header' marks the top section, 'nav' contains navigation links—helping browsers and assistive tech understand page structure.",
+      "visualCue": "Diagram of semantic tag layout on a sample webpage.",
+      "approxDurationSec": 60
+    },
+    {
+      "index": 2,
+      "title": "Structuring Content for Accessibility",
+      "bullets": [
+        "Using landmarks and roles",
+        "ARIA attributes basics",
+        "Ensuring keyboard navigation"
+      ],
+      "speakerNotes": "Accessible structure is crucial. This scene focuses on landmarks and ARIA to ensure screen readers and keyboard users navigate easily.",
+      "narration": "Landmarks like 'main' and 'aside' define sections for assistive tech. ARIA attributes add extra info to elements when HTML alone isn’t enough. This makes your HTML usable by everyone.",
+      "visualCue": "Example HTML snippet with ARIA roles and keyboard focus highlights.",
+      "approxDurationSec": 75
+    },
+    {
+      "index": 3,
+      "title": "Forms and Multimedia Elements",
+      "bullets": [
+        "Accessible forms best practices",
+        "Media embedding with <video> and <audio>",
+        "Progressive enhancement techniques"
+      ],
+      "speakerNotes": "Forms and media are interactive pillars. Learn to build accessible forms and embed multimedia that degrade gracefully on older browsers.",
+      "narration": "Label every form input clearly, provide helpful hints, and make error messages accessible. For media, use fallback captions and controls so everyone benefits.",
+      "visualCue": "Before/after form markup comparison showcasing accessibility improvements.",
+      "approxDurationSec": 70
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072535279-12345/html5-deep-dive-for-robust-web-foundations.pptx",
+    "transcriptUrl": "/generated-learning/1774072535279-12345/html5-deep-dive-for-robust-web-foundations.txt",
+    "artifactManifestUrl": "/generated-learning/1774072535279-12345/html5-deep-dive-for-robust-web-foundations.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072535279-12345/html5-deep-dive-for-robust-web-foundations.mp3"
+  }
+}

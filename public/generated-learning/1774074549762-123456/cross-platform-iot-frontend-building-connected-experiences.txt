@@ -1,0 +1,8 @@
+Flutter UI for Real-Time IoT Data and Control
+Real-time is everything in IoT. Flutter’s streams let you listen to sensor data updates from your Raspberry Pi and update the UI instantly. The Bloc pattern keeps state organized as you send control commands and receive status back. Designing clear feedback loops means users feel in command of smart devices—a core experience you champion at Truffaire.
+
+Offline-First and Resilience Strategies for IoT Frontends
+No network? No problem. By caching recent sensor readings and queued commands locally, your Flutter app stays interactive. Smart reconnect logic tries silently, syncing all changes seamlessly when connectivity returns. Users never notice glitches, just a reliable experience on Truffaire devices, whatever the network looks like.
+
+Android Automotive OS Frontend Features and Integration
+In cars, frontends must be responsive and lightweight. Implement layouts that adapt to vertical and wide screens. Media controls and voice commands keep users focused and safe. Efficient code ensures smooth operation within automotive hardware limits — skills you’re uniquely positioned to deliver from your IISc and PESU projects for Truffaire’s future vehicles.

@@ -1,0 +1,171 @@
+{
+  "title": "Mastering Core Web Technologies: HTML5, CSS3, and Modern JavaScript Essentials",
+  "category": "Foundation: Core Frontend Technologies",
+  "summary": "This module strengthens Sudarshan's foundational skills in HTML, CSS, and vanilla JavaScript with an emphasis on semantic markup, accessibility best practices, responsive design, and ES6+ features that are critical for modern frontend development.",
+  "targetSkill": "Strong proficiency in HTML, CSS, and JavaScript fundamentals",
+  "personalizationNote": "Considering your strong background in React, Next.js, and backend development, this module deep dives into the core foundation that elevates your existing skills, especially reinforcing concepts that all frameworks ultimately rely on under the hood. It is designed to enhance debugging ability and improve the semantic, performant, and accessible quality of your frontends, bridging gaps between framework abstraction and native web standards.",
+  "videoStyle": "Detailed screencasts demonstrating hands-on coding with side-by-side explanations, live debugging sessions of HTML/JS/CSS issues, and animations depicting DOM structure and CSS box models, complemented by whiteboard discussions of asynchronous flows and accessibility principles.",
+  "duration": "5 min",
+  "learningObjectives": [
+    "Write semantic HTML5 documents adhering to accessibility standards.",
+    "Implement responsive layouts using modern CSS techniques including Flexbox, Grid, and media queries.",
+    "Demonstrate mastery of JavaScript ES6+ features such as arrow functions, destructuring, promises, async/await, and modules.",
+    "Build interactive UI components using vanilla JavaScript without relying on frameworks.",
+    "Create maintainable and scalable CSS architectures such as BEM or utility-first approaches."
+  ],
+  "knowledgeChecks": [
+    "Explain why semantic HTML5 markup is crucial for accessibility and SEO.",
+    "Demonstrate how to create a responsive grid layout that adapts from mobile to desktop.",
+    "Write a vanilla JavaScript example that uses async/await to fetch and display API data.",
+    "Describe the difference between Flexbox and CSS Grid and when to use each.",
+    "Implement a custom web component using Shadow DOM, explaining its benefits."
+  ],
+  "narrationScript": "Semantic HTML5: Foundations for Accessibility and SEO\nHey, Sudarshan, let’s dive into semantic HTML5—a foundation critical for accessible and SEO-friendly pages. Semantic elements like <main>, <nav>, and <section> don’t only structure content visually but embed meaning that browsers and assistive tools can interpret. For example, wrapping primary content with <main> clarifies page intent, while pairing <section> with headings preserves a logical outline. Avoid relying on generic <div> tags for structure; native elements better communicate roles and enable richer navigation. ARIA roles are powerful but should only fill gaps, not override native semantics. Validating with W3C tools and testing accessibility helps ensure a robust, inclusive experience for all users.\n\nMastering Responsive Layouts with CSS Grid and Flexbox\nResponsive design is an art and science, and CSS Grid and Flexbox are your best tools. Flexbox shines for one-dimensional layouts—think rows or columns—where properties like justify-content and align-items control alignment elegantly. Meanwhile, Grid excels with complex two-dimensional layouts, letting you explicitly define rows, columns, and even named grid areas. Techniques like auto-fill and minmax() enable grids that fluidly adapt to screen widths, key for mobile-first approaches. Combine these with media queries to elegantly switch layouts on different devices. Architect your CSS with methods like BEM or utility-first classes to keep styles scalable and avoid problems like deep nesting or !important declarations that can cause specificity wars and performance hits.\n\nModern JavaScript ES6+: Clean, Modular, and Asynchronous Code\nModern JavaScript brings powerful syntax and patterns to make code cleaner and more maintainable. Arrow functions, for instance, lexically bind this, helping avoid issues in callbacks or event handlers common in frontend code. Destructuring lets you pull out values from objects or arrays neatly, making your functions more concise. Default parameters add robustness by providing sane defaults without extra checks. When working with asynchronous data, promises prevent callback hell, and async/await lets you write async code as if it were synchronous, complete with try/catch for errors. ES modules keep your code modular and optimized with features like tree shaking, reducing bundle sizes. Lastly, leveraging Custom Elements with Shadow DOM enables you to build encapsulated UI components without relying on large frameworks—ideal for robust, reusable frontend code.\n\nAccessibility Deep Dive: ARIA, Landmarks, and Keyboard Navigation\nAccessibility is often underappreciated but critical for a truly inclusive web. Start with native HTML5 elements—they inherently provide semantics and landmarks like <nav>, <main>, <header>, and <footer> that help screen readers navigate your page efficiently. Properly associated <label> elements with inputs enhance form clarity, which is essential for users relying on assistive technology. When handling keyboard navigation, manage tabindex carefully to maintain a natural tab order and avoid confusion caused by positive tabindex values. While ARIA roles can fill semantic gaps, misuse or conflicts with native elements can confuse assistive tools, so use ARIA sparingly and purposefully. Finally, validate your work using tools like axe or WAVE and test manually with screen readers and keyboard-only navigation to catch real-world issues.\n\nCSS Performance and Debugging: Writing Efficient, Scalable Styles\nEfficient CSS is key to smooth user experiences and easier maintenance. Deep selector nesting leads to high specificity, making overrides challenging and your stylesheets brittle. Using CSS variables, or custom properties, centralizes theming and facilitates global changes with minimal code. Avoid overusing !important; it often signals specificity problems better solved by refactoring selectors. Browser DevTools are your best friend—inspect styles live, explore the box model visually, and experiment in real time. Keep an eye on layout thrashing, where frequent DOM reads and writes cause forced synchronous layouts, hurting performance. Consistent CSS architectures like BEM or utility-first classes streamline selectors and shrink filesize, reducing render time and complexity.\n\nVanilla JS Components: Custom Elements with Shadow DOM\nCustom Elements paired with Shadow DOM let you build encapsulated, reusable UI components plain and simple—no frameworks required. You define a new element by extending HTMLElement and registering it with customElements.define(). Shadow DOM attaches a hidden subtree to your element that isolates styles and markup, preventing style leaks and conflicts with the surrounding page. Slots inside Shadow DOM allow you to compose flexible components by projecting light DOM content into defined insertion points. This approach offers predictable style scoping, smaller bundle sizes, and independence from bulky libraries. Just remember to check browser compatibility and consider polyfills for older environments. Tools like browser devtools let you peek into shadow roots and watch lifecycle callbacks, helping you debug and optimize seamlessly.",
+  "notesContent": "# Mastering Core Web Technologies: HTML5, CSS3, and Modern JavaScript Essentials\n\n---\n\n## Introduction\nAs a frontend engineer with a solid background in React.js, Next.js, and backend technologies, mastering core web technologies like HTML5, CSS3, and vanilla JavaScript ES6+ features is critical for building robust, scalable, and accessible applications. This module is focused on strengthening your foundation by dissecting the nuances of semantic HTML, advanced CSS layouts, and the latest JavaScript capabilities without relying solely on frameworks.\n\n\n---\n\n## 1. Semantics and Accessibility in HTML5\n\n### 1.1 The Importance of Semantic Markup\n- **Beyond Nesting and Styling:** Proper semantic elements provide meaning, improve SEO, and enable assistive technologies to interpret content correctly.\n- **Common Semantic Elements:** `<article>`, `<section>`, `<nav>`, `<aside>`, `<header>`, `<footer>`, `<main>`.\n\n### 1.2 Practical Implementation\n- Structure pages with a meaningful outline using `<main>` for primary content and `<nav>` for navigation links.\n- Use `<section>` to group related content with headings.\n- Avoid excessive divs; opt for native elements for better clarity.\n\n### 1.3 Accessibility Best Practices\n- **ARIA Roles and Attributes:** Use `role` only when necessary; native HTML5 elements inherently provide semantic information.\n- **Landmark Roles:** `<nav>` (navigation landmark), `<main>`, `<footer>`, and `<header>` improve screen reader navigation.\n- Use `<label>` with form inputs and optimize `tabindex` for logical keyboard navigation.\n\n### 1.4 Edge Cases & Common Pitfalls\n- Avoid nesting `<section>` without relevant headings; it disrupts the document outline.\n- Don’t misuse `<div>` as a structural substitute for semantics.\n- Screen readers prioritize semantic markup; improper use can make your site inaccessible.\n\n### 1.5 Debugging and Validation\n- Use tools like **WAVE**, **axe**, and browser dev tools accessibility inspectors.\n- Validate HTML with the **W3C Validator**; ensure no misplaced or deprecated tags.\n\n\n---\n\n## 2. Responsive Layouts and CSS3 Mastery\n\n### 2.1 Modern CSS Layouts: Flexbox and Grid\n- **Flexbox:** Designed for 1-dimensional layouts (rows or columns). Best for toolbars, menus, or small components.\n  - Master properties: `flex-direction`, `justify-content`, `align-items`, `flex-grow/shrink`.\n- **CSS Grid:** Perfect for 2-dimensional layouts involving rows and columns.\n  - Learn grid-template-columns/rows, grid-area, implicit vs explicit grids, and placement strategies.\n\n#### Practical Example: Responsive Photo Gallery\n```css\n.gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n  grid-gap: 10px;\n}\n```  \nThis syntax allows dynamic column creation while maintaining consistent sizing.\n\n\n### 2.2 Media Queries\n- Use `min-width` breakpoints to implement mobile-first design.\n- Combine with CSS Grid/Flexbox for smooth responsive transitions.\n\n### 2.3 CSS Architectures for Maintainability\n- **BEM (Block Element Modifier):** Enables predictable, reusable class naming.\n  - Example: `.button--primary`, `.card__header`.\n- **Utility-First (e.g., Tailwind CSS):** Small atomic classes for rapid styling.\n\nEnsure consistent usage across projects. Avoid mixing too many paradigms to reduce CSS specificity woes.\n\n### 2.4 Common Pitfalls and Performance\n- Avoid deeply nested selectors to reduce CSS specificity conflicts.\n- Minimize use of `!important`; refactor CSS if overridden frequently.\n- Leverage CSS variables for theming and reduce code duplication.\n\n### 2.5 Debugging CSS\n- DevTools CSS inspection panel for live style editing and visualizing box model.\n- Use browser Rendering performance tab to identify costly repaints or layout thrashing.\n\n\n---\n\n## 3. Mastering Modern JavaScript (ES6+)\n\n### 3.1 Core ES6+ Features\n- **Arrow Functions:** Lexically bind `this`, useful in React event handlers and callbacks.\n\n  ```js\n  const add = (a, b) => a + b;\n  ```\n\n- **Destructuring:** Cleaner extraction from objects and arrays.\n\n  ```js\n  const {name, age} = user;\n  const [first, second] = array;\n  ```\n\n- **Default Parameters:** Make functions more robust.\n  ```js\n  function fetchData(url, timeout = 5000) { ... }\n  ```\n\n### 3.2 Promises and Async/Await\n- Promises represent async operations; avoid callback hell.\n\n  ```js\n  fetch('/api/data')\n    .then(response => response.json())\n    .then(data => console.log(data))\n    .catch(err => console.error(err));\n  ```\n\n- **Async/Await:** Syntactic sugar for promises, making asynchronous code look synchronous.\n  ```js\n  async function getData() {\n    try {\n      const res = await fetch('/api/data');\n      const data = await res.json();\n      return data;\n    } catch (err) {\n      console.error(err);\n    }\n  }\n  ```\n\n### 3.3 Javascript Modules (ESM)\n- Use `import`/`export` to organize code into reusable components.\n- Important for code-splitting in modern bundlers (Webpack, Vite).\n\nExample:\n```js\n// utils.js\nexport function calculateAge(dob) { ... }\n\n// app.js\nimport { calculateAge } from './utils.js';\n```\n\n### 3.4 Building Interactive UI Components without Frameworks\n- Use custom Elements and Shadow DOM to build reusable, encapsulated components.\n- Example: Define a class extending `HTMLElement`, attach Shadow DOM for styles.\n\n```js\nclass MyButton extends HTMLElement {\n  constructor() {\n    super();\n    this.attachShadow({ mode: 'open' });\n    this.shadowRoot.innerHTML = `\n      <style>button { color: blue; }</style>\n      <button><slot></slot></button>\n    `;\n  }\n}\ncustomElements.define('my-button', MyButton);\n```\n\n### 3.5 Edge Cases and Debugging in JS\n- **Closures & `this` binding:** Arrow functions bind `this` lexically, normal functions don't.\n- Async error handling: Always catch promise rejections.\n- Debug with browser DevTools: Breakpoints, console logs, watch expressions.\n- Use tools like **ESLint** and **TypeScript** (even vanilla JS projects can benefit) for catching subtle bugs.\n\n### 3.6 Performance Considerations\n- Avoid unnecessary DOM manipulations; batch changes using DocumentFragments.\n- Minimize heavy computation in main thread, consider Web Workers for complex processing.\n- Lazy load scripts and UI components to improve initial load performance.\n\n\n---\n\n## 4. Integrating Best Practices from Modern Framework Experience\n\n- Even though you use React/Next.js daily, understanding vanilla JS and CSS means better debugging of framework internals.\n- Implement CSS modules or CSS-in-JS thoughtfully; always consider fallback to semantic and accessible base HTML and CSS.\n- Use your async/await expertise for smooth API integrations and state management, aligning with your REST API experience.\n\n\n---\n\n## Summary\nThis module equips you with a deep, practical understanding of the foundational frontend stack:\n- Semantic HTML5 for accessible, structured markup.\n- Responsive, performant CSS3 using Flexbox, Grid, and best architectural patterns.\n- Modern JavaScript ES6+ syntax and asynchronous techniques with thoughtful debugging.\n\nIntegrating these skills will elevate your frontend craftsmanship, enabling you to build maintainable, scalable applications from the ground up, complementing your React and backend expertise effectively.\n\n\n---\n\n## References\n- MDN Web Docs (HTML, CSS, JS)\n- A11Y Project (Accessibility Best Practices)\n- CSS-Tricks Flexbox and Grid guides\n- You Don’t Know JS (Book series) by Kyle Simpson\n- W3C Accessibility Guidelines\n\n\n---\n\n## Exercises\n- Build a semantic HTML5 landing page for a product, including ARIA landmarks.\n- Create a responsive dashboard UI using only CSS Grid and Flexbox.\n- Write a vanilla JS modal component encapsulated with Shadow DOM.\n- Refactor callback-based code to async/await with proper error handling.\n\n\n---\n\n## Expert Tips\n- Always test keyboard-only navigation and screen-reader compatibility.\n- Use native HTML elements before resorting to ARIA roles.\n- Style mobile-first; use rem and em units for scalable typography.\n- Modularize your JS; avoid monolithic scripts to leverage tree-shaking.\n- Regularly profile your CSS and JS with browser developer tools to spot bottlenecks.\n\n\n---",
+  "qaPairs": [],
+  "slides": [
+    {
+      "index": 1,
+      "title": "Semantic HTML5: Foundations for Accessibility and SEO",
+      "bullets": [
+        "Semantic elements provide intrinsic meaning to browsers and assistive technologies, improving SEO and accessibility.",
+        "Use <main> for primary page content; <nav> for navigation. Group related content with <section> paired with headings.",
+        "Avoid using excessive <div>s; prefer elements like <article>, <aside>, <header>, and <footer> for roles logically.",
+        "ARIA roles should complement, not replace, native semantics; use them sparingly to fix gaps.",
+        "Misnaming or improper nesting (e.g., <section> without headings) breaks document outline and harms screen reader experience.",
+        "Validate markup with tools like W3C Validator and run accessibility audits using WAVE or axe extension."
+      ],
+      "speakerNotes": "Highlight how semantic HTML isn’t just about markup but creating an intrinsic content meaning layer; guide learners to use landmarks logically and structure sections properly; warn about common mistakes like misnesting and overusing divs; explain ARIA roles as supplements, not replacements; emphasize tooling for validation and accessibility audits to catch errors early.",
+      "narration": "Hey, Sudarshan, let’s dive into semantic HTML5—a foundation critical for accessible and SEO-friendly pages. Semantic elements like <main>, <nav>, and <section> don’t only structure content visually but embed meaning that browsers and assistive tools can interpret. For example, wrapping primary content with <main> clarifies page intent, while pairing <section> with headings preserves a logical outline. Avoid relying on generic <div> tags for structure; native elements better communicate roles and enable richer navigation. ARIA roles are powerful but should only fill gaps, not override native semantics. Validating with W3C tools and testing accessibility helps ensure a robust, inclusive experience for all users.",
+      "visualCue": "Outline of a semantic HTML5 page structure showing native tags and landmarks",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Html5_semantics.svg",
+      "imageSourceUrl": "https://en.wikipedia.org/wiki/HTML5#Semantics",
+      "imageCaption": "Semantic HTML5 elements outline for improved accessibility and SEO.",
+      "layoutVariant": "media-left",
+      "approxDurationSec": 42,
+      "audioChunks": [
+        "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-1.mp3"
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Mastering Responsive Layouts with CSS Grid and Flexbox",
+      "bullets": [
+        "Flexbox excels in one-dimensional layouts; master properties like flex-direction, justify-content, align-items.",
+        "CSS Grid handles complex layouts with explicit rows and columns; define grid-template-columns/rows and grid-areas.",
+        "Use auto-fill and minmax() for dynamic grid columns that adapt to viewport width (mobile-first).",
+        "Combine media queries with CSS Grid/Flexbox to create seamless transitions between device sizes.",
+        "CSS architecture matters: apply BEM or utility-first classes consistently for maintainable styles.",
+        "Avoid deep selector nesting and !important declarations to reduce specificity and improve performance."
+      ],
+      "speakerNotes": "Explain the distinction between Flexbox and Grid in layout dimensionality, showing when to choose one over the other; cover dynamic grid techniques like auto-fill and minmax(); stress mobile-first design with media queries coordinating with layout styles; emphasize CSS architecture like BEM to keep code maintainable and avoid pitfalls like deep nesting and excessive !important usage, which degrade performance and complicate overrides.",
+      "narration": "Responsive design is an art and science, and CSS Grid and Flexbox are your best tools. Flexbox shines for one-dimensional layouts—think rows or columns—where properties like justify-content and align-items control alignment elegantly. Meanwhile, Grid excels with complex two-dimensional layouts, letting you explicitly define rows, columns, and even named grid areas. Techniques like auto-fill and minmax() enable grids that fluidly adapt to screen widths, key for mobile-first approaches. Combine these with media queries to elegantly switch layouts on different devices. Architect your CSS with methods like BEM or utility-first classes to keep styles scalable and avoid problems like deep nesting or !important declarations that can cause specificity wars and performance hits.",
+      "visualCue": "Sample CSS grid layout code snippet and visualization of grid areas",
+      "imageUrl": "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-2.jpg",
+      "imageSourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout",
+      "imageCaption": "Grid layout illustrating dynamic columns adapting to screen size.",
+      "layoutVariant": "media-left",
+      "approxDurationSec": 46,
+      "audioChunks": [
+        "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-2.mp3"
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Modern JavaScript ES6+: Clean, Modular, and Asynchronous Code",
+      "bullets": [
+        "Arrow functions provide lexical this binding; avoid common pitfalls in event handlers and callbacks.",
+        "Destructure objects and arrays to extract values cleanly and reduce boilerplate.",
+        "Use default parameters to make functions more resilient and expressive.",
+        "Promises prevent callback hell; async/await syntax allows writing asynchronous code like synchronous code with try/catch error handling.",
+        "ES modules (`import`/`export`) help organize code, enable tree shaking, and improve maintainability.",
+        "Custom Elements with Shadow DOM enable encapsulated UI components without framework dependencies."
+      ],
+      "speakerNotes": "Discuss arrow functions’ lexical this binding and common pitfalls in event handling; explain destructuring to reduce boilerplate; describe how default parameters increase resiliency; delve into async/await as cleaner async code approach with error handling; promote ES modules for modularity and tree shaking benefits; introduce custom elements and shadow DOM as framework-independent component strategies.",
+      "narration": "Modern JavaScript brings powerful syntax and patterns to make code cleaner and more maintainable. Arrow functions, for instance, lexically bind this, helping avoid issues in callbacks or event handlers common in frontend code. Destructuring lets you pull out values from objects or arrays neatly, making your functions more concise. Default parameters add robustness by providing sane defaults without extra checks. When working with asynchronous data, promises prevent callback hell, and async/await lets you write async code as if it were synchronous, complete with try/catch for errors. ES modules keep your code modular and optimized with features like tree shaking, reducing bundle sizes. Lastly, leveraging Custom Elements with Shadow DOM enables you to build encapsulated UI components without relying on large frameworks—ideal for robust, reusable frontend code.",
+      "visualCue": "Code snippet showing async/await with error handling and ES modules import/export",
+      "imageUrl": "https://cdn.pixabay.com/photo/2017/06/16/11/40/coding-2405541_960_720.jpg",
+      "imageSourceUrl": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules",
+      "imageCaption": "Modern JavaScript development with modules and asynchronous programming.",
+      "layoutVariant": "media-left",
+      "approxDurationSec": 52,
+      "audioChunks": [
+        "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-3.mp3"
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Accessibility Deep Dive: ARIA, Landmarks, and Keyboard Navigation",
+      "bullets": [
+        "Use native HTML5 elements first for semantics and accessibility before adding ARIA roles.",
+        "Landmark elements like <nav>, <main>, <header>, <footer> provide structure that screen readers rely on.",
+        "Associate <label> elements with inputs for screen-reader clarity and more accessible forms.",
+        "Manage tabindex carefully to maintain natural tab order; avoid positive tabindex values.",
+        "Common pitfalls: misuse of ARIA roles that conflict with native semantics; failing to test with screen readers.",
+        "Debug accessibility using tools like axe, WAVE, and manual keyboard navigation testing."
+      ],
+      "speakerNotes": "Stress using native HTML5 elements first to provide semantics; landmark elements structure pages meaningfully for assistive tech; properly associate labels with inputs for clearer forms; careful tabindex management to preserve logical keyboard navigation; warn against overusing ARIA roles or conflicting with native semantics; encourage thorough testing with screen readers and accessibility tools.",
+      "narration": "Accessibility is often underappreciated but critical for a truly inclusive web. Start with native HTML5 elements—they inherently provide semantics and landmarks like <nav>, <main>, <header>, and <footer> that help screen readers navigate your page efficiently. Properly associated <label> elements with inputs enhance form clarity, which is essential for users relying on assistive technology. When handling keyboard navigation, manage tabindex carefully to maintain a natural tab order and avoid confusion caused by positive tabindex values. While ARIA roles can fill semantic gaps, misuse or conflicts with native elements can confuse assistive tools, so use ARIA sparingly and purposefully. Finally, validate your work using tools like axe or WAVE and test manually with screen readers and keyboard-only navigation to catch real-world issues.",
+      "visualCue": "Diagram showing HTML landmarks and their roles in screen reader navigation",
+      "imageUrl": "https://cdn.pixabay.com/photo/2017/03/01/02/53/accessibility-2101546_960_720.png",
+      "imageSourceUrl": "https://webaim.org/techniques/aria/landmarks/",
+      "imageCaption": "Accessibility landmarks guide screen reader users through page regions.",
+      "layoutVariant": "media-left",
+      "approxDurationSec": 50,
+      "audioChunks": [
+        "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-4.mp3"
+      ]
+    },
+    {
+      "index": 5,
+      "title": "CSS Performance and Debugging: Writing Efficient, Scalable Styles",
+      "bullets": [
+        "Avoid deep selector nesting to reduce specificity conflicts and complicated overrides.",
+        "Leverage CSS variables (custom properties) for theme consistency and easy updates.",
+        "Minimize use of !important by refactoring CSS cascade and specificity issues.",
+        "Use browser DevTools to inspect styles, visualize box model, and experiment with live edits.",
+        "Measure layout thrashing and repaints with browser performance tools to detect costly style calculations.",
+        "Use consistent architecture (BEM or utility-first) to simplify selectors and reduce CSS file size and complexity."
+      ],
+      "speakerNotes": "Teach the impact of deeply nested selectors on specificity and how to avoid them; introduce CSS variables to centralize theming and simplify updates; caution against !important's misuse and how fixing specificity is a better approach; demonstrate using DevTools for live editing and understanding box model; explain layout thrashing and paint flashing as performance drains detected via browser profiles; underscore architectural consistency for maintainable, performant CSS.",
+      "narration": "Efficient CSS is key to smooth user experiences and easier maintenance. Deep selector nesting leads to high specificity, making overrides challenging and your stylesheets brittle. Using CSS variables, or custom properties, centralizes theming and facilitates global changes with minimal code. Avoid overusing !important; it often signals specificity problems better solved by refactoring selectors. Browser DevTools are your best friend—inspect styles live, explore the box model visually, and experiment in real time. Keep an eye on layout thrashing, where frequent DOM reads and writes cause forced synchronous layouts, hurting performance. Consistent CSS architectures like BEM or utility-first classes streamline selectors and shrink filesize, reducing render time and complexity.",
+      "visualCue": "Browser DevTools CSS pane screenshot highlighting box model and live style editing",
+      "imageUrl": "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-5.jpg",
+      "imageSourceUrl": "https://developers.google.com/web/tools/chrome-devtools/css",
+      "imageCaption": "DevTools CSS inspector for debugging styles and visualizing box model.",
+      "layoutVariant": "media-left",
+      "approxDurationSec": 44,
+      "audioChunks": [
+        "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-5.mp3"
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Vanilla JS Components: Custom Elements with Shadow DOM",
+      "bullets": [
+        "Define custom elements by extending HTMLElement and registering with customElements.define().",
+        "Attach Shadow DOM to isolate component styles and markup, preventing leakage or conflicts.",
+        "Use <slot> elements in Shadow DOM for content projection and flexible composition.",
+        "Advantages include framework independence, smaller bundle size, and predictable style scoping.",
+        "Watch out for browser compatibility; polyfills may be needed for older browsers.",
+        "Debug components by inspecting shadow roots in browser devtools and monitoring lifecycle callbacks."
+      ],
+      "speakerNotes": "Explain the process of defining custom elements with HTMLElement inheritance; detail Shadow DOM’s role in isolating component markup and styles to avoid leaks; describe slot usage for content projection enabling flexible components; discuss benefits like framework independence and bundle size reduction; note browser support caveats requiring polyfills; share debugging tips such as inspecting shadow roots and monitoring lifecycle callbacks for comprehensive understanding.",
+      "narration": "Custom Elements paired with Shadow DOM let you build encapsulated, reusable UI components plain and simple—no frameworks required. You define a new element by extending HTMLElement and registering it with customElements.define(). Shadow DOM attaches a hidden subtree to your element that isolates styles and markup, preventing style leaks and conflicts with the surrounding page. Slots inside Shadow DOM allow you to compose flexible components by projecting light DOM content into defined insertion points. This approach offers predictable style scoping, smaller bundle sizes, and independence from bulky libraries. Just remember to check browser compatibility and consider polyfills for older environments. Tools like browser devtools let you peek into shadow roots and watch lifecycle callbacks, helping you debug and optimize seamlessly.",
+      "visualCue": "Illustration of Shadow DOM encapsulating styles and markup within a custom element",
+      "imageUrl": "https://cdn.pixabay.com/photo/2019/12/06/14/44/css-4674037_960_720.png",
+      "imageSourceUrl": "https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM",
+      "imageCaption": "Shadow DOM encapsulates component internals for style and markup isolation.",
+      "layoutVariant": "media-left",
+      "approxDurationSec": 49,
+      "audioChunks": [
+        "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc-slide-6.mp3"
+      ]
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc.pptx",
+    "transcriptUrl": "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc.txt",
+    "artifactManifestUrl": "/generated-learning/1774086195721-12345/mastering-core-web-technologies-html5-css3-and-modern-javasc.json"
+  }
+}

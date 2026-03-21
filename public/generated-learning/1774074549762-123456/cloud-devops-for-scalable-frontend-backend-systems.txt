@@ -1,0 +1,8 @@
+Deploying Fullstack Applications on a VPS Securely
+Hosting your React frontend and FastAPI backend on the same VPS is efficient, but security comes first. Nginx acts as a reverse proxy managing HTTPS traffic smoothly. Firewalls and SSH keys guard your server against intrusions. These steps lock down your deployment while keeping critical Truffaire features available and fast for users worldwide.
+
+Dockerizing Frontend and Backend for Consistency and Scalability
+Docker takes your Development-to-Production journey from painful to smooth. Building concise Dockerfiles for React and FastAPI packages up your apps with their dependencies. Docker Compose spins up the entire stack—databases, caches, backends—in one command. Smaller, optimized images mean quicker startup and easier scaling across Truffaire servers. It’s infrastructure peace of mind made simple.
+
+Setting Up CI/CD Pipelines with Git for Reliable Releases
+Imagine every code push running tests and, if they pass, deploying your app without you lifting a finger. GitHub Actions and GitLab CI do exactly that. Automations keep your VPS updated with stable code, while instant alerts notify you on failures. This workflow gives you confidence, speeds delivery, and lets you focus on building innovative features for Truffaire.

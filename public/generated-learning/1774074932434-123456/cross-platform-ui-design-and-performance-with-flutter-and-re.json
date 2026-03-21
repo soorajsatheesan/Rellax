@@ -1,0 +1,66 @@
+{
+  "title": "Cross-Platform UI Design and Performance with Flutter and React",
+  "category": "Cross-Platform Development & UI/UX",
+  "summary": "Enhance your cross-platform app designs by mastering Flutter and React performance optimizations tailored for Truffaire's fashion and smart device ecosystems.",
+  "targetSkill": "Cross-Platform UI Engineering",
+  "personalizationNote": "Integrate your Flutter mobile UI and React web UI expertise to build cohesive, performant apps tailored for Truffaire’s users.",
+  "videoStyle": "Side-by-side UI demo and UX flow illustrations",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Compare UI paradigms in Flutter and React.",
+    "Optimize rendering and state management across platforms.",
+    "Design cohesive user experiences leveraging both frameworks."
+  ],
+  "knowledgeChecks": [
+    "Explain differences between Flutter widget and React virtual DOM architectures.",
+    "Identify strategies to minimize unnecessary UI re-renders in Flutter and React.",
+    "Describe how Figma can streamline cross-platform UX design."
+  ],
+  "narrationScript": "Balancing Flutter and React UI Approaches\nFlutter’s widgets build your apps like LEGO, while React’s virtual DOM efficiently paints web UIs. Knowing their differences lets you tailor apps that feel native, yet share a seamless design language from Figma mockups you craft.\n\nOptimizing State and Rendering for Speed\nUI speed is vital. In React, smart hooks prevent unwanted re-rendering, while Flutter’s providers let you control when widgets rebuild. Together, these tactics keep your apps feeling lightning-fast.\n\nDesigning Unified UX Across Platforms\nConsistent UX builds trust and brand identity. Prototyping with Figma lets you iterate quickly, then apply those designs faithfully in Flutter and React, delivering seamless cross-platform journeys.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Balancing Flutter and React UI Approaches",
+      "bullets": [
+        "Understand widget trees vs virtual DOM.",
+        "Leverage platform-specific capabilities in Flutter and React.",
+        "Coordinate shared design language with Figma."
+      ],
+      "speakerNotes": "You juggle Flutter for mobile and React for web at Truffaire. Let’s examine their core UI architectures to exploit each framework’s strengths in delivering sleek, consistent user experiences.",
+      "narration": "Flutter’s widgets build your apps like LEGO, while React’s virtual DOM efficiently paints web UIs. Knowing their differences lets you tailor apps that feel native, yet share a seamless design language from Figma mockups you craft.",
+      "visualCue": "Split-screen animation: left shows Flutter widget tree hierarchy; right shows React virtual DOM diffing process.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Optimizing State and Rendering for Speed",
+      "bullets": [
+        "Implement effective state management in React with hooks.",
+        "Use Flutter’s Provider and Riverpod for scalable state control.",
+        "Reduce unnecessary re-renders and UI jank."
+      ],
+      "speakerNotes": "Your complex apps need silky-smooth UI updates. Effective state management cuts lag and enhances UX for Truffaire’s active users across devices.",
+      "narration": "UI speed is vital. In React, smart hooks prevent unwanted re-rendering, while Flutter’s providers let you control when widgets rebuild. Together, these tactics keep your apps feeling lightning-fast.",
+      "visualCue": "Flowchart showing React hook state lifecycle and Flutter provider updates controlling widget rebuilds.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Designing Unified UX Across Platforms",
+      "bullets": [
+        "Use Figma to prototype designs for both mobile and web.",
+        "Define interaction patterns consistent across Flutter and React.",
+        "Incorporate user feedback loops for continuous refinement."
+      ],
+      "speakerNotes": "Your design chops with Figma are key to making Truffaire’s apps shine. We’ll align design and development flows for experiences that delight no matter the device.",
+      "narration": "Consistent UX builds trust and brand identity. Prototyping with Figma lets you iterate quickly, then apply those designs faithfully in Flutter and React, delivering seamless cross-platform journeys.",
+      "visualCue": "Multi-device Figma prototype showing harmonized UI elements for mobile (Flutter) and web (React).",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074932434-123456/cross-platform-ui-design-and-performance-with-flutter-and-re.pptx",
+    "transcriptUrl": "/generated-learning/1774074932434-123456/cross-platform-ui-design-and-performance-with-flutter-and-re.txt",
+    "artifactManifestUrl": "/generated-learning/1774074932434-123456/cross-platform-ui-design-and-performance-with-flutter-and-re.json"
+  }
+}

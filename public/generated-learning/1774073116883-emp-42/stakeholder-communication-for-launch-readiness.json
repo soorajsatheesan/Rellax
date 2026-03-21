@@ -1,0 +1,51 @@
+{
+  "title": "Stakeholder communication for launch readiness",
+  "category": "Communication",
+  "summary": "Translate technical work into clear launch updates for cross-functional partners.",
+  "targetSkill": "stakeholder communication",
+  "personalizationNote": "The learner has strong technical depth, so this module emphasizes executive-ready framing.",
+  "videoStyle": "Narrated explainer",
+  "duration": "3 min",
+  "learningObjectives": [
+    "Frame launch risk in business terms",
+    "Summarize decisions and owners clearly"
+  ],
+  "knowledgeChecks": [
+    "What should appear in a launch-ready stakeholder update?",
+    "How do you separate issue detail from decision impact?"
+  ],
+  "narrationScript": "Why launch updates fail\nLaunch updates usually fail when the audience cannot tell what changed, what is blocked, and who owns the next move.\n\nA simple communication frame\nA strong update starts with the expected outcome, then names the main risk, and closes with a concrete owner and next action.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Why launch updates fail",
+      "bullets": [
+        "Too much detail",
+        "No owner clarity",
+        "Impact buried"
+      ],
+      "speakerNotes": "Open with a realistic launch-status example.",
+      "narration": "Launch updates usually fail when the audience cannot tell what changed, what is blocked, and who owns the next move.",
+      "visualCue": "Split screen of noisy update versus clean summary",
+      "approxDurationSec": 70
+    },
+    {
+      "index": 2,
+      "title": "A simple communication frame",
+      "bullets": [
+        "State outcome",
+        "Highlight risk",
+        "Assign owner"
+      ],
+      "speakerNotes": "Keep the framework memorable.",
+      "narration": "A strong update starts with the expected outcome, then names the main risk, and closes with a concrete owner and next action.",
+      "visualCue": "Three-step diagram",
+      "approxDurationSec": 90
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774073116883-emp-42/stakeholder-communication-for-launch-readiness.pptx",
+    "transcriptUrl": "/generated-learning/1774073116883-emp-42/stakeholder-communication-for-launch-readiness.txt",
+    "artifactManifestUrl": "/generated-learning/1774073116883-emp-42/stakeholder-communication-for-launch-readiness.json"
+  }
+}

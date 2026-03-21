@@ -1,0 +1,81 @@
+{
+  "title": "Mastering Semantic HTML and Modern CSS",
+  "category": "Frontend Fundamentals",
+  "summary": "Solidify your foundation in semantic HTML5 and modern CSS to build accessible, responsive, and maintainable web interfaces.",
+  "targetSkill": "HTML5 & CSS3 proficiency",
+  "personalizationNote": "Focus on semantic structure and CSS best practices since you have core web development experience but your HTML/CSS skills need sharpening.",
+  "videoStyle": "Clean code demos with example websites",
+  "duration": "3 min",
+  "learningObjectives": [
+    "Identify semantic HTML elements and their use cases",
+    "Implement responsive layouts with Flexbox and Grid",
+    "Apply best practices for scalable CSS architecture",
+    "Enhance accessibility via HTML attributes and ARIA roles"
+  ],
+  "knowledgeChecks": [
+    "Which semantic HTML tag best represents the main content area?",
+    "Name two CSS layout methods for responsive design.",
+    "What is an ARIA role used for?"
+  ],
+  "narrationScript": "Scene 1: Why Semantic HTML Matters\nSemantic HTML5 elements like <header>, <main>, and <footer> give meaning to your content, boosting SEO and accessibility without extra effort.\n\nScene 2: Modern CSS Layouts: Flexbox & Grid\nUse Flexbox to align items in a row or column, and Grid to create complex layouts. Combining them lets you craft dynamic interfaces that work on any screen size.\n\nScene 3: Scalable and Maintainable CSS Practices\nAdopt CSS custom properties for consistent theming and break styles into reusable modules. These habits prevent messy, hard-to-fix style bugs.\n\nScene 4: Enhancing Accessibility with ARIA & HTML Attributes\nUse ARIA roles to define regions for screen readers, and ensure keyboard users can navigate your interface smoothly — simple steps with big impact.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Why Semantic HTML Matters",
+      "bullets": [
+        "Understand HTML5 semantic tags",
+        "Enhance SEO and accessibility",
+        "Simplify maintenance"
+      ],
+      "speakerNotes": "Let's start by understanding why semantic HTML isn't just a formality. Using the right tags improves SEO, makes your apps accessible, and helps future you maintain code faster.",
+      "narration": "Semantic HTML5 elements like <header>, <main>, and <footer> give meaning to your content, boosting SEO and accessibility without extra effort.",
+      "visualCue": "Code snippet highlighting semantic tags with overlay text",
+      "approxDurationSec": 45
+    },
+    {
+      "index": 2,
+      "title": "Modern CSS Layouts: Flexbox & Grid",
+      "bullets": [
+        "Flexbox for single-dimensional layouts",
+        "Grid for complex two-dimensional designs",
+        "Combining both for responsive UI"
+      ],
+      "speakerNotes": "CSS has evolved with powerful tools. Flexbox and Grid let you build layouts that adapt effortlessly across devices — a must-have skill for frontend engineers.",
+      "narration": "Use Flexbox to align items in a row or column, and Grid to create complex layouts. Combining them lets you craft dynamic interfaces that work on any screen size.",
+      "visualCue": "Animated layout switching between flexbox and grid examples",
+      "approxDurationSec": 60
+    },
+    {
+      "index": 3,
+      "title": "Scalable and Maintainable CSS Practices",
+      "bullets": [
+        "Use CSS variables and custom properties",
+        "Modular CSS for component styling",
+        "Avoiding specificity wars"
+      ],
+      "speakerNotes": "Writing CSS that's clean and maintainable lets your team move fast without running into style conflicts. We'll look at variables and modularity techniques.",
+      "narration": "Adopt CSS custom properties for consistent theming and break styles into reusable modules. These habits prevent messy, hard-to-fix style bugs.",
+      "visualCue": "Split screen before/after CSS improvements",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 4,
+      "title": "Enhancing Accessibility with ARIA & HTML Attributes",
+      "bullets": [
+        "Role attributes and landmarks",
+        "Keyboard navigation support",
+        "ARIA labels & live regions"
+      ],
+      "speakerNotes": "Accessibility ensures everyone can use your apps. Adding ARIA roles and proper attributes makes your UI inclusive and compliant.",
+      "narration": "Use ARIA roles to define regions for screen readers, and ensure keyboard users can navigate your interface smoothly — simple steps with big impact.",
+      "visualCue": "Screen reader highlighting ARIA roles with keyboard navigation cues",
+      "approxDurationSec": 50
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072939256-12345/mastering-semantic-html-and-modern-css.pptx",
+    "transcriptUrl": "/generated-learning/1774072939256-12345/mastering-semantic-html-and-modern-css.txt",
+    "artifactManifestUrl": "/generated-learning/1774072939256-12345/mastering-semantic-html-and-modern-css.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072939256-12345/mastering-semantic-html-and-modern-css.mp3"
+  }
+}

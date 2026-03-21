@@ -1,0 +1,68 @@
+{
+  "title": "Practical Git and Debugging Workflows",
+  "category": "Developer Tools & Debugging",
+  "summary": "Improve productivity with professional Git usage and effective debugging strategies tailored for frontend development.",
+  "targetSkill": "Familiarity with Git plus debugging and problem-solving skills",
+  "personalizationNote": "Reinforce Git best practices and equip Sudarshan with advanced debugging techniques for complex frontend issues.",
+  "videoStyle": "Terminal and IDE screen captures paired with explanations",
+  "duration": "4 min",
+  "learningObjectives": [
+    "Branching and merging workflows",
+    "Resolving conflicts like a pro",
+    "Debugging JavaScript and React apps",
+    "Using browser and editor tools effectively"
+  ],
+  "knowledgeChecks": [
+    "How do you handle a git merge conflict?",
+    "Which DevTools panel helps inspect React components?",
+    "What is the first step in debugging a new bug?"
+  ],
+  "narrationScript": "Scene 1: Git Branching and Merging\nCreate branches for features to keep main stable. Pull requests let teammates review code. Conflicts happen when changes overlap; resolving them carefully keeps history clean.\n\nScene 2: Debugging JavaScript Frontends\nSet breakpoints to pause script execution, inspect variables, and step through code. Use React DevTools to examine component trees and props.\n\nScene 3: Effective Problem-Solving Strategies\nStart by reproducing bugs consistently. Narrow down to minimal failing code. Logs and error boundaries catch and report unexpected errors gracefully.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Git Branching and Merging",
+      "bullets": [
+        "Creating feature branches",
+        "Pull requests basics",
+        "Handling merge conflicts"
+      ],
+      "speakerNotes": "Branching isolates work, and merge conflicts are common. We'll explore smooth workflows to collaborate without headaches.",
+      "narration": "Create branches for features to keep main stable. Pull requests let teammates review code. Conflicts happen when changes overlap; resolving them carefully keeps history clean.",
+      "visualCue": "Git commands demo and conflict editor screenshot.",
+      "approxDurationSec": 75
+    },
+    {
+      "index": 2,
+      "title": "Debugging JavaScript Frontends",
+      "bullets": [
+        "Using browser DevTools",
+        "Inspecting component state",
+        "Profiling performance bottlenecks"
+      ],
+      "speakerNotes": "DevTools are your debugger’s best friend. Learn tips to trace bugs and performance lags in React and plain JS apps.",
+      "narration": "Set breakpoints to pause script execution, inspect variables, and step through code. Use React DevTools to examine component trees and props.",
+      "visualCue": "Chrome DevTools interface highlighting sources panel.",
+      "approxDurationSec": 85
+    },
+    {
+      "index": 3,
+      "title": "Effective Problem-Solving Strategies",
+      "bullets": [
+        "Reproducing bugs systematically",
+        "Isolating root causes",
+        "Leveraging logs and error boundaries"
+      ],
+      "speakerNotes": "Good problem solving is methodical. We’ll cover approaches to identify and fix issues faster.",
+      "narration": "Start by reproducing bugs consistently. Narrow down to minimal failing code. Logs and error boundaries catch and report unexpected errors gracefully.",
+      "visualCue": "Flowchart of debugging process with example console logs.",
+      "approxDurationSec": 70
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072535279-12345/practical-git-and-debugging-workflows.pptx",
+    "transcriptUrl": "/generated-learning/1774072535279-12345/practical-git-and-debugging-workflows.txt",
+    "artifactManifestUrl": "/generated-learning/1774072535279-12345/practical-git-and-debugging-workflows.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072535279-12345/practical-git-and-debugging-workflows.mp3"
+  }
+}

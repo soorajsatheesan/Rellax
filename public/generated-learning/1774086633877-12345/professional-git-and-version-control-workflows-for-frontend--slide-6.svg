@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(640 120) rotate(90) scale(420 860)">
+      <stop stop-color="#244E3A" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#0B0D10"/>
+    </radialGradient>
+    <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#3D6B4F" fill-opacity="0.35"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="720" rx="28" fill="url(#g1)"/>
+  <rect width="1280" height="720" rx="28" fill="url(#dots)"/>
+  <rect x="40" y="40" width="1200" height="640" rx="24" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <circle cx="78" cy="82" r="8" fill="#7DE2A8"/>
+  <text x="104" y="88" fill="#F2F5F3" font-size="22" font-family="IBM Plex Mono, monospace" letter-spacing="3.5">RELLAX AI</text>
+  <text x="56" y="520" fill="#FFFFFF" font-size="58" font-weight="700" font-family="Georgia, 'Times New Roman', serif"><tspan x="56" dy="0">Integrating Git with CI/CD</tspan><tspan x="56" dy="44">Pipelines for Frontend</tspan><tspan x="56" dy="44">Deployment</tspan></text>
+  <text x="56" y="650" fill="#D7E2DB" font-size="28" font-family="IBM Plex Sans, Arial, sans-serif">CI/CD pipeline triggered by Git commit automates frontend tests and deployment.</text>
+</svg>

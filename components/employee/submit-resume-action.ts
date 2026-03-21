@@ -1,45 +1,41 @@
 "use server";
 
 import { withAuth } from "@workos-inc/authkit-nextjs";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { createAuthenticatedConvexClient } from "@/lib/convex-server";
 import { extractTextFromResumeFile } from "@/lib/extract-resume-text";
+import {
+  generateAdaptiveRoadmap,
+  generationVersion,
+} from "@/lib/content-engine";
 import { extractSkillsFromResume } from "@/lib/resume-skills-xai";
 
 export type SubmitResumeState = { error?: string };
 
-/** MVP: generate modules from gap skills. Each gap becomes a "Learn X" module. */
-function generateModuleSpecs(
-  gapSkills: string[],
-  employeeRoleTitle: string,
-): Array<{ title: string; category: string; duration: string; lessons: number }> {
-  if (gapSkills.length === 0) {
-    return [
-      {
-        title: `${employeeRoleTitle} fundamentals`,
-        category: "Onboarding",
-        duration: "30 min",
-        lessons: 3,
-      },
-      {
-        title: "Company policies & compliance",
-        category: "Compliance",
-        duration: "20 min",
-        lessons: 2,
-      },
-    ];
+function toActionErrorMessage(error: unknown, fallback: string) {
+  const message = error instanceof Error ? error.message : fallback;
+
+  if (message.includes("ArgumentValidationError")) {
+    return "The Convex backend is still using the old validator. Restart or rerun `npx convex dev --once` so the updated employeeLearning mutation is pushed, then submit again.";
   }
 
-  const category = "Skills";
-  return gapSkills.slice(0, 12).map((skill) => ({
-    title: `Learn ${skill.charAt(0).toUpperCase() + skill.slice(1)}`,
-    category,
-    duration: "25 min",
-    lessons: 3,
-  }));
+  return message || fallback;
+}
+
+async function getBaseUrl() {
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
+  const proto = requestHeaders.get("x-forwarded-proto") ?? "http";
+
+  if (!host) {
+    throw new Error("Unable to determine request host.");
+  }
+
+  return `${proto}://${host}`;
 }
 
 export async function submitResumeAction(
@@ -97,18 +93,63 @@ export async function submitResumeAction(
   );
   const existingSet = new Set(extractedSkills);
   const gapSkills = [...requiredSkills].filter((s) => !existingSet.has(s));
+  const requiredSkillList = [...requiredSkills];
 
-  const moduleSpecs = generateModuleSpecs(gapSkills, employee.roleTitle);
-
+  let generatedRoadmap;
   try {
-    await convex.mutation(api.employeeLearning.insertResumeAndLearningPath, {
+    generatedRoadmap = await generateAdaptiveRoadmap({
+      employeeName: employee.fullName,
+      roleTitle: employee.roleTitle,
+      companyName: employer.companyName,
       resumeText,
       extractedSkills,
-      moduleSpecs,
+      requiredSkills: requiredSkillList,
+      gapSkills,
     });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : "Failed to save learning path.";
-    return { error: msg };
+    return {
+      error: toActionErrorMessage(err, "Rellax AI roadmap generation failed."),
+    };
+  }
+
+  let pathId: Id<"learning_paths">;
+  try {
+    const created = await convex.mutation(api.employeeLearning.insertResumeAndRoadmap, {
+      resumeText,
+      extractedSkills,
+      requiredSkills: requiredSkillList,
+      gapSkills,
+      learnerPersonaSummary: generatedRoadmap.learnerPersonaSummary,
+      generationVersion: generationVersion(),
+      roadmapModules: generatedRoadmap.modules.map((module) => ({
+        title: module.title,
+        category: module.category,
+        summary: module.summary,
+        targetSkill: module.targetSkill,
+        personalizationNote: module.personalizationNote,
+        difficulty: module.difficulty,
+        estimatedMinutes: module.estimatedMinutes,
+        learningObjectives: module.learningObjectives,
+      })),
+    });
+    pathId = created.pathId;
+  } catch (err) {
+    return { error: toActionErrorMessage(err, "Failed to save learning path.") };
+  }
+
+  try {
+    const baseUrl = await getBaseUrl();
+    void fetch(`${baseUrl}/api/learning/generate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: (await headers()).get("cookie") ?? "",
+      },
+      body: JSON.stringify({ pathId }),
+      cache: "no-store",
+    });
+  } catch {
+    // Roadmap page will retry generation orchestration on load.
   }
 
   redirect("/employee/roadmap");

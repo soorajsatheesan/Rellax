@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
 import { ModuleCard } from "./module-card";
+import { getLearningPathState, hasAssignedModules } from "./learning-path-state";
 
 type LearningPathData = {
   path: Doc<"learning_paths">;
@@ -13,27 +13,19 @@ type LearningPathData = {
 } | null;
 
 type Props = {
-  companyName: string;
   serverLearningPath?: LearningPathData | null;
 };
 
-export function DashboardModules({ companyName, serverLearningPath }: Props) {
+export function DashboardModules({ serverLearningPath }: Props) {
   const clientData = useQuery(api.employeeLearning.getLearningPathForEmployee, {});
-  const lastGoodData = useRef<LearningPathData | undefined>(
-    serverLearningPath ?? undefined,
-  );
-
-  useEffect(() => {
-    if (clientData?.modules?.length) lastGoodData.current = clientData;
-    else if (serverLearningPath?.modules?.length) lastGoodData.current = serverLearningPath;
-  }, [clientData, serverLearningPath]);
-
   const data =
     clientData === undefined
-      ? lastGoodData.current ?? serverLearningPath ?? undefined
-      : clientData ?? lastGoodData.current ?? (serverLearningPath ?? null);
+      ? serverLearningPath ?? undefined
+      : clientData ?? (serverLearningPath ?? null);
 
-  if (data === undefined) {
+  const learningPathState = getLearningPathState(data);
+
+  if (learningPathState === "loading") {
     return (
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[1, 2, 3, 4].map((i) => (
@@ -50,7 +42,12 @@ export function DashboardModules({ companyName, serverLearningPath }: Props) {
     );
   }
 
-  if (!data) {
+  if (learningPathState !== "ready") {
+    const description =
+      learningPathState === "empty"
+        ? "Your learning path is set up, but there are no assigned modules yet. Upload an updated resume to regenerate your roadmap."
+        : "No learning path yet. Upload your resume to get a personalized learning roadmap.";
+
     return (
       <div
         className="rounded-[1.5rem] p-8"
@@ -61,8 +58,7 @@ export function DashboardModules({ companyName, serverLearningPath }: Props) {
         }}
       >
         <p className="text-sm leading-7" style={{ color: "var(--db-text-soft)" }}>
-          No learning path yet. Upload your resume to get a personalized learning
-          roadmap.
+          {description}
         </p>
         <Link
           href="/employee/upload-resume"
@@ -90,21 +86,37 @@ export function DashboardModules({ companyName, serverLearningPath }: Props) {
     );
   }
 
+  if (!hasAssignedModules(data)) {
+    return null;
+  }
+
   const { modules } = data;
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span
-          className="inline-flex rounded-full px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em]"
-          style={{
-            background: "var(--db-surface)",
-            border: "1px solid var(--db-border)",
-            color: "var(--db-text-muted)",
-          }}
-        >
-          {modules.length} modules
-        </span>
+        <div className="flex flex-wrap gap-2">
+          <span
+            className="inline-flex rounded-full px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em]"
+            style={{
+              background: "var(--db-surface)",
+              border: "1px solid var(--db-border)",
+              color: "var(--db-text-muted)",
+            }}
+          >
+            {modules.length} modules
+          </span>
+          <span
+            className="inline-flex rounded-full px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em]"
+            style={{
+              background: "color-mix(in srgb, var(--rellax-sage) 10%, transparent)",
+              border: "1px solid color-mix(in srgb, var(--rellax-sage) 25%, transparent)",
+              color: "var(--rellax-sage)",
+            }}
+          >
+            narrated slides
+          </span>
+        </div>
         <Link
           href="/employee/roadmap"
           className="text-xs font-medium transition hover:underline"
@@ -139,11 +151,13 @@ export function useLearningPathStats(): {
   }
 
   const { modules } = data;
+  const hasPath = modules.length > 0;
+
   return {
     total: modules.length,
     completed: modules.filter((m) => m.status === "completed").length,
     inProgress: modules.filter((m) => m.status === "in_progress").length,
-    hasPath: true,
+    hasPath,
     loading: false,
   };
 }

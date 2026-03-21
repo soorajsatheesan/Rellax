@@ -1,0 +1,81 @@
+{
+  "title": "Advanced JavaScript: Async Patterns & API Integration",
+  "category": "JavaScript Mastery",
+  "summary": "Deepen understanding of asynchronous JavaScript and best practices for robust REST API consumption.",
+  "targetSkill": "JavaScript async programming & REST APIs",
+  "personalizationNote": "Capitalize on your strong JavaScript skills by mastering async patterns and integrating APIs efficiently at scale.",
+  "videoStyle": "Code walkthroughs with live coding examples",
+  "duration": "4 min",
+  "learningObjectives": [
+    "Explain JavaScript event loop and async handling",
+    "Use Promises, async/await effectively",
+    "Handle REST API errors and retries gracefully",
+    "Optimize API calls with debounce and caching"
+  ],
+  "knowledgeChecks": [
+    "What does async/await simplify in JavaScript?",
+    "How do you handle errors in fetch API requests?",
+    "Name a technique to reduce the number of API calls from user input."
+  ],
+  "narrationScript": "Scene 1: Demystifying the JavaScript Event Loop\nJavaScript runs tasks on a single thread using the event loop, scheduling callbacks and promises to avoid blocking your app.\n\nScene 2: Using Promises and Async/Await\nPromises represent future results; async/await lets you write asynchronous code like synchronous, improving clarity and maintainability.\n\nScene 3: REST API Integration: Best Practices\nThe Fetch API allows you to call REST endpoints straightforwardly; always check responses and handle errors to avoid user breaks.\n\nScene 4: Optimizing API Calls: Caching & Debouncing\nCache responses locally and debounce input events so your app only queries APIs when necessary, improving speed and reducing load.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Demystifying the JavaScript Event Loop",
+      "bullets": [
+        "Call stack and task queue",
+        "Promises and microtasks",
+        "Impact on UI responsiveness"
+      ],
+      "speakerNotes": "Understanding the event loop clarifies how async JavaScript works and why your UI remains responsive even during network calls.",
+      "narration": "JavaScript runs tasks on a single thread using the event loop, scheduling callbacks and promises to avoid blocking your app.",
+      "visualCue": "Animated diagram of event loop processing",
+      "approxDurationSec": 60
+    },
+    {
+      "index": 2,
+      "title": "Using Promises and Async/Await",
+      "bullets": [
+        "Promise states and chaining",
+        "Converting callbacks to promises",
+        "Simplifying async code with async/await"
+      ],
+      "speakerNotes": "Promises and async/await make asynchronous flows cleaner and easier to read. We'll refactor callback hell into sleek async functions.",
+      "narration": "Promises represent future results; async/await lets you write asynchronous code like synchronous, improving clarity and maintainability.",
+      "visualCue": "Before/after code comparison: callbacks vs async/await",
+      "approxDurationSec": 55
+    },
+    {
+      "index": 3,
+      "title": "REST API Integration: Best Practices",
+      "bullets": [
+        "Fetch API for requests",
+        "Error handling strategies",
+        "Using query parameters and headers"
+      ],
+      "speakerNotes": "Consuming APIs requires robust patterns to handle variability in network latency and errors. We'll cover error retries and clean parameter management.",
+      "narration": "The Fetch API allows you to call REST endpoints straightforwardly; always check responses and handle errors to avoid user breaks.",
+      "visualCue": "Code snippet with fetch, try/catch, and retry logic",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 4,
+      "title": "Optimizing API Calls: Caching & Debouncing",
+      "bullets": [
+        "Cache results for repeat calls",
+        "Debounce user input for fewer requests",
+        "Balancing freshness and performance"
+      ],
+      "speakerNotes": "Too many API calls can kill performance. Caching and debouncing ensure your app remains fast and efficient even with frequent data fetches.",
+      "narration": "Cache responses locally and debounce input events so your app only queries APIs when necessary, improving speed and reducing load.",
+      "visualCue": "Animated graph showing API call rate reduction",
+      "approxDurationSec": 45
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072939256-12345/advanced-javascript-async-patterns-api-integration.pptx",
+    "transcriptUrl": "/generated-learning/1774072939256-12345/advanced-javascript-async-patterns-api-integration.txt",
+    "artifactManifestUrl": "/generated-learning/1774072939256-12345/advanced-javascript-async-patterns-api-integration.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072939256-12345/advanced-javascript-async-patterns-api-integration.mp3"
+  }
+}

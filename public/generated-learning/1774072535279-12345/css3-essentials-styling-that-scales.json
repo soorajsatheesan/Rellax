@@ -1,0 +1,68 @@
+{
+  "title": "CSS3 Essentials: Styling That Scales",
+  "category": "Core Frontend Skills",
+  "summary": "Enhance UI aesthetics with modern CSS3 features emphasizing responsiveness, layouts, and maintainability.",
+  "targetSkill": "Strong proficiency in CSS",
+  "personalizationNote": "Target practical layout and styling skills to support Sudarshan's frontend apps alongside React usage.",
+  "videoStyle": "Side-by-side code and live rendered UI with animations",
+  "duration": "4 min",
+  "learningObjectives": [
+    "Use Flexbox and Grid for responsive layouts",
+    "Implement CSS variables for consistency",
+    "Apply transitions and animations effectively",
+    "Maintainable CSS strategies"
+  ],
+  "knowledgeChecks": [
+    "Which CSS layout module best handles vertical centering?",
+    "How do CSS variables improve maintainability?",
+    "What property triggers smooth transitions?"
+  ],
+  "narrationScript": "Scene 1: Modern Layout Techniques\nFlexbox allows aligning items horizontally or vertically, great for components like navbars. Grid controls rows and columns, perfect for entire page layouts.\n\nScene 2: CSS Variables and Theming\nVariables are reusable values like colors or spacing. Define them at the root for site-wide use, or inside components for scoped custom themes.\n\nScene 3: Transitions and Animation Principles\nTransitions animate property changes like color or size. Keyframes define more complex sequences. Always test on devices to keep interactions smooth.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Modern Layout Techniques",
+      "bullets": [
+        "Flexbox fundamentals",
+        "CSS Grid basics",
+        "When to use each layout"
+      ],
+      "speakerNotes": "We'll explore Flexbox for one-dimensional layouts and Grid for two-dimensional ones. Knowing when and how to use each optimizes UI structure.",
+      "narration": "Flexbox allows aligning items horizontally or vertically, great for components like navbars. Grid controls rows and columns, perfect for entire page layouts.",
+      "visualCue": "Animated flex container and grid example side by side.",
+      "approxDurationSec": 80
+    },
+    {
+      "index": 2,
+      "title": "CSS Variables and Theming",
+      "bullets": [
+        "Declaring and using custom properties",
+        "Dynamic theming basics",
+        "Scope and inheritance nuances"
+      ],
+      "speakerNotes": "CSS variables simplify theming and reusability. Learn to define and override them effectively for dynamic styles.",
+      "narration": "Variables are reusable values like colors or spacing. Define them at the root for site-wide use, or inside components for scoped custom themes.",
+      "visualCue": "Theme toggle example switching CSS variable values live.",
+      "approxDurationSec": 70
+    },
+    {
+      "index": 3,
+      "title": "Transitions and Animation Principles",
+      "bullets": [
+        "Basic transitions",
+        "Keyframe animations",
+        "Performance considerations"
+      ],
+      "speakerNotes": "Animations draw user attention but must be performant. We'll cover how to create smooth, efficient UI effects.",
+      "narration": "Transitions animate property changes like color or size. Keyframes define more complex sequences. Always test on devices to keep interactions smooth.",
+      "visualCue": "Button hover transition and a simple animation cycle illustration.",
+      "approxDurationSec": 75
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072535279-12345/css3-essentials-styling-that-scales.pptx",
+    "transcriptUrl": "/generated-learning/1774072535279-12345/css3-essentials-styling-that-scales.txt",
+    "artifactManifestUrl": "/generated-learning/1774072535279-12345/css3-essentials-styling-that-scales.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072535279-12345/css3-essentials-styling-that-scales.mp3"
+  }
+}

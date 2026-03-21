@@ -1,0 +1,66 @@
+{
+  "title": "Optimizing Backend Integration for Frontend Reliability",
+  "category": "Backend Systems",
+  "summary": "Your backend knowledge with FastAPI, PostgreSQL, Redis, and Celery positions you uniquely to enhance frontend stability and UX by optimizing API design, caching, and asynchronous tasks supporting frontend data needs.",
+  "targetSkill": "Seamless Backend-Frontend Sync",
+  "personalizationNote": "Targets your backend experience to improve frontend responsiveness.",
+  "videoStyle": "System architecture visualization",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Design RESTful APIs with frontend efficiency in mind",
+    "Implement caching strategies with Redis for quick UI updates",
+    "Coordinate task queues with Celery for background processing"
+  ],
+  "knowledgeChecks": [
+    "What makes an API endpoint frontend-friendly?",
+    "How does caching improve frontend responsiveness?",
+    "Explain benefits of async task queues for UI stability."
+  ],
+  "narrationScript": "API Design for Frontend Performance\nFastAPI is your backend powerhouse. Shaping APIs so your React frontend requests only needed data cuts wait times. Pagination and filtering avoid overwhelming frontend. API versioning lets Truffaire evolve features without breaking user experience.\n\nCaching for Instant UI Updates\nCaching with Redis slashes response times for user profile or clothing recommendations. Pair with smart invalidation rules to keep data accurate. Redis Pub/Sub lets you push live updates, making Truffaire’s frontend feel truly instantaneous and responsive.\n\nAsync Task Queues Enhance Frontend UX\nHeavy tasks like AI inference take time. Offloading them with Celery workers keeps APIs responsive. Notify your React frontend when tasks finish so users see updates live. Proper retries and error handling keep the system stable—essential for Truffaire’s professional apps.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "API Design for Frontend Performance",
+      "bullets": [
+        "Design endpoints tailored to frontend data consumption",
+        "Paginate and filter efficiently to reduce payload size",
+        "Version APIs to avoid frontend breaking changes"
+      ],
+      "speakerNotes": "Use your FastAPI-powered fashion assistance platform as example.",
+      "narration": "FastAPI is your backend powerhouse. Shaping APIs so your React frontend requests only needed data cuts wait times. Pagination and filtering avoid overwhelming frontend. API versioning lets Truffaire evolve features without breaking user experience.",
+      "visualCue": "Sequence diagram showing React app requesting paginated API data efficiently.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Caching for Instant UI Updates",
+      "bullets": [
+        "Use Redis to cache frequent queries",
+        "Invalidate cache smartly to keep data fresh",
+        "Employ Redis Pub/Sub to push real-time changes to frontend"
+      ],
+      "speakerNotes": "Highlight your Redis integration supporting real-time alerts at IoT projects.",
+      "narration": "Caching with Redis slashes response times for user profile or clothing recommendations. Pair with smart invalidation rules to keep data accurate. Redis Pub/Sub lets you push live updates, making Truffaire’s frontend feel truly instantaneous and responsive.",
+      "visualCue": "Illustration of Redis caching layer between frontend requests and database calls, showing cache hits reducing latency.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Async Task Queues Enhance Frontend UX",
+      "bullets": [
+        "Move intensive computations like model inference to Celery workers",
+        "Notify frontend of task progress using WebSockets or Redis",
+        "Optimize task retries and error handling to maintain stability"
+      ],
+      "speakerNotes": "Reflect on how you used Celery in fashion assistant backend for smooth UX.",
+      "narration": "Heavy tasks like AI inference take time. Offloading them with Celery workers keeps APIs responsive. Notify your React frontend when tasks finish so users see updates live. Proper retries and error handling keep the system stable—essential for Truffaire’s professional apps.",
+      "visualCue": "Animated workflow showing Celery tasks processing in background with frontend receiving progress events.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074682258-123456/optimizing-backend-integration-for-frontend-reliability.pptx",
+    "transcriptUrl": "/generated-learning/1774074682258-123456/optimizing-backend-integration-for-frontend-reliability.txt",
+    "artifactManifestUrl": "/generated-learning/1774074682258-123456/optimizing-backend-integration-for-frontend-reliability.json"
+  }
+}

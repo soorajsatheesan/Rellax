@@ -1,0 +1,8 @@
+Scene 1: Modern JavaScript Features
+Use 'let' and 'const' instead of 'var' for clearer scoping. Arrow functions provide concise syntax, and destructuring unpacks objects cleanly.
+
+Scene 2: Promises and Async/Await
+Promises represent future values. Async/await lets us write async code that looks synchronous, making it easier to read and maintain.
+
+Scene 3: Debugging Async JavaScript
+Set breakpoints in async functions to inspect state. Console log promises and use network panels to troubleshoot API calls effectively.

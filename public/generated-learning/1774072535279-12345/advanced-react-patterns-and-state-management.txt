@@ -1,0 +1,8 @@
+Scene 1: React Hooks Refresher
+useState creates local state; useEffect runs side-effects like data fetching. Custom hooks encapsulate reusable logic. Remember, hooks must be called at the top level.
+
+Scene 2: State Management Patterns
+Context shares state globally without passing props deeply. useReducer manages complex state updates predictably, ideal for forms or apps with many interactions.
+
+Scene 3: Performance Optimizations
+React.memo skips rendering unchanged components. useMemo caches expensive calculations. Lazy loading splits your code, loading components only when needed.

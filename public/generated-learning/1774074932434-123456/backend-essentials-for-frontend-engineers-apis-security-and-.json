@@ -1,0 +1,66 @@
+{
+  "title": "Backend Essentials for Frontend Engineers: APIs, Security, and Deployment",
+  "category": "Backend Development & DevOps",
+  "summary": "Expand your backend comprehension to build secure, scalable APIs and efficiently deploy frontend-backend solutions at Truffaire.",
+  "targetSkill": "Backend Proficiency for Frontend",
+  "personalizationNote": "Building on your FastAPI, Celery, Redis, and VPS deployment experience to deepen API security and deployment best practices essential for frontend engineers.",
+  "videoStyle": "Explainer with infrastructure diagrams and deployment demos",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Design secure RESTful APIs targeting frontend consumption.",
+    "Implement authentication strategies for frontend-backend flows.",
+    "Deploy scalable backend services on VPS environments."
+  ],
+  "knowledgeChecks": [
+    "Outline steps to secure a FastAPI RESTful API for frontend access.",
+    "Explain how frontend apps handle JWT authentication tokens.",
+    "Describe benefits of Docker containerization for VPS app deployment."
+  ],
+  "narrationScript": "Crafting Secure RESTful APIs for Frontend Use\nAPIs power your frontend experiences but can expose vulnerabilities. Using standards like OAuth2 for authentication and careful validation stops attacks, protecting Truffaire’s users and assets.\n\nAuthentication Patterns Frontend Engineers Must Know\nTokens are the keys to the castle. Your React app must keep them safe and refresh them timely to maintain user sessions without interrupting the experience. This balance builds user trust and security.\n\nDeploying Full Stack Apps on VPS with Docker\nDocker containers wrap your apps into portable units. Combined with VPS hosting secured by SSH keys and firewalls, you get stable, scalable deployments that can be updated in minutes—crucial as Truffaire products evolve.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Crafting Secure RESTful APIs for Frontend Use",
+      "bullets": [
+        "Design clear, versioned API endpoints with FastAPI.",
+        "Use OAuth2 and JWT for secure authentication.",
+        "Validate and sanitize inputs to prevent attacks."
+      ],
+      "speakerNotes": "Your backend-built fashion assistant benefits from secure APIs. Let’s sharpen your skills to lock down access and make your frontend’s life easier with predictable, safe data contracts.",
+      "narration": "APIs power your frontend experiences but can expose vulnerabilities. Using standards like OAuth2 for authentication and careful validation stops attacks, protecting Truffaire’s users and assets.",
+      "visualCue": "Diagram of FastAPI endpoint workflow with OAuth2 JWT token authorization flow.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Authentication Patterns Frontend Engineers Must Know",
+      "bullets": [
+        "Implement token-based auth flows from frontend to backend.",
+        "Manage session state and token renewal gracefully in React apps.",
+        "Handle secure storage of sensitive credentials locally."
+      ],
+      "speakerNotes": "Your experience with secure authentication can be elevated by mastering how frontend apps manage sessions and tokens, ensuring smooth and safe user login flows at Truffaire.",
+      "narration": "Tokens are the keys to the castle. Your React app must keep them safe and refresh them timely to maintain user sessions without interrupting the experience. This balance builds user trust and security.",
+      "visualCue": "Sequence diagram showing React frontend requesting JWT token, storing securely, and renewing before expiry.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Deploying Full Stack Apps on VPS with Docker",
+      "bullets": [
+        "Containerize frontend and backend apps using Docker.",
+        "Set up VPS environments with secure SSH and firewall configurations.",
+        "Automate deployment pipelines for quick updates."
+      ],
+      "speakerNotes": "You’ve deployed on VPS before, Sudarshan. We’ll sharpen your containerization and pipeline skills so Truffaire’s products stay reliable as they grow.",
+      "narration": "Docker containers wrap your apps into portable units. Combined with VPS hosting secured by SSH keys and firewalls, you get stable, scalable deployments that can be updated in minutes—crucial as Truffaire products evolve.",
+      "visualCue": "Infrastructure diagram showing Docker containers deployed on VPS with CI/CD pipeline flow.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074932434-123456/backend-essentials-for-frontend-engineers-apis-security-and-.pptx",
+    "transcriptUrl": "/generated-learning/1774074932434-123456/backend-essentials-for-frontend-engineers-apis-security-and-.txt",
+    "artifactManifestUrl": "/generated-learning/1774074932434-123456/backend-essentials-for-frontend-engineers-apis-security-and-.json"
+  }
+}

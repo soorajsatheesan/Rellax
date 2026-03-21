@@ -1,0 +1,66 @@
+{
+  "title": "Advanced JavaScript Patterns for Frontend Mastery",
+  "category": "Programming Languages & Frontend Development",
+  "summary": "Leverage your existing JavaScript experience to unlock advanced, scalable patterns and techniques that will elevate your frontend projects at Truffaire.",
+  "targetSkill": "Advanced JavaScript",
+  "personalizationNote": "Connecting your solid JavaScript foundation from React projects with advanced asynchronous patterns and modular design to enhance app performance and maintainability.",
+  "videoStyle": "Explainer with live coding animations",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Deepen understanding of asynchronous JavaScript beyond basics.",
+    "Implement modular JavaScript design for scalability.",
+    "Use advanced ES6+ features effectively in React projects."
+  ],
+  "knowledgeChecks": [
+    "Explain how JavaScript’s event loop manages asynchronous tasks in a React app.",
+    "Identify ES6+ features that improve modularity and readability in frontend code.",
+    "Describe how to connect a FastAPI backend with a React frontend effectively."
+  ],
+  "narrationScript": "Rethink Async: Promises, Async/Await, and Event Loops\nEver wondered what really happens under the hood when your React app fetches data? It's the event loop juggling your code and keeping the UI fluid. Understanding promises and async/await isn’t just syntax; it’s the secret to smooth, responsive interfaces that your users at Truffaire will love.\n\nModular JavaScript and ES6+ Features in React\nBreaking code into manageable parts makes collaboration smoother and bugs easier to squash. Using the latest ES6+ features lets you write less code that does more—a fit for your fast-paced development at Truffaire.\n\nBridging Python Backend Logic with Frontend Interaction\nYour backend powers complex logic, but how should the frontend talk back? Using REST APIs or WebSockets, you can create dynamic interfaces that respond instantly to live data—blurring lines between frontend and backend.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Rethink Async: Promises, Async/Await, and Event Loops",
+      "bullets": [
+        "Explore the event loop and how async affects UI responsiveness.",
+        "Compare callback patterns, promises, and async/await in practical UI scenarios.",
+        "Use async constructs to optimize API calls in React apps."
+      ],
+      "speakerNotes": "Sudarshan, you already handle asynchronous tasks in your projects, but let's unpack how understanding the event loop deeply can prevent UI freezes and bugs, especially in your React applications.",
+      "narration": "Ever wondered what really happens under the hood when your React app fetches data? It's the event loop juggling your code and keeping the UI fluid. Understanding promises and async/await isn’t just syntax; it’s the secret to smooth, responsive interfaces that your users at Truffaire will love.",
+      "visualCue": "Animated diagram of JavaScript event loop showing call stack, event queue, promises resolving, and async/await flow.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Modular JavaScript and ES6+ Features in React",
+      "bullets": [
+        "Apply JavaScript modules to structure React components efficiently.",
+        "Use destructuring, spread operators, and template literals to simplify code.",
+        "Implement named imports and exports for clearer, reusable codebases."
+      ],
+      "speakerNotes": "Your React work benefits greatly from cleaner, modular code. We'll build on ES6+ syntax you use regularly, pushing your code’s clarity and scalability further, crucial for Truffaire’s evolving frontend.",
+      "narration": "Breaking code into manageable parts makes collaboration smoother and bugs easier to squash. Using the latest ES6+ features lets you write less code that does more—a fit for your fast-paced development at Truffaire.",
+      "visualCue": "Side-by-side code comparison showing traditional JavaScript vs modular ES6+ in React component imports and exports.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Bridging Python Backend Logic with Frontend Interaction",
+      "bullets": [
+        "Understand API consumption patterns in frontend apps.",
+        "Use WebSocket and RESTful integration techniques with FastAPI backends.",
+        "Map Python data structures to frontend state management."
+      ],
+      "speakerNotes": "Your Python and FastAPI knowledge gives you an edge. Let's explore how to leverage that backend logic directly in frontend interactions, streamlining your full-stack workflow at Truffaire.",
+      "narration": "Your backend powers complex logic, but how should the frontend talk back? Using REST APIs or WebSockets, you can create dynamic interfaces that respond instantly to live data—blurring lines between frontend and backend.",
+      "visualCue": "Workflow illustration showing FastAPI backend responding to React frontend via REST and WebSocket channels.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074932434-123456/advanced-javascript-patterns-for-frontend-mastery.pptx",
+    "transcriptUrl": "/generated-learning/1774074932434-123456/advanced-javascript-patterns-for-frontend-mastery.txt",
+    "artifactManifestUrl": "/generated-learning/1774074932434-123456/advanced-javascript-patterns-for-frontend-mastery.json"
+  }
+}

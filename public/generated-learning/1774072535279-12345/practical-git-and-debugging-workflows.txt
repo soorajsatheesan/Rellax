@@ -1,0 +1,8 @@
+Scene 1: Git Branching and Merging
+Create branches for features to keep main stable. Pull requests let teammates review code. Conflicts happen when changes overlap; resolving them carefully keeps history clean.
+
+Scene 2: Debugging JavaScript Frontends
+Set breakpoints to pause script execution, inspect variables, and step through code. Use React DevTools to examine component trees and props.
+
+Scene 3: Effective Problem-Solving Strategies
+Start by reproducing bugs consistently. Narrow down to minimal failing code. Logs and error boundaries catch and report unexpected errors gracefully.

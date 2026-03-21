@@ -1,0 +1,11 @@
+Scene 1: Why Semantic HTML Matters
+Semantic HTML5 elements like <header>, <main>, and <footer> give meaning to your content, boosting SEO and accessibility without extra effort.
+
+Scene 2: Modern CSS Layouts: Flexbox & Grid
+Use Flexbox to align items in a row or column, and Grid to create complex layouts. Combining them lets you craft dynamic interfaces that work on any screen size.
+
+Scene 3: Scalable and Maintainable CSS Practices
+Adopt CSS custom properties for consistent theming and break styles into reusable modules. These habits prevent messy, hard-to-fix style bugs.
+
+Scene 4: Enhancing Accessibility with ARIA & HTML Attributes
+Use ARIA roles to define regions for screen readers, and ensure keyboard users can navigate your interface smoothly — simple steps with big impact.

@@ -24,7 +24,7 @@ export function ChangePasswordForm() {
   return (
     <form action={formAction} className="space-y-4">
       <div className="space-y-2">
-        <label className="block text-sm font-medium" style={{ color: "var(--db-text)" }}>
+        <label className="block text-sm font-medium" style={{ color: "var(--db-text-soft)" }}>
           Current password
         </label>
         <div className="relative">
@@ -33,7 +33,12 @@ export function ChangePasswordForm() {
             type={showCurrentPassword ? "text" : "password"}
             required
             autoComplete="current-password"
-            className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
+            className="w-full rounded-2xl px-4 py-3 pr-28 text-sm outline-none"
+            style={{
+              background: "var(--db-input)",
+              border: "1px solid var(--db-input-border)",
+              color: "var(--db-text)",
+            }}
             placeholder="Enter current password"
           />
           <button
@@ -53,7 +58,7 @@ export function ChangePasswordForm() {
 
       <div className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <label className="block text-sm font-medium" style={{ color: "var(--db-text)" }}>
+          <label className="block text-sm font-medium" style={{ color: "var(--db-text-soft)" }}>
             New password
           </label>
           <button
@@ -93,8 +98,13 @@ export function ChangePasswordForm() {
             required
             autoComplete="new-password"
             minLength={14}
-            className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
-            placeholder="Enter new password (min 14 chars, mixed case, numbers, symbols)"
+            className="w-full rounded-2xl px-4 py-3 pr-28 text-sm outline-none"
+            style={{
+              background: "var(--db-input)",
+              border: "1px solid var(--db-input-border)",
+              color: "var(--db-text)",
+            }}
+            placeholder="Min 14 chars — mixed case, numbers, symbols"
           />
           <button
             type="button"
@@ -112,7 +122,7 @@ export function ChangePasswordForm() {
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium" style={{ color: "var(--db-text)" }}>
+        <label className="block text-sm font-medium" style={{ color: "var(--db-text-soft)" }}>
           Confirm new password
         </label>
         <div className="relative">
@@ -123,7 +133,12 @@ export function ChangePasswordForm() {
             required
             autoComplete="new-password"
             minLength={14}
-            className="w-full rounded-2xl border border-black/8 bg-[var(--db-surface)] px-4 py-3 pr-28 text-sm outline-none transition focus:border-[var(--db-border)]"
+            className="w-full rounded-2xl px-4 py-3 pr-28 text-sm outline-none"
+            style={{
+              background: "var(--db-input)",
+              border: "1px solid var(--db-input-border)",
+              color: "var(--db-text)",
+            }}
             placeholder="Re-enter new password"
           />
           <button
@@ -142,29 +157,33 @@ export function ChangePasswordForm() {
       </div>
 
       {state.error ? (
-        <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <p className="rounded-[0.875rem] border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-500">
           {state.error}
         </p>
       ) : null}
 
       {state.success ? (
-        <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <p className="rounded-[0.875rem] border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-600">
           {state.success}
         </p>
       ) : null}
 
       {state.passwordRequirements ? (
-        <div className="space-y-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
-          <p className="text-sm font-semibold text-red-800">
-            Password requirements check
+        <div className="space-y-3 rounded-[0.875rem] border border-red-400/30 bg-red-500/10 px-4 py-4">
+          <p className="text-sm font-semibold text-red-500">
+            Password requirements not met
           </p>
-          <p className="text-xs text-red-700 italic">
+          <p className="text-xs leading-5" style={{ color: "var(--db-text-soft)" }}>
             {state.passwordRequirements.summary}
           </p>
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {state.passwordRequirements.checks.map((c) => (
-              <div key={c.label} className="text-xs text-red-800 italic">
-                <span style={{ marginRight: "0.5rem" }}>
+              <div
+                key={c.label}
+                className="flex items-center gap-2 text-xs"
+                style={{ color: c.ok ? "var(--rellax-sage)" : "var(--db-text-soft)" }}
+              >
+                <span className="font-mono font-bold shrink-0">
                   {c.ok ? "✓" : "✗"}
                 </span>
                 {c.label}

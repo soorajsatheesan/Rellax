@@ -1,0 +1,11 @@
+Scene 1: Navigating Browser Developer Tools
+Use Elements to edit HTML/CSS live, Console for errors and testing, Sources for breakpoints, and Network to trace API calls.
+
+Scene 2: Debugging Common JavaScript Errors
+Set breakpoints to halt execution, step through code line by line, and review call stacks to trace errors back to their source.
+
+Scene 3: Fixing CSS Rendering Issues
+Use computed styles to see active CSS rules and override them as needed. Understanding specificity helps you apply intended styles reliably.
+
+Scene 4: Structured Problem-Solving Workflow
+Isolate the problem area, form a hypothesis, test it, and document the fix so you learn and prevent regressions.

@@ -1,0 +1,8 @@
+Running TensorFlow Models in the Browser
+Running AI right in the browser cuts latency and empowers users with instant feedback. TensorFlow.js lets you reuse your Python TensorFlow models in React, bringing machine learning magic to your frontend interfaces.
+
+Real-Time AI Visualization and User Interaction
+An AI feature isn’t useful if users don’t get it. By weaving clear visual cues and interactive input, you turn complex models into intuitive tools that keep users engaged and informed.
+
+Data Pipelines from Backend to Frontend
+From complex model outputs to clean frontends, managing data pipelines ensures users see the right insights at the right time. Streaming data live and caching cleverly keeps your interfaces quick and reliable.

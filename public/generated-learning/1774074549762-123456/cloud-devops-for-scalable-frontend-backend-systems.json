@@ -1,0 +1,67 @@
+{
+  "title": "Cloud & DevOps for Scalable Frontend-Backend Systems",
+  "category": "Cloud Computing & Deployment",
+  "summary": "Gain mastery over VPS deployment, Docker, and CI/CD pipelines to maintain robust, scalable fullstack apps at Truffaire.",
+  "targetSkill": "Cloud Infrastructure & DevOps Integration",
+  "personalizationNote": "Deepens Sudarshan’s hands-on VPS deployment, Docker, Git and backend experience with cloud-native best practices for frontend lead roles.",
+  "videoStyle": "Animated deployment pipeline with real server dashboard visuals",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Deploy React and FastAPI applications securely on VPS",
+    "Containerize fullstack apps with Docker for consistency",
+    "Automate deployments using Git workflows and CI/CD",
+    "Monitor system health and scale services on cloud infrastructure"
+  ],
+  "knowledgeChecks": [
+    "Describe essential VPS security configurations for deployment.",
+    "What advantages does Docker provide for your frontend-backend stack?",
+    "How can CI/CD with Git improve release reliability?"
+  ],
+  "narrationScript": "Deploying Fullstack Applications on a VPS Securely\nHosting your React frontend and FastAPI backend on the same VPS is efficient, but security comes first. Nginx acts as a reverse proxy managing HTTPS traffic smoothly. Firewalls and SSH keys guard your server against intrusions. These steps lock down your deployment while keeping critical Truffaire features available and fast for users worldwide.\n\nDockerizing Frontend and Backend for Consistency and Scalability\nDocker takes your Development-to-Production journey from painful to smooth. Building concise Dockerfiles for React and FastAPI packages up your apps with their dependencies. Docker Compose spins up the entire stack—databases, caches, backends—in one command. Smaller, optimized images mean quicker startup and easier scaling across Truffaire servers. It’s infrastructure peace of mind made simple.\n\nSetting Up CI/CD Pipelines with Git for Reliable Releases\nImagine every code push running tests and, if they pass, deploying your app without you lifting a finger. GitHub Actions and GitLab CI do exactly that. Automations keep your VPS updated with stable code, while instant alerts notify you on failures. This workflow gives you confidence, speeds delivery, and lets you focus on building innovative features for Truffaire.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Deploying Fullstack Applications on a VPS Securely",
+      "bullets": [
+        "Configure Nginx as reverse proxy with HTTPS",
+        "Setup firewall and SSH security best practices",
+        "Deploy React static files and backend APIs on same VPS"
+      ],
+      "speakerNotes": "You’ve deployed apps on VPS before, but here’s how to lock down security and ensure your fullstack apps run fast and reliably for Truffaire’s users.",
+      "narration": "Hosting your React frontend and FastAPI backend on the same VPS is efficient, but security comes first. Nginx acts as a reverse proxy managing HTTPS traffic smoothly. Firewalls and SSH keys guard your server against intrusions. These steps lock down your deployment while keeping critical Truffaire features available and fast for users worldwide.",
+      "visualCue": "Diagram of VPS architecture showing Nginx proxy routing HTTPS requests to React frontend and FastAPI backend with firewall icon overlay.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Dockerizing Frontend and Backend for Consistency and Scalability",
+      "bullets": [
+        "Create Dockerfiles for React and FastAPI services",
+        "Use Docker Compose to orchestrate multi-container apps including Redis and PostgreSQL",
+        "Optimize images for fast builds and minimal size"
+      ],
+      "speakerNotes": "Your experience with Docker is strong. This walkthrough shows how to containerize all parts of your stack cohesively for easy scaling and team collaboration at Truffaire.",
+      "narration": "Docker takes your Development-to-Production journey from painful to smooth. Building concise Dockerfiles for React and FastAPI packages up your apps with their dependencies. Docker Compose spins up the entire stack—databases, caches, backends—in one command. Smaller, optimized images mean quicker startup and easier scaling across Truffaire servers. It’s infrastructure peace of mind made simple.",
+      "visualCue": "Layered diagram of Docker containers for React, FastAPI, Redis, PostgreSQL linked by Docker Compose network.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Setting Up CI/CD Pipelines with Git for Reliable Releases",
+      "bullets": [
+        "Integrate GitHub Actions or GitLab CI for automated tests",
+        "Deploy successful builds automatically to VPS or cloud",
+        "Set up notification alerts on failures to react quickly"
+      ],
+      "speakerNotes": "You already use Git extensively. CI/CD automation is the next step to ship features faster and catch bugs before they reach Truffaire’s users.",
+      "narration": "Imagine every code push running tests and, if they pass, deploying your app without you lifting a finger. GitHub Actions and GitLab CI do exactly that. Automations keep your VPS updated with stable code, while instant alerts notify you on failures. This workflow gives you confidence, speeds delivery, and lets you focus on building innovative features for Truffaire.",
+      "visualCue": "Flowchart of Git commit triggering CI build, testing, deployment, and notification cycle integrated with VPS dashboard.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074549762-123456/cloud-devops-for-scalable-frontend-backend-systems.pptx",
+    "transcriptUrl": "/generated-learning/1774074549762-123456/cloud-devops-for-scalable-frontend-backend-systems.txt",
+    "artifactManifestUrl": "/generated-learning/1774074549762-123456/cloud-devops-for-scalable-frontend-backend-systems.json"
+  }
+}

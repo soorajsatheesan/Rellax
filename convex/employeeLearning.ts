@@ -9,20 +9,30 @@ async function requireEmployeeIdentity(ctx: {
   return identity;
 }
 
-/** Current employee's learning path and modules. */
+async function getCurrentEmployeeRecord(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ctx: any,
+  options?: { requireIdentity?: boolean },
+) {
+  const identity = options?.requireIdentity
+    ? await requireEmployeeIdentity(ctx)
+    : await ctx.auth.getUserIdentity();
+
+  if (!identity) {
+    return null;
+  }
+
+  return ctx.db
+    .query("employees")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .withIndex("by_workos_user_id", (q: any) => q.eq("workOSUserId", identity.subject))
+    .unique();
+}
+
 export const getLearningPathForEmployee = query({
   args: {},
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return null;
-
-    const employee = await ctx.db
-      .query("employees")
-      .withIndex("by_workos_user_id", (q) =>
-        q.eq("workOSUserId", identity.subject),
-      )
-      .unique();
-
+    const employee = await getCurrentEmployeeRecord(ctx);
     if (!employee) return null;
 
     const path = await ctx.db
@@ -35,9 +45,7 @@ export const getLearningPathForEmployee = query({
 
     const modules = await ctx.db
       .query("learning_path_modules")
-      .withIndex("by_learning_path_id", (q) =>
-        q.eq("learningPathId", path._id),
-      )
+      .withIndex("by_learning_path_id", (q) => q.eq("learningPathId", path._id))
       .order("asc")
       .collect();
 
@@ -45,56 +53,72 @@ export const getLearningPathForEmployee = query({
   },
 });
 
-/** Single module by ID (must belong to current employee's path). */
 export const getModuleById = query({
   args: { moduleId: v.id("learning_path_modules") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return null;
+    const employee = await getCurrentEmployeeRecord(ctx);
+    if (!employee) return null;
 
-    const module = await ctx.db.get(args.moduleId);
-    if (!module) return null;
+    const learningModule = await ctx.db.get(args.moduleId);
+    if (!learningModule) return null;
 
-    const path = await ctx.db.get(module.learningPathId);
-    if (!path) return null;
+    const path = await ctx.db.get(learningModule.learningPathId);
+    if (!path || path.employeeId !== employee._id) return null;
 
-    const employee = await ctx.db
-      .query("employees")
-      .withIndex("by_workos_user_id", (q) =>
-        q.eq("workOSUserId", identity.subject),
-      )
-      .unique();
-
-    if (!employee || path.employeeId !== employee._id) return null;
-
-    return module;
+    return learningModule;
   },
 });
 
-/** Insert resume + learning path + modules. Called from Next.js server action with pre-computed data. */
-export const insertResumeAndLearningPath = mutation({
+export const getGenerationContext = query({
+  args: { pathId: v.id("learning_paths") },
+  handler: async (ctx, args) => {
+    const employee = await getCurrentEmployeeRecord(ctx);
+    if (!employee) return null;
+
+    const path = await ctx.db.get(args.pathId);
+    if (!path || path.employeeId !== employee._id) return null;
+
+    const employer = await ctx.db.get(employee.employerId);
+    if (!employer) return null;
+
+    const resume = path.sourceResumeId ? await ctx.db.get(path.sourceResumeId) : null;
+    const modules = await ctx.db
+      .query("learning_path_modules")
+      .withIndex("by_learning_path_id", (q) => q.eq("learningPathId", path._id))
+      .order("asc")
+      .collect();
+
+    return { employee, employer, path, resume, modules };
+  },
+});
+
+export const insertResumeAndRoadmap = mutation({
   args: {
     resumeText: v.string(),
     extractedSkills: v.array(v.string()),
-    moduleSpecs: v.array(
+    requiredSkills: v.array(v.string()),
+    gapSkills: v.array(v.string()),
+    learnerPersonaSummary: v.string(),
+    generationVersion: v.string(),
+    roadmapModules: v.array(
       v.object({
         title: v.string(),
         category: v.string(),
-        duration: v.string(),
-        lessons: v.number(),
+        summary: v.string(),
+        targetSkill: v.string(),
+        personalizationNote: v.string(),
+        difficulty: v.union(
+          v.literal("foundation"),
+          v.literal("intermediate"),
+          v.literal("advanced"),
+        ),
+        estimatedMinutes: v.number(),
+        learningObjectives: v.array(v.string()),
       }),
     ),
   },
   handler: async (ctx, args) => {
-    const identity = await requireEmployeeIdentity(ctx);
-
-    const employee = await ctx.db
-      .query("employees")
-      .withIndex("by_workos_user_id", (q) =>
-        q.eq("workOSUserId", identity.subject),
-      )
-      .unique();
-
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
     if (!employee) throw new Error("Employee profile not found.");
 
     const now = Date.now();
@@ -111,17 +135,35 @@ export const insertResumeAndLearningPath = mutation({
       employeeId: employee._id,
       employerId: employee.employerId,
       sourceResumeId: resumeId,
+      sourceRoleTitle: employee.roleTitle,
+      learnerPersonaSummary: args.learnerPersonaSummary,
+      requiredSkills: args.requiredSkills,
+      gapSkills: args.gapSkills,
+      generationVersion: args.generationVersion,
+      generationStatus: "roadmap_ready",
       createdAt: now,
     });
 
-    for (let i = 0; i < args.moduleSpecs.length; i++) {
-      const m = args.moduleSpecs[i];
+    for (let i = 0; i < args.roadmapModules.length; i += 1) {
+      const roadmapModule = args.roadmapModules[i];
       await ctx.db.insert("learning_path_modules", {
         learningPathId: pathId,
-        title: m.title,
-        category: m.category,
-        duration: m.duration,
-        lessons: m.lessons,
+        title: roadmapModule.title,
+        category: roadmapModule.category,
+        summary: roadmapModule.summary,
+        targetSkill: roadmapModule.targetSkill,
+        personalizationNote: roadmapModule.personalizationNote,
+        learningObjectives: roadmapModule.learningObjectives,
+        duration: `${Math.max(1, Math.round(roadmapModule.estimatedMinutes))} min`,
+        lessons: 0,
+        sceneCount: 0,
+        difficulty: roadmapModule.difficulty,
+        estimatedMinutes: roadmapModule.estimatedMinutes,
+        generationProvider: "openai",
+        generationStatus: "pending",
+        notesStatus: "pending",
+        videoStatus: "pending",
+        qaStatus: "pending",
         orderIndex: i,
         status: "not_started",
       });
@@ -131,59 +173,321 @@ export const insertResumeAndLearningPath = mutation({
   },
 });
 
-/** Start a module. */
-export const startModule = mutation({
-  args: { moduleId: v.id("learning_path_modules") },
+export const claimNextModuleForGeneration = mutation({
+  args: { pathId: v.id("learning_paths") },
   handler: async (ctx, args) => {
-    const identity = await requireEmployeeIdentity(ctx);
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
 
-    const module = await ctx.db.get(args.moduleId);
-    if (!module) throw new Error("Module not found.");
-
-    const path = await ctx.db.get(module.learningPathId);
-    if (!path) throw new Error("Learning path not found.");
-
-    const employee = await ctx.db
-      .query("employees")
-      .withIndex("by_workos_user_id", (q) =>
-        q.eq("workOSUserId", identity.subject),
-      )
-      .unique();
-
-    if (!employee || path.employeeId !== employee._id) {
+    const path = await ctx.db.get(args.pathId);
+    if (!path || path.employeeId !== employee._id) {
       throw new Error("Unauthorized");
     }
 
-    if (module.status !== "not_started") return; // already started/completed
+    const modules = await ctx.db
+      .query("learning_path_modules")
+      .withIndex("by_learning_path_id", (q) => q.eq("learningPathId", path._id))
+      .order("asc")
+      .collect();
 
+    const currentModule = path.currentGeneratingModuleId
+      ? await ctx.db.get(path.currentGeneratingModuleId)
+      : null;
+
+    if (
+      currentModule &&
+      currentModule.learningPathId === path._id &&
+      (currentModule.generationStatus === "processing" ||
+        currentModule.generationStatus === "partial" ||
+        currentModule.generationStatus === "pending")
+    ) {
+      await ctx.db.patch(currentModule._id, {
+        generationStatus: "processing",
+        generationError: undefined,
+        notesStatus: currentModule.notesStatus === "ready" ? "ready" : "processing",
+        videoStatus: currentModule.videoStatus === "ready" ? "ready" : "pending",
+        qaStatus: currentModule.qaStatus === "ready" ? "ready" : "pending",
+      });
+
+      await ctx.db.patch(path._id, {
+        generationStatus: "generating",
+        currentGeneratingModuleId: currentModule._id,
+        generationError: undefined,
+      });
+
+      return currentModule._id;
+    }
+
+    const claimed = modules.find(
+      (module) =>
+        module.generationStatus === "pending" || module.generationStatus === "partial",
+    );
+
+    if (!claimed) {
+      await ctx.db.patch(path._id, {
+        generationStatus: "ready",
+        currentGeneratingModuleId: undefined,
+        generationError: undefined,
+      });
+      return null;
+    }
+
+    await ctx.db.patch(claimed._id, {
+      generationStatus: "processing",
+      generationError: undefined,
+      notesStatus: claimed.notesStatus === "ready" ? "ready" : "processing",
+      videoStatus: claimed.videoStatus === "ready" ? "ready" : "pending",
+      qaStatus: claimed.qaStatus === "ready" ? "ready" : "pending",
+    });
+    await ctx.db.patch(path._id, {
+      generationStatus: "generating",
+      currentGeneratingModuleId: claimed._id,
+      generationError: undefined,
+    });
+
+    return claimed._id;
+  },
+});
+
+export const saveModuleNotes = mutation({
+  args: {
+    moduleId: v.id("learning_path_modules"),
+    notesContent: v.string(),
+    knowledgeChecks: v.array(v.string()),
+    personalizationNote: v.string(),
+    videoStyle: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
+
+    const learningModule = await ctx.db.get(args.moduleId);
+    if (!learningModule) throw new Error("Module not found.");
+
+    const path = await ctx.db.get(learningModule.learningPathId);
+    if (!path || path.employeeId !== employee._id) throw new Error("Unauthorized");
+
+    await ctx.db.patch(args.moduleId, {
+      notesContent: args.notesContent,
+      knowledgeChecks: args.knowledgeChecks,
+      personalizationNote: args.personalizationNote,
+      videoStyle: args.videoStyle,
+      notesStatus: "ready",
+      generationStatus: "partial",
+      generationError: undefined,
+    });
+  },
+});
+
+export const saveModuleVideo = mutation({
+  args: {
+    moduleId: v.id("learning_path_modules"),
+    slides: v.array(
+      v.object({
+        title: v.string(),
+        focus: v.optional(v.string()),
+        bullets: v.array(v.string()),
+        speakerNotes: v.string(),
+        narration: v.string(),
+        takeaway: v.optional(v.string()),
+        visualCue: v.optional(v.string()),
+        imageUrl: v.optional(v.string()),
+        imageSourceUrl: v.optional(v.string()),
+        imageCaption: v.optional(v.string()),
+        layoutVariant: v.optional(v.string()),
+        approxDurationSec: v.number(),
+        audioUrl: v.optional(v.string()),
+        audioChunks: v.optional(v.array(v.string())),
+      }),
+    ),
+    narrationScript: v.string(),
+    duration: v.string(),
+    slideDeckUrl: v.string(),
+    transcriptUrl: v.string(),
+    artifactManifestUrl: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
+
+    const learningModule = await ctx.db.get(args.moduleId);
+    if (!learningModule) throw new Error("Module not found.");
+
+    const path = await ctx.db.get(learningModule.learningPathId);
+    if (!path || path.employeeId !== employee._id) throw new Error("Unauthorized");
+
+    await ctx.db.patch(args.moduleId, {
+      slides: args.slides,
+      narrationScript: args.narrationScript,
+      duration: args.duration,
+      lessons: args.slides.length,
+      sceneCount: args.slides.length,
+      slideDeckUrl: args.slideDeckUrl,
+      transcriptUrl: args.transcriptUrl,
+      artifactManifestUrl: args.artifactManifestUrl,
+      videoStatus: "ready",
+      generationStatus: "partial",
+      generationError: undefined,
+    });
+  },
+});
+
+export const saveModuleQa = mutation({
+  args: {
+    moduleId: v.id("learning_path_modules"),
+    qaPairs: v.array(
+      v.object({
+        question: v.string(),
+        options: v.array(v.string()),
+        correctAnswer: v.string(),
+        explanation: v.string(),
+      }),
+    ),
+  },
+  handler: async (ctx, args) => {
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
+
+    const learningModule = await ctx.db.get(args.moduleId);
+    if (!learningModule) throw new Error("Module not found.");
+
+    const path = await ctx.db.get(learningModule.learningPathId);
+    if (!path || path.employeeId !== employee._id) throw new Error("Unauthorized");
+
+    await ctx.db.patch(args.moduleId, {
+      qaPairs: args.qaPairs,
+      qaStatus: "ready",
+      generationStatus: "ready",
+      generationError: undefined,
+    });
+
+    const siblingModules = await ctx.db
+      .query("learning_path_modules")
+      .withIndex("by_learning_path_id", (q) => q.eq("learningPathId", learningModule.learningPathId))
+      .order("asc")
+      .collect();
+
+    const allReady = siblingModules.every(
+      (module) => module._id === learningModule._id || module.generationStatus === "ready",
+    );
+
+    await ctx.db.patch(path._id, {
+      generationStatus: allReady ? "ready" : "generating",
+      currentGeneratingModuleId: undefined,
+      generationError: undefined,
+    });
+  },
+});
+
+export const failModuleGeneration = mutation({
+  args: {
+    pathId: v.id("learning_paths"),
+    moduleId: v.id("learning_path_modules"),
+    stage: v.union(v.literal("notes"), v.literal("video"), v.literal("qa")),
+    error: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
+
+    const learningModule = await ctx.db.get(args.moduleId);
+    const path = await ctx.db.get(args.pathId);
+    if (!learningModule || !path || path.employeeId !== employee._id) {
+      throw new Error("Unauthorized");
+    }
+
+    await ctx.db.patch(args.moduleId, {
+      generationStatus: "failed",
+      generationError: args.error.slice(0, 1200),
+      notesStatus: args.stage === "notes" ? "failed" : learningModule.notesStatus,
+      videoStatus: args.stage === "video" ? "failed" : learningModule.videoStatus,
+      qaStatus: args.stage === "qa" ? "failed" : learningModule.qaStatus,
+    });
+
+    await ctx.db.patch(path._id, {
+      generationStatus: "generating",
+      currentGeneratingModuleId: undefined,
+      generationError: args.error.slice(0, 1200),
+    });
+  },
+});
+
+export const startModule = mutation({
+  args: { moduleId: v.id("learning_path_modules") },
+  handler: async (ctx, args) => {
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
+
+    const learningModule = await ctx.db.get(args.moduleId);
+    if (!learningModule) throw new Error("Module not found.");
+
+    const path = await ctx.db.get(learningModule.learningPathId);
+    if (!path || path.employeeId !== employee._id) {
+      throw new Error("Unauthorized");
+    }
+
+    if (learningModule.status !== "not_started") return;
     await ctx.db.patch(args.moduleId, { status: "in_progress" });
   },
 });
 
-/** Complete a module. */
 export const completeModule = mutation({
   args: { moduleId: v.id("learning_path_modules") },
   handler: async (ctx, args) => {
-    const identity = await requireEmployeeIdentity(ctx);
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
 
-    const module = await ctx.db.get(args.moduleId);
-    if (!module) throw new Error("Module not found.");
+    const learningModule = await ctx.db.get(args.moduleId);
+    if (!learningModule) throw new Error("Module not found.");
 
-    const path = await ctx.db.get(module.learningPathId);
-    if (!path) throw new Error("Learning path not found.");
-
-    const employee = await ctx.db
-      .query("employees")
-      .withIndex("by_workos_user_id", (q) =>
-        q.eq("workOSUserId", identity.subject),
-      )
-      .unique();
-
-    if (!employee || path.employeeId !== employee._id) {
+    const path = await ctx.db.get(learningModule.learningPathId);
+    if (!path || path.employeeId !== employee._id) {
       throw new Error("Unauthorized");
     }
 
-    const now = Date.now();
-    await ctx.db.patch(args.moduleId, { status: "completed", completedAt: now });
+    await ctx.db.patch(args.moduleId, { status: "completed", completedAt: Date.now() });
+  },
+});
+
+export const deleteLatestLearningPathForEmployee = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const employee = await getCurrentEmployeeRecord(ctx, { requireIdentity: true });
+    if (!employee) throw new Error("Unauthorized");
+
+    const latestPath = await ctx.db
+      .query("learning_paths")
+      .withIndex("by_employee_id", (q) => q.eq("employeeId", employee._id))
+      .order("desc")
+      .first();
+
+    if (!latestPath) {
+      return { deleted: false };
+    }
+
+    const modules = await ctx.db
+      .query("learning_path_modules")
+      .withIndex("by_learning_path_id", (q) => q.eq("learningPathId", latestPath._id))
+      .order("asc")
+      .collect();
+
+    for (const learningModule of modules) {
+      await ctx.db.delete(learningModule._id);
+    }
+
+    if (latestPath.sourceResumeId) {
+      const resume = await ctx.db.get(latestPath.sourceResumeId);
+      if (resume) {
+        await ctx.db.delete(resume._id);
+      }
+    }
+
+    await ctx.db.delete(latestPath._id);
+
+    return {
+      deleted: true,
+      deletedModules: modules.length,
+      deletedPathId: latestPath._id,
+    };
   },
 });

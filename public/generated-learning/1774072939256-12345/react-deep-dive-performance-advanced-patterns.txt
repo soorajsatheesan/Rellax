@@ -1,0 +1,11 @@
+Scene 1: Spotting React Performance Issues
+Check which components re-render often and why. Avoid passing new objects or functions as props without memoization.
+
+Scene 2: Optimizing with React.memo and Hooks
+Wrap components with React.memo, and use hooks like useCallback to memoize functions and reduce updates.
+
+Scene 3: Advanced Component Patterns
+Compound components let users compose APIs intuitively; render props enable dynamic UI composition; HOCs add features to components.
+
+Scene 4: Profiling and Measuring React Performance
+Record interactive sessions, spot bottlenecks in flamegraphs, and prioritize fixes where React spends most time.

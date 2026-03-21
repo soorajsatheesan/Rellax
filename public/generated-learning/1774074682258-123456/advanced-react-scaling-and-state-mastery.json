@@ -1,0 +1,66 @@
+{
+  "title": "Advanced React: Scaling and State Mastery",
+  "category": "Web Development",
+  "summary": "You’ve built React apps for Audidex and Truffaire’s platforms. It’s time to dive deeper into state management, scalability, and performance tuning to craft impeccable UIs that delight users and stand up to rapid growth.",
+  "targetSkill": "Expert React Architecture and Optimization",
+  "personalizationNote": "Builds on your React projects and web development skills for production-grade UI.",
+  "videoStyle": "Step-by-step architecture walkthrough",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Implement Context API and Redux for complex state needs",
+    "Optimize React rendering behavior and code splitting",
+    "Apply advanced hooks and lifecycle methods effectively"
+  ],
+  "knowledgeChecks": [
+    "When should you prefer Context API over Redux?",
+    "Name React features to reduce unnecessary re-renders.",
+    "Explain how a custom hook improves code reuse in complex projects."
+  ],
+  "narrationScript": "State Management: Beyond Basics\nYou’ve handled React state locally; now tackle scaling with Redux or Context API. Managing global state smoothly means your UI won’t break under pressure as features multiply at Truffaire. Knowing when to lift state or centralize it keeps your architecture clean and maintainable.\n\nPerformance Tuning React Apps\nYour audio detection app shows how slow UI kills user trust. Profiling React helps spot slow components. Memoization and lazy loading reduce re-renders and bundle size. These tweaks keep Truffaire’s products snappy even as complexity grows.\n\nAdvanced Hooks and Side Effects\nCustom hooks encapsulate logic you reuse. Cleaning up side effects avoids bugs in asynchronous calls. Integrating third-party tools like libraries for face recognition or audio processing into React through hooks can make your UI smarter and your code cleaner at Truffaire.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "State Management: Beyond Basics",
+      "bullets": [
+        "When to use Context API vs Redux",
+        "Balancing local and global state effectively",
+        "Avoiding common pitfalls like prop drilling"
+      ],
+      "speakerNotes": "Use your real React codebase examples to illustrate complexity management.",
+      "narration": "You’ve handled React state locally; now tackle scaling with Redux or Context API. Managing global state smoothly means your UI won’t break under pressure as features multiply at Truffaire. Knowing when to lift state or centralize it keeps your architecture clean and maintainable.",
+      "visualCue": "Flowchart contrasting prop drilling, Context API, and Redux data flow in React apps.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Performance Tuning React Apps",
+      "bullets": [
+        "Profiling React components to find bottlenecks",
+        "Using React.memo and useCallback effectively",
+        "Implementing code splitting and lazy loading"
+      ],
+      "speakerNotes": "Highlight your work on Audidex’s real-time inference UI as a case study.",
+      "narration": "Your audio detection app shows how slow UI kills user trust. Profiling React helps spot slow components. Memoization and lazy loading reduce re-renders and bundle size. These tweaks keep Truffaire’s products snappy even as complexity grows.",
+      "visualCue": "Bar chart showing rendering times before and after optimizations with memoization.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Advanced Hooks and Side Effects",
+      "bullets": [
+        "Create custom hooks tailored for common logic",
+        "Handle asynchronous effects with proper cleanup",
+        "Integrate hooks with external libraries gracefully"
+      ],
+      "speakerNotes": "Demonstrate how hooks improved reusability in your Flutter and React cross-platform apps.",
+      "narration": "Custom hooks encapsulate logic you reuse. Cleaning up side effects avoids bugs in asynchronous calls. Integrating third-party tools like libraries for face recognition or audio processing into React through hooks can make your UI smarter and your code cleaner at Truffaire.",
+      "visualCue": "Code snippet animation showing creation and usage of a custom React hook managing side effects.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074682258-123456/advanced-react-scaling-and-state-mastery.pptx",
+    "transcriptUrl": "/generated-learning/1774074682258-123456/advanced-react-scaling-and-state-mastery.txt",
+    "artifactManifestUrl": "/generated-learning/1774074682258-123456/advanced-react-scaling-and-state-mastery.json"
+  }
+}

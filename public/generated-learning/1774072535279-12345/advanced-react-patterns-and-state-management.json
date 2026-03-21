@@ -1,0 +1,68 @@
+{
+  "title": "Advanced React Patterns and State Management",
+  "category": "Frontend Frameworks",
+  "summary": "Sharpen React skills with hooks, component patterns, and state management critical for building scalable frontend apps.",
+  "targetSkill": "Experience with React and modern frontend frameworks",
+  "personalizationNote": "Deepen React expertise to complement backend proficiency and build richer user interfaces.",
+  "videoStyle": "Code examples with rendered component previews",
+  "duration": "4 min",
+  "learningObjectives": [
+    "Use React hooks effectively",
+    "Manage state with context and reducers",
+    "Structure components for reusability",
+    "Optimize rendering performance"
+  ],
+  "knowledgeChecks": [
+    "What hook manages side-effects in React?",
+    "How does Context API help with state?",
+    "When is React.memo helpful?"
+  ],
+  "narrationScript": "Scene 1: React Hooks Refresher\nuseState creates local state; useEffect runs side-effects like data fetching. Custom hooks encapsulate reusable logic. Remember, hooks must be called at the top level.\n\nScene 2: State Management Patterns\nContext shares state globally without passing props deeply. useReducer manages complex state updates predictably, ideal for forms or apps with many interactions.\n\nScene 3: Performance Optimizations\nReact.memo skips rendering unchanged components. useMemo caches expensive calculations. Lazy loading splits your code, loading components only when needed.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "React Hooks Refresher",
+      "bullets": [
+        "useState and useEffect",
+        "Custom hooks",
+        "Rules of hooks"
+      ],
+      "speakerNotes": "Hooks are the heart of modern React. We'll review their correct usage to manage state and lifecycle efficiently.",
+      "narration": "useState creates local state; useEffect runs side-effects like data fetching. Custom hooks encapsulate reusable logic. Remember, hooks must be called at the top level.",
+      "visualCue": "Hook usage code snippet alongside live output.",
+      "approxDurationSec": 70
+    },
+    {
+      "index": 2,
+      "title": "State Management Patterns",
+      "bullets": [
+        "Using Context API",
+        "Reducer pattern with useReducer",
+        "When to lift state up"
+      ],
+      "speakerNotes": "Managing state across components is essential. Learn to use context and reducers to avoid prop-drilling and keep code manageable.",
+      "narration": "Context shares state globally without passing props deeply. useReducer manages complex state updates predictably, ideal for forms or apps with many interactions.",
+      "visualCue": "State flow diagram and code snippets demonstrating context provider.",
+      "approxDurationSec": 80
+    },
+    {
+      "index": 3,
+      "title": "Performance Optimizations",
+      "bullets": [
+        "Memoization with React.memo and useMemo",
+        "Avoiding unnecessary rerenders",
+        "Lazy loading components"
+      ],
+      "speakerNotes": "Boost app responsiveness by preventing wasted renders and loading resources on demand.",
+      "narration": "React.memo skips rendering unchanged components. useMemo caches expensive calculations. Lazy loading splits your code, loading components only when needed.",
+      "visualCue": "Chart showing component re-render triggers before and after memoization.",
+      "approxDurationSec": 75
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072535279-12345/advanced-react-patterns-and-state-management.pptx",
+    "transcriptUrl": "/generated-learning/1774072535279-12345/advanced-react-patterns-and-state-management.txt",
+    "artifactManifestUrl": "/generated-learning/1774072535279-12345/advanced-react-patterns-and-state-management.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072535279-12345/advanced-react-patterns-and-state-management.mp3"
+  }
+}

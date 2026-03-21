@@ -1,0 +1,67 @@
+{
+  "title": "Python Mastery for Frontend Engineers: From Scripting to Scalable Systems",
+  "category": "Programming Language Enhancement",
+  "summary": "Refine your Python skills, focusing on writing scalable, maintainable code that integrates seamlessly with frontend ecosystems like React and Flutter, leveraging your backend knowledge at Truffaire.",
+  "targetSkill": "Advanced Python for Fullstack Context",
+  "personalizationNote": "Leverages Sudarshan’s extensive Python backend and AI scripting, bringing deeper clarity on Python’s role in frontend-adjacent workflows and APIs.",
+  "videoStyle": "Animated code walkthrough with side-by-side UI/backend data flow",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Understand Python best practices for clean, modular code in fullstack apps",
+    "Integrate Python scripts effectively with frontend workflows",
+    "Enhance Python code for asynchronous, event-driven applications relevant to Truffaire’s ecosystem",
+    "Debug and optimize Python code in contexts involving RESTful APIs and cloud deployment"
+  ],
+  "knowledgeChecks": [
+    "Explain how Python async improves frontend responsiveness.",
+    "Describe best practices for documenting Python modules for frontend-backend collaboration.",
+    "Give an example of a Python script automating a frontend workflow at Truffaire."
+  ],
+  "narrationScript": "Python Beyond Backend Scripts\nPython isn’t just for backend servers or AI scripts — it’s your secret weapon for automating frontend workflows too. Think build scripts, API orchestration, and background tasks that keep your React and Flutter apps swift and responsive. With modular, async Python code, you can write clear, maintainable tools that power the whole stack. Let’s harness your Python skills beyond what you’ve done at Veyon Ideations and bring them directly into your frontend ecosystem.\n\nWriting Scalable Python Modules for Cross-Functional Teams\nYour Python code is more than lines in a file — it’s a shared language bridging teams. By using type annotations and comprehensive docs, you make your modules crystal clear. Testing ensures they behave as expected, so your React components and Flutter apps can rely on rock-solid APIs. This clarity saves time, reduces bugs, and boosts everyone’s productivity at Truffaire.\n\nLeveraging Python Async for Responsive Frontend Backends\nPicture backend services reacting instantly as users interact with your frontend. That's the power of Python async programming. By writing non-blocking FastAPI endpoints and offloading heavier jobs to Redis-powered Celery workers, your apps will feel snappy and reliable — just like your Veyon Ideations smart mirror app, but faster and more scalable.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Python Beyond Backend Scripts",
+      "bullets": [
+        "Python scripts can automate frontend build and deployment tasks",
+        "Use asynchronous Python to handle API calls and background jobs efficiently",
+        "Modular Python code improves cross-team collaboration with frontend developers"
+      ],
+      "speakerNotes": "You've built some strong Python backend apps, but Python is also a powerhouse for automating frontend-related workflows and integrations. This scene expands your perspective on where Python plays in a fullstack frontend context at Truffaire.",
+      "narration": "Python isn’t just for backend servers or AI scripts — it’s your secret weapon for automating frontend workflows too. Think build scripts, API orchestration, and background tasks that keep your React and Flutter apps swift and responsive. With modular, async Python code, you can write clear, maintainable tools that power the whole stack. Let’s harness your Python skills beyond what you’ve done at Veyon Ideations and bring them directly into your frontend ecosystem.",
+      "visualCue": "Animated flowchart showing Python scripts triggering frontend build processes and API orchestration, overlaid on React and Flutter logos.",
+      "approxDurationSec": 31
+    },
+    {
+      "index": 2,
+      "title": "Writing Scalable Python Modules for Cross-Functional Teams",
+      "bullets": [
+        "Use type hinting and docstrings for better module maintainability",
+        "Adopt consistent code style and testing practices",
+        "Design modules that expose clean APIs to JavaScript and Flutter layers"
+      ],
+      "speakerNotes": "At Truffaire, your Python modules interface tightly with frontend apps. Writing clean, well-documented, and tested Python code makes collaboration between frontend and backend seamless, helping all teams move faster.",
+      "narration": "Your Python code is more than lines in a file — it’s a shared language bridging teams. By using type annotations and comprehensive docs, you make your modules crystal clear. Testing ensures they behave as expected, so your React components and Flutter apps can rely on rock-solid APIs. This clarity saves time, reduces bugs, and boosts everyone’s productivity at Truffaire.",
+      "visualCue": "Split screen: left showing Python code annotated with types and comments, right showing React and Flutter consuming those modules via API calls.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Leveraging Python Async for Responsive Frontend Backends",
+      "bullets": [
+        "Understand async/await syntax in Python",
+        "Build non-blocking FastAPI endpoints for real-time UI updates",
+        "Integrate with Redis and Celery for async task processing"
+      ],
+      "speakerNotes": "You’ve used FastAPI and Celery, but asynchronous Python lets you write backend services that respond instantly to frontend events, which is key for smooth user experience in Truffaire’s apps.",
+      "narration": "Picture backend services reacting instantly as users interact with your frontend. That's the power of Python async programming. By writing non-blocking FastAPI endpoints and offloading heavier jobs to Redis-powered Celery workers, your apps will feel snappy and reliable — just like your Veyon Ideations smart mirror app, but faster and more scalable.",
+      "visualCue": "Diagram showing async FastAPI endpoint handling multiple requests concurrently, with Redis and Celery managing background jobs aligned with frontend events.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074549762-123456/python-mastery-for-frontend-engineers-from-scripting-to-scal.pptx",
+    "transcriptUrl": "/generated-learning/1774074549762-123456/python-mastery-for-frontend-engineers-from-scripting-to-scal.txt",
+    "artifactManifestUrl": "/generated-learning/1774074549762-123456/python-mastery-for-frontend-engineers-from-scripting-to-scal.json"
+  }
+}

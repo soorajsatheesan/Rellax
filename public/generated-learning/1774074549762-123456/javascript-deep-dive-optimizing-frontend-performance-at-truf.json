@@ -1,0 +1,67 @@
+{
+  "title": "JavaScript Deep Dive: Optimizing Frontend Performance at Truffaire",
+  "category": "Frontend Development",
+  "summary": "Elevate your JavaScript skills to create performant, maintainable React applications that perfectly mesh with your backend and AI models.",
+  "targetSkill": "Advanced JavaScript for React Ecosystem",
+  "personalizationNote": "Builds on Sudarshan’s React experience and JavaScript knowledge, focusing on performance optimizations critical to Truffaire's frontend challenges.",
+  "videoStyle": "Interactive code debug and performance profiling animation",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Understand advanced JavaScript features and their impact on React apps",
+    "Employ profiling tools for pinpointing bottlenecks",
+    "Write maintainable, testable JS code in complex UIs",
+    "Integrate JavaScript efficiently with FastAPI and TensorFlow model outputs"
+  ],
+  "knowledgeChecks": [
+    "What is a closure and how does it affect React callbacks?",
+    "How can you detect unnecessary React re-renders?",
+    "Describe a strategy to cleanly manage async data fetching in React."
+  ],
+  "narrationScript": "Advanced JS Concepts Powering Smooth React Apps\nClosures aren’t just abstract concepts; they’re the backbone to managing state and callbacks cleanly in your React components. Knowing how the event loop schedules tasks lets you avoid freezing the UI during heavy operations. Promises and async/await simplify fetching data from FastAPI backends, especially when combining with your AI model outputs. This sharp JS knowledge directly lifts your frontend game.\n\nProfiling and Optimizing JavaScript Performance\nYou’ve got powerful apps, but slowdowns ruin user trust. Profiling tools in your browser track script execution, memory, and state changes so you see exactly what’s causing lag. Spot excessive React re-renders or bloated API calls, then refactor to make the UI zip along. With this, your apps at Truffaire run buttery smooth, no matter how much AI magic they carry.\n\nWriting Maintainable JavaScript for Scalable Frontend Systems\nReact’s component model fits perfectly with modular, well-documented JavaScript. Setting up ESLint and Prettier keeps your code clean and consistent across teams. Reusable hooks and tested components reduce bugs and speed feature rollout. This disciplined approach is what helps Truffaire ship high-quality UI features fast and keep them solid as projects grow.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Advanced JS Concepts Powering Smooth React Apps",
+      "bullets": [
+        "Use closures to manage component state and callbacks",
+        "Navigate the event loop to avoid UI blocking",
+        "Implement promises and async/await for clean asynchronous data fetching"
+      ],
+      "speakerNotes": "You’re comfortable with React and JavaScript already. This scene digs deeper, showing how understanding JS core concepts can solve common UI issues and improve data handling within your Truffaire applications.",
+      "narration": "Closures aren’t just abstract concepts; they’re the backbone to managing state and callbacks cleanly in your React components. Knowing how the event loop schedules tasks lets you avoid freezing the UI during heavy operations. Promises and async/await simplify fetching data from FastAPI backends, especially when combining with your AI model outputs. This sharp JS knowledge directly lifts your frontend game.",
+      "visualCue": "Animated event loop visualization alongside React component lifecycle with closures and promises marked.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Profiling and Optimizing JavaScript Performance",
+      "bullets": [
+        "Profile script execution time and memory usage",
+        "Detect inefficient React re-renders and excessive state updates",
+        "Refactor critical code for faster DOM manipulation and API calls"
+      ],
+      "speakerNotes": "At Truffaire, performance is king. Mastering profiling tools helps you pinpoint exactly what slows your app down, even in complex, data-rich AI applications you build.",
+      "narration": "You’ve got powerful apps, but slowdowns ruin user trust. Profiling tools in your browser track script execution, memory, and state changes so you see exactly what’s causing lag. Spot excessive React re-renders or bloated API calls, then refactor to make the UI zip along. With this, your apps at Truffaire run buttery smooth, no matter how much AI magic they carry.",
+      "visualCue": "Screen capture style graphic of Chrome DevTools Profiler highlighting slow JS functions and React component re-renders.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Writing Maintainable JavaScript for Scalable Frontend Systems",
+      "bullets": [
+        "Adopt consistent ESLint rules and code formatting",
+        "Use component-based architecture with reusable hooks",
+        "Document JS code and test coverage to ease maintenance"
+      ],
+      "speakerNotes": "You’re already leading frontend projects. This scene shows how disciplined JS code structure and standards help your team build and scale Truffaire’s complex UI systems efficiently.",
+      "narration": "React’s component model fits perfectly with modular, well-documented JavaScript. Setting up ESLint and Prettier keeps your code clean and consistent across teams. Reusable hooks and tested components reduce bugs and speed feature rollout. This disciplined approach is what helps Truffaire ship high-quality UI features fast and keep them solid as projects grow.",
+      "visualCue": "Diagram showing React component hierarchy annotated with modular JS patterns, linting icons, and testing badges.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074549762-123456/javascript-deep-dive-optimizing-frontend-performance-at-truf.pptx",
+    "transcriptUrl": "/generated-learning/1774074549762-123456/javascript-deep-dive-optimizing-frontend-performance-at-truf.txt",
+    "artifactManifestUrl": "/generated-learning/1774074549762-123456/javascript-deep-dive-optimizing-frontend-performance-at-truf.json"
+  }
+}

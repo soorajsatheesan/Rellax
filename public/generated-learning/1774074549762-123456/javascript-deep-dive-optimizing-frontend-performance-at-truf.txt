@@ -1,0 +1,8 @@
+Advanced JS Concepts Powering Smooth React Apps
+Closures aren’t just abstract concepts; they’re the backbone to managing state and callbacks cleanly in your React components. Knowing how the event loop schedules tasks lets you avoid freezing the UI during heavy operations. Promises and async/await simplify fetching data from FastAPI backends, especially when combining with your AI model outputs. This sharp JS knowledge directly lifts your frontend game.
+
+Profiling and Optimizing JavaScript Performance
+You’ve got powerful apps, but slowdowns ruin user trust. Profiling tools in your browser track script execution, memory, and state changes so you see exactly what’s causing lag. Spot excessive React re-renders or bloated API calls, then refactor to make the UI zip along. With this, your apps at Truffaire run buttery smooth, no matter how much AI magic they carry.
+
+Writing Maintainable JavaScript for Scalable Frontend Systems
+React’s component model fits perfectly with modular, well-documented JavaScript. Setting up ESLint and Prettier keeps your code clean and consistent across teams. Reusable hooks and tested components reduce bugs and speed feature rollout. This disciplined approach is what helps Truffaire ship high-quality UI features fast and keep them solid as projects grow.

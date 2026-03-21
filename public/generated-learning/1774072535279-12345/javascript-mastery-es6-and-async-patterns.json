@@ -1,0 +1,68 @@
+{
+  "title": "JavaScript Mastery: ES6+ and Async Patterns",
+  "category": "Core Frontend Skills",
+  "summary": "Advance JavaScript skills focusing on modern syntax and asynchronous programming fundamental to frontend development.",
+  "targetSkill": "Strong proficiency in JavaScript + async programming",
+  "personalizationNote": "Build on existing JavaScript knowledge with ES6+ syntax refresh and async coding best practices relevant to frontend APIs and UI updates.",
+  "videoStyle": "Animated code walkthroughs",
+  "duration": "4 min",
+  "learningObjectives": [
+    "Understand ES6+ features (let, const, arrow functions)",
+    "Handle promises and async/await",
+    "Implement async API calls robustly",
+    "Debug asynchronous code"
+  ],
+  "knowledgeChecks": [
+    "What keyword pauses execution inside an async function?",
+    "How do you catch errors in promise chains?",
+    "Why prefer let/const over var?"
+  ],
+  "narrationScript": "Scene 1: Modern JavaScript Features\nUse 'let' and 'const' instead of 'var' for clearer scoping. Arrow functions provide concise syntax, and destructuring unpacks objects cleanly.\n\nScene 2: Promises and Async/Await\nPromises represent future values. Async/await lets us write async code that looks synchronous, making it easier to read and maintain.\n\nScene 3: Debugging Async JavaScript\nSet breakpoints in async functions to inspect state. Console log promises and use network panels to troubleshoot API calls effectively.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Modern JavaScript Features",
+      "bullets": [
+        "Block scoping with let/const",
+        "Arrow functions",
+        "Destructuring and template literals"
+      ],
+      "speakerNotes": "Modern syntax enhances code clarity and reduces errors. We'll refresh essentials you'll use every day in React and scripts.",
+      "narration": "Use 'let' and 'const' instead of 'var' for clearer scoping. Arrow functions provide concise syntax, and destructuring unpacks objects cleanly.",
+      "visualCue": "Code snippets before and after ES6 refactoring.",
+      "approxDurationSec": 80
+    },
+    {
+      "index": 2,
+      "title": "Promises and Async/Await",
+      "bullets": [
+        "Promise basics and chaining",
+        "Async/await syntax",
+        "Error handling in async code"
+      ],
+      "speakerNotes": "Async JavaScript underpins data fetching and responsive UIs. We'll clarify how promises and async/await simplify asynchronous flows.",
+      "narration": "Promises represent future values. Async/await lets us write async code that looks synchronous, making it easier to read and maintain.",
+      "visualCue": "Diagram of promise lifecycle and async/await flow.",
+      "approxDurationSec": 90
+    },
+    {
+      "index": 3,
+      "title": "Debugging Async JavaScript",
+      "bullets": [
+        "Common async bugs",
+        "Using browser devtools",
+        "Logging and breakpoints in async code"
+      ],
+      "speakerNotes": "Async bugs can be tricky. We'll cover debugging patterns and tooling to resolve issues quickly in frontend apps.",
+      "narration": "Set breakpoints in async functions to inspect state. Console log promises and use network panels to troubleshoot API calls effectively.",
+      "visualCue": "Devtools screenshot demonstrating async breakpoint usage.",
+      "approxDurationSec": 70
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072535279-12345/javascript-mastery-es6-and-async-patterns.pptx",
+    "transcriptUrl": "/generated-learning/1774072535279-12345/javascript-mastery-es6-and-async-patterns.txt",
+    "artifactManifestUrl": "/generated-learning/1774072535279-12345/javascript-mastery-es6-and-async-patterns.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072535279-12345/javascript-mastery-es6-and-async-patterns.mp3"
+  }
+}

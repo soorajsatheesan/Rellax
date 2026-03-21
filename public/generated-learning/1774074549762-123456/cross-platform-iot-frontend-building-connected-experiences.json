@@ -1,0 +1,67 @@
+{
+  "title": "Cross-Platform & IoT Frontend: Building Connected Experiences",
+  "category": "Cross-Platform Development & IoT",
+  "summary": "Harness your Flutter, Raspberry Pi, and IoT skills to build engaging connected frontend apps bridging physical and digital worlds for Truffaire.",
+  "targetSkill": "Cross-Platform IoT Frontend Engineering",
+  "personalizationNote": "Builds on Sudarshan’s Flutter, Raspberry Pi, Android Automotive OS, and IoT project expertise, focusing on seamless frontend integration of physical sensors and services.",
+  "videoStyle": "Mixed media with hardware photos and Flutter app demos",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Develop Flutter UI for IoT device control and monitoring",
+    "Integrate real-time sensor data into frontend components",
+    "Implement offline-first and graceful degradation strategies",
+    "Use Android Automotive OS frontend features in embedded systems"
+  ],
+  "knowledgeChecks": [
+    "How can Flutter Streams improve real-time sensor data display?",
+    "What techniques ensure IoT app resilience during network drops?",
+    "Name key frontend considerations for Android Automotive OS apps."
+  ],
+  "narrationScript": "Flutter UI for Real-Time IoT Data and Control\nReal-time is everything in IoT. Flutter’s streams let you listen to sensor data updates from your Raspberry Pi and update the UI instantly. The Bloc pattern keeps state organized as you send control commands and receive status back. Designing clear feedback loops means users feel in command of smart devices—a core experience you champion at Truffaire.\n\nOffline-First and Resilience Strategies for IoT Frontends\nNo network? No problem. By caching recent sensor readings and queued commands locally, your Flutter app stays interactive. Smart reconnect logic tries silently, syncing all changes seamlessly when connectivity returns. Users never notice glitches, just a reliable experience on Truffaire devices, whatever the network looks like.\n\nAndroid Automotive OS Frontend Features and Integration\nIn cars, frontends must be responsive and lightweight. Implement layouts that adapt to vertical and wide screens. Media controls and voice commands keep users focused and safe. Efficient code ensures smooth operation within automotive hardware limits — skills you’re uniquely positioned to deliver from your IISc and PESU projects for Truffaire’s future vehicles.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Flutter UI for Real-Time IoT Data and Control",
+      "bullets": [
+        "Use Flutter Streams and Bloc pattern to manage IoT state",
+        "Connect to Raspberry Pi sensors via WebSocket or MQTT",
+        "Design intuitive controls and status feedback UI for devices"
+      ],
+      "speakerNotes": "You built a smart mirror with cross-platform Flutter apps. Let’s elevate that by streaming live sensor data and controlling devices fluidly in your Flutter frontends.",
+      "narration": "Real-time is everything in IoT. Flutter’s streams let you listen to sensor data updates from your Raspberry Pi and update the UI instantly. The Bloc pattern keeps state organized as you send control commands and receive status back. Designing clear feedback loops means users feel in command of smart devices—a core experience you champion at Truffaire.",
+      "visualCue": "Screenshot of Flutter app showing live sensor dashboard with control buttons and data stream graph animating in real time.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Offline-First and Resilience Strategies for IoT Frontends",
+      "bullets": [
+        "Implement local caching of sensor data and commands",
+        "Gracefully handle network failures and reconnect logic",
+        "Sync states when connection restores to keep UI consistent"
+      ],
+      "speakerNotes": "IoT networks can be flaky. Your app must keep working smoothly at Truffaire, even offline, syncing data smartly when back online.",
+      "narration": "No network? No problem. By caching recent sensor readings and queued commands locally, your Flutter app stays interactive. Smart reconnect logic tries silently, syncing all changes seamlessly when connectivity returns. Users never notice glitches, just a reliable experience on Truffaire devices, whatever the network looks like.",
+      "visualCue": "Flow diagram illustrating offline data caching, retry logic, and resynchronization cycles between IoT device and Flutter UI.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Android Automotive OS Frontend Features and Integration",
+      "bullets": [
+        "Implement responsive layouts for varied screen sizes",
+        "Integrate media controls and voice commands within frontends",
+        "Optimize resource usage for automotive hardware constraints"
+      ],
+      "speakerNotes": "Your Raspberry Pi and Android Automotive OS work means you can raise Truffaire’s in-vehicle infotainment systems to the next level with responsive, resource-smart frontend features.",
+      "narration": "In cars, frontends must be responsive and lightweight. Implement layouts that adapt to vertical and wide screens. Media controls and voice commands keep users focused and safe. Efficient code ensures smooth operation within automotive hardware limits — skills you’re uniquely positioned to deliver from your IISc and PESU projects for Truffaire’s future vehicles.",
+      "visualCue": "UI mockups of automotive infotainment screens with media controls, map navigation, and voice command interface overlays.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074549762-123456/cross-platform-iot-frontend-building-connected-experiences.pptx",
+    "transcriptUrl": "/generated-learning/1774074549762-123456/cross-platform-iot-frontend-building-connected-experiences.txt",
+    "artifactManifestUrl": "/generated-learning/1774074549762-123456/cross-platform-iot-frontend-building-connected-experiences.json"
+  }
+}

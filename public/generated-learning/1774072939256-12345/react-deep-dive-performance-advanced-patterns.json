@@ -1,0 +1,81 @@
+{
+  "title": "React Deep Dive: Performance & Advanced Patterns",
+  "category": "Modern Frameworks",
+  "summary": "Enhance your existing React skills with performance optimization techniques and advanced component patterns.",
+  "targetSkill": "React advanced topics and optimization",
+  "personalizationNote": "Leverage your React experience and focus on refining rendering performance and reusable patterns.",
+  "videoStyle": "Interactive code demos and profiling tools",
+  "duration": "3 min",
+  "learningObjectives": [
+    "Identify common React performance pitfalls",
+    "Use React.memo and hooks effectively",
+    "Implement compound and render prop patterns",
+    "Profile and optimize React apps"
+  ],
+  "knowledgeChecks": [
+    "What does React.memo do?",
+    "Name a hook used to memoize functions.",
+    "What is a render prop pattern used for?"
+  ],
+  "narrationScript": "Scene 1: Spotting React Performance Issues\nCheck which components re-render often and why. Avoid passing new objects or functions as props without memoization.\n\nScene 2: Optimizing with React.memo and Hooks\nWrap components with React.memo, and use hooks like useCallback to memoize functions and reduce updates.\n\nScene 3: Advanced Component Patterns\nCompound components let users compose APIs intuitively; render props enable dynamic UI composition; HOCs add features to components.\n\nScene 4: Profiling and Measuring React Performance\nRecord interactive sessions, spot bottlenecks in flamegraphs, and prioritize fixes where React spends most time.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Spotting React Performance Issues",
+      "bullets": [
+        "Excessive re-renders",
+        "Unnecessary prop changes",
+        "Identifying slow components"
+      ],
+      "speakerNotes": "Understanding what triggers React to re-render helps you optimize hotspots that can degrade user experience.",
+      "narration": "Check which components re-render often and why. Avoid passing new objects or functions as props without memoization.",
+      "visualCue": "React Profiler visual highlighting re-renders",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 2,
+      "title": "Optimizing with React.memo and Hooks",
+      "bullets": [
+        "Memoizing functional components",
+        "Using useCallback and useMemo",
+        "Avoiding stale closures"
+      ],
+      "speakerNotes": "React.memo prevents needless re-renders; hooks can optimize expensive computations or event handlers.",
+      "narration": "Wrap components with React.memo, and use hooks like useCallback to memoize functions and reduce updates.",
+      "visualCue": "Code before/after applying React.memo and hooks",
+      "approxDurationSec": 55
+    },
+    {
+      "index": 3,
+      "title": "Advanced Component Patterns",
+      "bullets": [
+        "Compound components for flexibility",
+        "Render props for dynamic rendering",
+        "Higher-order components (brief overview)"
+      ],
+      "speakerNotes": "These patterns let you write highly reusable and flexible UI components, improving maintainability.",
+      "narration": "Compound components let users compose APIs intuitively; render props enable dynamic UI composition; HOCs add features to components.",
+      "visualCue": "Diagram of component relationships using patterns",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 4,
+      "title": "Profiling and Measuring React Performance",
+      "bullets": [
+        "Using React DevTools Profiler",
+        "Analyzing flamegraphs",
+        "Optimizing based on metrics"
+      ],
+      "speakerNotes": "Profiling shows what parts of your app are costly. React DevTools gives actionable insights to guide optimizations.",
+      "narration": "Record interactive sessions, spot bottlenecks in flamegraphs, and prioritize fixes where React spends most time.",
+      "visualCue": "React Profiler flamegraph with key areas highlighted",
+      "approxDurationSec": 50
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072939256-12345/react-deep-dive-performance-advanced-patterns.pptx",
+    "transcriptUrl": "/generated-learning/1774072939256-12345/react-deep-dive-performance-advanced-patterns.txt",
+    "artifactManifestUrl": "/generated-learning/1774072939256-12345/react-deep-dive-performance-advanced-patterns.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072939256-12345/react-deep-dive-performance-advanced-patterns.mp3"
+  }
+}

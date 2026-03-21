@@ -1,0 +1,8 @@
+Crafting Secure RESTful APIs for Frontend Use
+APIs power your frontend experiences but can expose vulnerabilities. Using standards like OAuth2 for authentication and careful validation stops attacks, protecting Truffaire’s users and assets.
+
+Authentication Patterns Frontend Engineers Must Know
+Tokens are the keys to the castle. Your React app must keep them safe and refresh them timely to maintain user sessions without interrupting the experience. This balance builds user trust and security.
+
+Deploying Full Stack Apps on VPS with Docker
+Docker containers wrap your apps into portable units. Combined with VPS hosting secured by SSH keys and firewalls, you get stable, scalable deployments that can be updated in minutes—crucial as Truffaire products evolve.

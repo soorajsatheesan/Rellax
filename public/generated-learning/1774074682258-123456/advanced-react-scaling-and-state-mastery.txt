@@ -1,0 +1,8 @@
+State Management: Beyond Basics
+You’ve handled React state locally; now tackle scaling with Redux or Context API. Managing global state smoothly means your UI won’t break under pressure as features multiply at Truffaire. Knowing when to lift state or centralize it keeps your architecture clean and maintainable.
+
+Performance Tuning React Apps
+Your audio detection app shows how slow UI kills user trust. Profiling React helps spot slow components. Memoization and lazy loading reduce re-renders and bundle size. These tweaks keep Truffaire’s products snappy even as complexity grows.
+
+Advanced Hooks and Side Effects
+Custom hooks encapsulate logic you reuse. Cleaning up side effects avoids bugs in asynchronous calls. Integrating third-party tools like libraries for face recognition or audio processing into React through hooks can make your UI smarter and your code cleaner at Truffaire.

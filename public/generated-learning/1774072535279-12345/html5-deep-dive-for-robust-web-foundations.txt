@@ -1,0 +1,8 @@
+Scene 1: Semantic HTML Overview
+Semantic HTML uses tags that describe content meaningfully. For example, 'header' marks the top section, 'nav' contains navigation links—helping browsers and assistive tech understand page structure.
+
+Scene 2: Structuring Content for Accessibility
+Landmarks like 'main' and 'aside' define sections for assistive tech. ARIA attributes add extra info to elements when HTML alone isn’t enough. This makes your HTML usable by everyone.
+
+Scene 3: Forms and Multimedia Elements
+Label every form input clearly, provide helpful hints, and make error messages accessible. For media, use fallback captions and controls so everyone benefits.

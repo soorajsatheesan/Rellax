@@ -1,0 +1,81 @@
+{
+  "title": "Frontend Debugging and Problem-Solving Mastery",
+  "category": "Debugging",
+  "summary": "Sharpen practical debugging techniques and systematic problem-solving catered for frontend engineers.",
+  "targetSkill": "Debugging & troubleshooting frontend issues",
+  "personalizationNote": "Leverage your existing backend and system debugging skills to master frontend-specific tools and workflows.",
+  "videoStyle": "Live debugging sessions and walkthroughs",
+  "duration": "3 min",
+  "learningObjectives": [
+    "Use browser developer tools effectively",
+    "Identify and fix common JS, CSS, and rendering bugs",
+    "Apply logical problem-solving workflows",
+    "Incorporate automated debugging tools"
+  ],
+  "knowledgeChecks": [
+    "What DevTools panel helps inspect CSS styles?",
+    "How do breakpoints assist debugging?",
+    "Describe a methodical approach to solving bugs."
+  ],
+  "narrationScript": "Scene 1: Navigating Browser Developer Tools\nUse Elements to edit HTML/CSS live, Console for errors and testing, Sources for breakpoints, and Network to trace API calls.\n\nScene 2: Debugging Common JavaScript Errors\nSet breakpoints to halt execution, step through code line by line, and review call stacks to trace errors back to their source.\n\nScene 3: Fixing CSS Rendering Issues\nUse computed styles to see active CSS rules and override them as needed. Understanding specificity helps you apply intended styles reliably.\n\nScene 4: Structured Problem-Solving Workflow\nIsolate the problem area, form a hypothesis, test it, and document the fix so you learn and prevent regressions.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "Navigating Browser Developer Tools",
+      "bullets": [
+        "Elements and Styles panels",
+        "JavaScript Console and Sources",
+        "Network and Performance tabs"
+      ],
+      "speakerNotes": "Familiarize yourself with DevTools panels to inspect DOM, monitor network calls, and debug scripts in real time.",
+      "narration": "Use Elements to edit HTML/CSS live, Console for errors and testing, Sources for breakpoints, and Network to trace API calls.",
+      "visualCue": "Recording of DevTools panel navigation",
+      "approxDurationSec": 55
+    },
+    {
+      "index": 2,
+      "title": "Debugging Common JavaScript Errors",
+      "bullets": [
+        "Syntax vs runtime errors",
+        "Using breakpoints and watches",
+        "Tracing call stacks"
+      ],
+      "speakerNotes": "Breakpoints let you pause code execution and inspect variables, revealing where things go wrong in complex logic.",
+      "narration": "Set breakpoints to halt execution, step through code line by line, and review call stacks to trace errors back to their source.",
+      "visualCue": "Stepwise breakpoint debugging session",
+      "approxDurationSec": 50
+    },
+    {
+      "index": 3,
+      "title": "Fixing CSS Rendering Issues",
+      "bullets": [
+        "Inspecting computed styles",
+        "Overriding specificity",
+        "Dealing with layout quirks"
+      ],
+      "speakerNotes": "Visual glitches often stem from CSS issues. We'll explore how to inspect and resolve difficult style conflicts efficiently.",
+      "narration": "Use computed styles to see active CSS rules and override them as needed. Understanding specificity helps you apply intended styles reliably.",
+      "visualCue": "Side-by-side visual of style changes via DevTools",
+      "approxDurationSec": 45
+    },
+    {
+      "index": 4,
+      "title": "Structured Problem-Solving Workflow",
+      "bullets": [
+        "Reproduce and isolate issues",
+        "Hypothesis and testing",
+        "Documenting fixes"
+      ],
+      "speakerNotes": "Approach bugs methodically by reproducing consistently, hypothesizing causes, and verifying solutions before permanent fixes.",
+      "narration": "Isolate the problem area, form a hypothesis, test it, and document the fix so you learn and prevent regressions.",
+      "visualCue": "Flowchart of debugging steps",
+      "approxDurationSec": 50
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774072939256-12345/frontend-debugging-and-problem-solving-mastery.pptx",
+    "transcriptUrl": "/generated-learning/1774072939256-12345/frontend-debugging-and-problem-solving-mastery.txt",
+    "artifactManifestUrl": "/generated-learning/1774072939256-12345/frontend-debugging-and-problem-solving-mastery.json",
+    "voiceoverAudioUrl": "/generated-learning/1774072939256-12345/frontend-debugging-and-problem-solving-mastery.mp3"
+  }
+}

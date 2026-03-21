@@ -28,11 +28,11 @@ export default async function ModuleDetailPage({ params }: Props) {
     redirect("/login?view=employee");
   }
 
-  const module = await convex.query(api.employeeLearning.getModuleById, {
+  const learningModule = await convex.query(api.employeeLearning.getModuleById, {
     moduleId: moduleId as Id<"learning_path_modules">,
   });
 
-  if (!module) notFound();
+  if (!learningModule) notFound();
 
   const { employer: company } = employeeProfile;
 
@@ -41,15 +41,16 @@ export default async function ModuleDetailPage({ params }: Props) {
       <header
         className="sticky top-0 z-20"
         style={{
-          background: "var(--db-header)",
+          background: "color-mix(in srgb, var(--db-header) 92%, transparent)",
           borderBottom: "1px solid var(--db-border)",
+          backdropFilter: "blur(16px)",
         }}
       >
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6 sm:px-8">
-          <BrandLogo />
-          <div className="flex items-center gap-4">
+        <div className="flex h-14 w-full items-center justify-between px-6 sm:px-8">
+          <BrandLogo tone="auto" />
+          <div className="flex items-center gap-3">
             <span
-              className="hidden font-mono text-[0.62rem] uppercase tracking-[0.18em] sm:block"
+              className="hidden font-mono text-[0.6rem] uppercase tracking-[0.2em] sm:block"
               style={{ color: "var(--db-text-muted)" }}
             >
               {company.companyName}
@@ -57,11 +58,11 @@ export default async function ModuleDetailPage({ params }: Props) {
             <ThemeToggle />
             <Link
               href="/employee/roadmap"
-              className="rounded-full px-4 py-1.5 text-xs font-medium transition"
+              className="db-nav-btn rounded-full px-4 py-1.5 text-xs font-medium"
               style={{
                 border: "1px solid var(--db-border)",
                 color: "var(--db-text-soft)",
-                background: "transparent",
+                background: "var(--db-surface)",
                 textDecoration: "none",
               }}
             >
@@ -70,7 +71,7 @@ export default async function ModuleDetailPage({ params }: Props) {
             <form action={signOutEmployeeAction}>
               <button
                 type="submit"
-                className="rounded-full px-4 py-1.5 text-xs font-medium transition"
+                className="db-nav-btn rounded-full px-4 py-1.5 text-xs font-medium"
                 style={{
                   border: "1px solid var(--db-border)",
                   color: "var(--db-text-soft)",
@@ -84,8 +85,8 @@ export default async function ModuleDetailPage({ params }: Props) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-6 py-10 sm:px-8">
-        <ModuleDetailContent module={module} />
+      <main className="w-full">
+        <ModuleDetailContent module={learningModule} />
       </main>
     </div>
   );

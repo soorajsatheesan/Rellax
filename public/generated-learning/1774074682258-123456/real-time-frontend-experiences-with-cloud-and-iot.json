@@ -1,0 +1,66 @@
+{
+  "title": "Real-Time Frontend Experiences with Cloud and IoT",
+  "category": "Cloud & IoT",
+  "summary": "Capitalize on your experience with Raspberry Pi, Android Automotive OS, and VPS deployment to build real-time, secure frontend features. This module teaches how to link cloud services, real-time alerts, and streaming into polished UIs at Truffaire.",
+  "targetSkill": "Real-Time Cloud-Enabled Frontend Engineering",
+  "personalizationNote": "Builds on your IoT and cloud deployment expertise for frontend innovation.",
+  "videoStyle": "Live demo with data flow diagrams",
+  "duration": "2 min",
+  "learningObjectives": [
+    "Design secure real-time communication channels with WebSockets",
+    "Implement live video/audio streaming in React apps",
+    "Deploy scalable frontend-backend solutions on cloud VPS"
+  ],
+  "knowledgeChecks": [
+    "Why use WebSockets over HTTP for realtime updates?",
+    "What are key considerations for live video streaming in React?",
+    "How does Docker improve frontend deployment reliability?"
+  ],
+  "narrationScript": "WebSockets: The Pulse of Real-Time UIs\nUsers expect up-to-the-moment updates. With your IoT and VPS background, you can implement WebSockets that push device data straight to React interfaces without delay, like your surveillance app’s alert stream. Handling reconnections ensures Truffaire’s frontend never misses a beat.\n\nLive Streaming Integration in Frontend\nYour smart mirror uses cameras and face recognition live streams. Delivering those to a React app means embedding video feeds with minimal lag. Combine with your AI pipelines to make interactive experiences that adapt as users move through Truffaire’s platform interfaces.\n\nCloud Deployment for Frontend Scalability\nConsistent deployments mean fewer bugs and faster updates. Dockerizing your React apps guarantees the same environment everywhere. Pair this with automated Git pipelines that trigger VPS deployments and monitor usage so Truffaire’s frontend scales seamlessly as user count climbs.",
+  "slides": [
+    {
+      "index": 1,
+      "title": "WebSockets: The Pulse of Real-Time UIs",
+      "bullets": [
+        "Set up WebSocket connections in React efficiently",
+        "Handle connection drops and retries gracefully",
+        "Sync live IoT device status to frontend displays"
+      ],
+      "speakerNotes": "Tie into your surveillance real-time alert system experience.",
+      "narration": "Users expect up-to-the-moment updates. With your IoT and VPS background, you can implement WebSockets that push device data straight to React interfaces without delay, like your surveillance app’s alert stream. Handling reconnections ensures Truffaire’s frontend never misses a beat.",
+      "visualCue": "Diagram showing two-way WebSocket communication between device backend and React frontend UI with connection status indicators.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 2,
+      "title": "Live Streaming Integration in Frontend",
+      "bullets": [
+        "Use HTML5 video/audio APIs to integrate streams",
+        "Optimize bandwidth and latency for smooth playback",
+        "Combine streaming with AI features like face recognition"
+      ],
+      "speakerNotes": "Use your smart mirror’s live camera and face recognition features as concrete use cases.",
+      "narration": "Your smart mirror uses cameras and face recognition live streams. Delivering those to a React app means embedding video feeds with minimal lag. Combine with your AI pipelines to make interactive experiences that adapt as users move through Truffaire’s platform interfaces.",
+      "visualCue": "Screenshot of React UI showing live video feed with overlaid dynamic face recognition bounding boxes.",
+      "approxDurationSec": 30
+    },
+    {
+      "index": 3,
+      "title": "Cloud Deployment for Frontend Scalability",
+      "bullets": [
+        "Dockerize React apps for consistent builds",
+        "Automate deployments using Git workflows",
+        "Monitor cloud resources and scale dynamically"
+      ],
+      "speakerNotes": "Relate back to your expert VPS and Docker deployments for startup-level projects.",
+      "narration": "Consistent deployments mean fewer bugs and faster updates. Dockerizing your React apps guarantees the same environment everywhere. Pair this with automated Git pipelines that trigger VPS deployments and monitor usage so Truffaire’s frontend scales seamlessly as user count climbs.",
+      "visualCue": "Pipeline flowchart from Git push triggering Docker build, VPS deploy, and monitoring dashboard metrics.",
+      "approxDurationSec": 30
+    }
+  ],
+  "assets": {
+    "slideDeckUrl": "/generated-learning/1774074682258-123456/real-time-frontend-experiences-with-cloud-and-iot.pptx",
+    "transcriptUrl": "/generated-learning/1774074682258-123456/real-time-frontend-experiences-with-cloud-and-iot.txt",
+    "artifactManifestUrl": "/generated-learning/1774074682258-123456/real-time-frontend-experiences-with-cloud-and-iot.json"
+  }
+}

@@ -1,0 +1,11 @@
+Scene 1: Branching and Merging Fundamentals
+Create branches for features, switch context easily, and merge back once tested to maintain a stable main branch.
+
+Scene 2: Resolving Merge Conflicts Gracefully
+When Git flags conflicts, open affected files, analyze differences, and carefully merge code to unify changes without overwriting work.
+
+Scene 3: Using Git Rebase for a Cleaner History
+Use git rebase to integrate changes cleanly. Interactive rebasing lets you edit, squash, or reorder commits before sharing code.
+
+Scene 4: Collaborating with Pull Requests and Code Reviews
+Write clear PR descriptions, address reviewer comments constructively, and use reviews to learn and keep code solid.
