@@ -59,6 +59,10 @@ function getPublicOutputPaths(employeeId: string) {
   return { absoluteDir, publicBaseUrl };
 }
 
+function canPersistPublicAssets() {
+  return process.env.VERCEL !== "1";
+}
+
 function moduleManifest(bundle: GeneratedModuleBundle) {
   return {
     title: bundle.module.title,
@@ -563,6 +567,31 @@ export async function buildLearningModuleAssets(args: {
   slides: GeneratedSlide[];
   qaPairs: GeneratedQAPair[];
 }) {
+  if (!canPersistPublicAssets()) {
+    const slides = args.slides.map((slide) => ({
+      ...slide,
+      audioChunks: [],
+      audioUrl: undefined,
+    }));
+    const narrationScript = narrationScriptFromSlides(slides);
+
+    return {
+      module: args.module,
+      notesContent: args.notesContent,
+      knowledgeChecks: args.knowledgeChecks,
+      videoStyle: args.videoStyle,
+      slides,
+      qaPairs: args.qaPairs,
+      narrationScript,
+      duration: durationLabelFromSlides(slides),
+      assets: {
+        slideDeckUrl: "",
+        transcriptUrl: "",
+        artifactManifestUrl: "",
+      },
+    };
+  }
+
   const { absoluteDir, publicBaseUrl } = getPublicOutputPaths(args.employeeId);
   await mkdir(absoluteDir, { recursive: true });
 
